@@ -44,6 +44,7 @@ const LoginForm = () => {
       </article>
       <article className="form-article user-article">
         <div className="user-form-link-container">
+          <img className="form-rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
           <NavLink to="/sign-up" className="user-form-link form-link">
             Sign-up here!
           </NavLink>

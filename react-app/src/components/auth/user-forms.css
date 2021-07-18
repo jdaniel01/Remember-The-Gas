@@ -1,16 +1,10 @@
-@media screen and (min-width: 768px) {
-    
-   .user-form-page-container {
-        display: flex;
-        flex-flow: row nowrap;
-        height: 100%;
-   }
-
+@media screen and (min-width: 1150px) {
    .user-article {
        width: 50%;
        display: flex;
        align-items: center;
        flex-flow: column wrap;
+       box-sizing: border-box;
    }
 
    .logo-article {
@@ -18,74 +12,149 @@
     }
 
    .rtg-logo{
-       width: 40%;
+       width: 16rem;
        padding-right: 30%;
        padding-top: 5%;
        padding-bottom: 5%;
    }
 
-
-   .user-form{
-       display: flex;
-       flex-flow: column wrap;
-       justify-content: center;
-       font-size: 18pt;
-   }
-
-   .user-field {
-       display: flex;
-       justify-content: space-between;
-       align-items: flex-start;
-       flex-flow: column nowrap;
-       width: 100%;
-       margin: 4%;
-       font-size: 18pt;
-   }
-
-   .form-input{
-       font-size: 18pt;
-       border: 1px solid rgb(120, 75, 161);
-       border-radius: 5px;
-       padding: 5px;
-   }
-   .form-input:focus {
-       font-size: 18pt;
-       border: 2px solid rgb(120, 75, 161);
-       color:rgb(120, 75, 161);
-       box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
-       outline: 2px solid rgb(120, 75, 161);
-       outline: none;
-   }
-
-}
-
-@media screen and (max-width: 767px) {
-    .user-form-page-container {
-        background-color: aqua;
+   .form-rtg_logo{
+        display: none;
     }
+    
+    .user-form-link-container{
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-end;
+        padding-top: 5%;
+        padding-bottom: 5%;
+        width: 500px;
+        margin-right: 7%;
+    }
+
+    .user-form{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        font-size: 18pt;
+        width: 500px;
+    }
+
 }
 
+@media screen and (max-width: 1149px) {
 
-.user-form-link-container{
+    .logo-article{
+        display: none;
+    }
+
+    .form-rtg_logo{
+        width: 16rem;
+    }
+    
+    .user-form{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        font-size: 18pt;
+    }
+
+    .form-article {
+        width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+
+    .user-form{
+        width: 600px;
+        display:flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user-form-link-container{
+        width: 600px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
+    .form-input{
+        width: 100%;
+        padding: 1rem;
+    }
+    
+}
+
+.input-container.user-field {
     display: flex;
-    justify-content: flex-end;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-right: 5%;
+    align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
-.form-link{
-    text-decoration: none;
+nav {
+    display: none;
+}
+
+.user-form-page-container {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    justify-content: center;
+}
+
+
+.user-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    width: 100%;
+    margin: 4%;
     font-size: 18pt;
-    border-radius: 5px;
+}
+
+.form-input{
+    font-size: 18pt;
     border: 1px solid rgb(120, 75, 161);
+    border-radius: 5px;
+    width: 90%;
+
+}
+.form-input:focus {
+    font-size: 18pt;
+    border: 2px solid rgb(120, 75, 161);
+    color:rgb(120, 75, 161);
+    box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
+    outline: 2px solid rgb(120, 75, 161);
+    outline: none;
+}
+
+
+.form-link{
+    display: flex;
+    text-decoration: none;
+    font-size: 20pt;
+    border-radius: 5px;
+    height: fit-content;
+    border: 1px solid rgb(120, 75, 161);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
 }
 
 .form-link:hover{
+    display: flex;
     text-decoration: none;
-    font-size: 18pt;
+    font-size: 20pt;
     border-radius: 5px;
+    height: fit-content;
+
 }
 
 .user-form-link{
@@ -107,6 +176,7 @@
     border-radius: 5px;
     color:white;
     background-color: rgb(120, 75, 161);
+    width: 90%;
 }
 .user-form-button:hover {
     margin: 4%;
@@ -116,3 +186,4 @@
     background-color:rgb(75, 29, 119);
     color: whitesmoke;
 }
+

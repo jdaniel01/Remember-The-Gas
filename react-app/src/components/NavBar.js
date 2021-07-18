@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { authenticate } from '../store/session';
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
+import "./auth/user-forms.css"
 
 const NavBar = () => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
