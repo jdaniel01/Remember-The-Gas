@@ -3,8 +3,11 @@
        width: 50%;
        display: flex;
        align-items: center;
-       flex-flow: column wrap;
-       box-sizing: border-box;
+       flex-flow: column nowrap;
+   }
+
+   .form-article {
+       justify-content: flex-start;
    }
 
    .logo-article {
@@ -13,9 +16,9 @@
 
    .rtg-logo{
        width: 16rem;
-       padding-right: 30%;
-       padding-top: 5%;
-       padding-bottom: 5%;
+       padding-right: 12rem;
+       padding-top: 3rem;
+       padding-bottom: 3rem;
    }
 
    .form-rtg_logo{
@@ -27,15 +30,15 @@
         flex-flow: row nowrap;
         align-items: center;
         justify-content: flex-end;
-        padding-top: 5%;
-        padding-bottom: 5%;
+        padding-top: 5rem;
+        padding-bottom: 3rem;
         width: 500px;
-        margin-right: 7%;
+        margin-bottom: 10rem;
     }
 
     .user-form{
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
         font-size: 18pt;
@@ -63,6 +66,7 @@
 
     .form-article {
         width: 100%;
+        height: 100%;
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
@@ -79,8 +83,11 @@
     .user-form-link-container{
         width: 600px;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
         justify-content: space-between;
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        margin-bottom: 10rem;
     }
 
     .form-input{
@@ -88,6 +95,15 @@
         padding: 1rem;
     }
     
+    
+}
+
+html, body, #root, .user-form-page-container, .user-article {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .input-container.user-field {
@@ -97,17 +113,12 @@
     width: 100%;
 }
 
-nav {
-    display: none;
-}
 
 .user-form-page-container {
     display: flex;
     flex-flow: row nowrap;
-    height: 100%;
     justify-content: center;
 }
-
 
 .user-field {
     display: flex;
@@ -120,14 +131,14 @@ nav {
 }
 
 .form-input{
-    font-size: 18pt;
+    font-size: 30pt;
     border: 1px solid rgb(120, 75, 161);
     border-radius: 5px;
     width: 90%;
 
 }
 .form-input:focus {
-    font-size: 18pt;
+    font-size: 30pt;
     border: 2px solid rgb(120, 75, 161);
     color:rgb(120, 75, 161);
     box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
@@ -139,38 +150,38 @@ nav {
 .form-link{
     display: flex;
     text-decoration: none;
-    font-size: 20pt;
+    font-size: 30pt;
     border-radius: 5px;
     height: fit-content;
-    border: 1px solid rgb(120, 75, 161);
     align-items: center;
     justify-content: center;
     padding: 2rem;
-}
+}   
 
 .form-link:hover{
     display: flex;
     text-decoration: none;
-    font-size: 20pt;
+    font-size: 30pt;
     border-radius: 5px;
     height: fit-content;
 
 }
 
 .user-form-link{
-    background-color:rgb(120, 75, 161);
-    color: whitesmoke;
+    color:rgb(120, 75, 161);
+    background-color: white;
+    border: 1px solid rgb(120, 75, 161);
     padding: 10px;
 }
 
 .user-form-link:hover {
     background-color:rgb(75, 29, 119);
-    color: whitesmoke;
+    color: white;
 }
 
 .user-form-button {
     margin: 4%;
-    font-size: 18pt;
+    font-size: 30pt;
     padding: 5px;
     border: 1px solid rgb(120, 75, 161);
     border-radius: 5px;
@@ -180,7 +191,7 @@ nav {
 }
 .user-form-button:hover {
     margin: 4%;
-    font-size: 18pt;
+    font-size: 30pt;
     padding: 5px;
     border-radius: 5px;
     background-color:rgb(75, 29, 119);

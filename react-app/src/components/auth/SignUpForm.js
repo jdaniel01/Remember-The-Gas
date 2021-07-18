@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import "./user-forms.css"
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -17,6 +19,11 @@ const SignUpForm = () => {
       const data = await dispatch(signUp(username, email, password));
     }
   };
+
+  const loginDemoUser = (e) => {
+    e.preventDefault()
+    //TODO: DemoUser Login route and store
+  }
 
   const updateUsername = (e) => {
     setUsername(e.target.value);
@@ -39,46 +46,65 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div>
-        <label>User Name</label>
-        <input
+    <div className="user-form-page-container">
+      <article className="logo-article user-article">
+        <img className="rtg-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+      </article>
+      <article className="form-article user-article">
+        <div className="user-form-link-container">
+          <img className="form-rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+          <NavLink to="/login" className="user-form-link form-link">
+            Login
+          </NavLink>
+        </div>
+        <form className="user-form" onSubmit={onSignUp}>
+          <div className="errors-container">
+            {errors && errors.map((error) => (
+              <div>{error}</div>
+            ))}
+          </div>
+          <div className="input-container user-field">
+            <input className="form-input"
           type="text"
-          name="username"
+              name="username"
+              placeholder="Username"
           onChange={updateUsername}
           value={username}
         ></input>
       </div>
-      <div>
-        <label>Email</label>
-        <input
+          <div className="input-container user-field">
+            <input className="form-input"
           type="text"
-          name="email"
+              name="email"
+              placeholder="Email"
           onChange={updateEmail}
           value={email}
         ></input>
       </div>
-      <div>
-        <label>Password</label>
-        <input
+          <div className="input-container user-field">
+            <input className="form-input"
           type="password"
-          name="password"
+              name="password"
+              placeholder="Password"
           onChange={updatePassword}
           value={password}
         ></input>
       </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
+          <div className="input-container user-field">
+            <input className="form-input"
           type="password"
-          name="repeat_password"
+              name="repeat_password"
+              placeholder="Confirm Password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
         ></input>
       </div>
-      <button type="submit">Sign Up</button>
-    </form>
+          <button className="form-button user-form-button" type="submit">Sign Up</button>
+          <button className="demo-login-button user-form-button" onClick={loginDemoUser}>Demo Login</button>
+        </form>
+      </article>
+    </div>
   );
 };
 
