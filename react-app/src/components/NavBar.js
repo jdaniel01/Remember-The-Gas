@@ -6,31 +6,32 @@ import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 
 const NavBar = () => {
+  //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const user = useSelector(state => state.session.user)
 
   return (
     <nav>
-      <div>
-        <img className="rtg_logo" src="dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+      <div className="container">
+        <img className="rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
         {!user &&
           <>
             <div>
-              <NavLink to="/" exact={true} activeClassName="active">
-              Main
+            <NavLink className="nav-link" to="/" exact={true} activeClassName="active">
+              Tour
             </NavLink>
           </div>
           <div>
-            <NavLink to="/about" exact={true} activeClassName="active">
+            <NavLink className="nav-link" to="/about" exact={true} activeClassName="active">
               About
             </NavLink>
           </div>
           <div>
-            <NavLink to="/login" exact={true} activeClassName="active">
+            <NavLink className="nav-link" to="/login" exact={true} activeClassName="active">
               Login
             </NavLink>
           </div>
           <div>
-            <NavLink to="/sign-up" exact={true} activeClassName="active">
+            <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active">
               Sign Up
             </NavLink>
             </div>
@@ -39,9 +40,14 @@ const NavBar = () => {
         {user &&
           <>
             <div>
-              <NavLink to="/users" exact={true} activeClassName="active">
-                Users
-              </NavLink>
+            <NavLink className="nav-link" to="/" exact={true} activeClassName="active">
+              Main
+            </NavLink>
+          </div>
+          <div>
+            <NavLink className="nav-link" to="/" exact={true} activeClassName="active">
+              Main
+            </NavLink>
           </div>
           <div>
             <LogoutButton />

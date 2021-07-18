@@ -1,0 +1,118 @@
+@media screen and (min-width: 768px) {
+    
+   .user-form-page-container {
+        display: flex;
+        flex-flow: row nowrap;
+        height: 100%;
+   }
+
+   .user-article {
+       width: 50%;
+       display: flex;
+       align-items: center;
+       flex-flow: column wrap;
+   }
+
+   .logo-article {
+       background-color: rgb(120, 75, 161);
+    }
+
+   .rtg-logo{
+       width: 40%;
+       padding-right: 30%;
+       padding-top: 5%;
+       padding-bottom: 5%;
+   }
+
+
+   .user-form{
+       display: flex;
+       flex-flow: column wrap;
+       justify-content: center;
+       font-size: 18pt;
+   }
+
+   .user-field {
+       display: flex;
+       justify-content: space-between;
+       align-items: flex-start;
+       flex-flow: column nowrap;
+       width: 100%;
+       margin: 4%;
+       font-size: 18pt;
+   }
+
+   .form-input{
+       font-size: 18pt;
+       border: 1px solid rgb(120, 75, 161);
+       border-radius: 5px;
+       padding: 5px;
+   }
+   .form-input:focus {
+       font-size: 18pt;
+       border: 2px solid rgb(120, 75, 161);
+       color:rgb(120, 75, 161);
+       box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
+       outline: 2px solid rgb(120, 75, 161);
+       outline: none;
+   }
+
+}
+
+@media screen and (max-width: 767px) {
+    .user-form-page-container {
+        background-color: aqua;
+    }
+}
+
+
+.user-form-link-container{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 5%;
+    width: 100%;
+}
+
+.form-link{
+    text-decoration: none;
+    font-size: 18pt;
+    border-radius: 5px;
+    border: 1px solid rgb(120, 75, 161);
+}
+
+.form-link:hover{
+    text-decoration: none;
+    font-size: 18pt;
+    border-radius: 5px;
+}
+
+.user-form-link{
+    background-color:rgb(120, 75, 161);
+    color: whitesmoke;
+    padding: 10px;
+}
+
+.user-form-link:hover {
+    background-color:rgb(75, 29, 119);
+    color: whitesmoke;
+}
+
+.user-form-button {
+    margin: 4%;
+    font-size: 18pt;
+    padding: 5px;
+    border: 1px solid rgb(120, 75, 161);
+    border-radius: 5px;
+    color:white;
+    background-color: rgb(120, 75, 161);
+}
+.user-form-button:hover {
+    margin: 4%;
+    font-size: 18pt;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:rgb(75, 29, 119);
+    color: whitesmoke;
+}
