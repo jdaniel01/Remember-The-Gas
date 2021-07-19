@@ -49,6 +49,21 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
     }
 }
 
+export const demoLogin = () => async (dispatch) => {
+    const response = await fetch('/api/auth/demo')
+
+    if (response.ok) {
+        console.log("#############RESPONSE OK. SESSION LOGIN")
+        const data = await response.json();
+        if (data.errors) {
+            return data;
+        }
+        dispatch(setUser(data))
+        return {} //change ({} to data) why are we returning nothing?
+        // Question Answered. By changing data to an empty object, it fixed an error which said data.errors was undefined (login form)
+    }
+}
+
 export const logout = () => async (dispatch) => {
     const response = await fetch("/api/auth/logout", {
         headers: {

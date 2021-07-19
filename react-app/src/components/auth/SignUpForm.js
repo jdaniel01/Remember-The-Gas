@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, NavLink } from 'react-router-dom';
-import { signUp } from '../../store/session';
+import { Redirect, NavLink, useHistory } from 'react-router-dom';
+import { signUp, demoLogin } from '../../store/session';
 import "./user-forms.css"
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const user = useSelector(state => state.session.user)
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -17,11 +19,13 @@ const SignUpForm = () => {
     e.preventDefault();
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
+      //TODO: check for errors
     }
   };
 
   const loginDemoUser = (e) => {
     e.preventDefault()
+    dispatch(demoLogin())
     //TODO: DemoUser Login route and store
   }
 
@@ -48,11 +52,15 @@ const SignUpForm = () => {
   return (
     <div className="user-form-page-container">
       <article className="logo-article user-article">
-        <img className="rtg-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+        <NavLink to="/" className="rtg-logo" >
+          <img className="rtg-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+        </NavLink>
       </article>
       <article className="form-article user-article">
         <div className="user-form-link-container">
+          <NavLink to="/" className="rtg-logo" >
           <img className="form-rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+          </NavLink>
           <NavLink to="/login" className="user-form-link form-link">
             Login
           </NavLink>
