@@ -63,32 +63,45 @@ const NavBar = () => {
             <NavLink to="/" className="nav-logo">
               <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
             </NavLink>
-            <div className="tasks-container" onClick={updateTasksShowing} value="All Tasks">
+            <div className="tasks-container burger-item">
+              <div className="upcoming-tasks" onClick={updateTasksShowing}>Upcoming Tasks</div>
               {tasksShowing &&
                 <>
-                <div className="tasks">All Tasks<span>{0}</span></div>
-                <div className="tasks">Recieved<span>{0}</span></div>
-                <div className="tasks">Today<span>{0}</span></div>
-                <div className="tasks">Tomorrow<span>{0}</span></div>
-                <div className="tasks">This Week<span>{0}</span></div>
-                <div className="tasks">Given Tasks<span>{0}</span></div>
-                <div className="tasks">Trash<span>{0}</span></div>
-                </>
+                <div className="tasks-list">
+                  <div className="tasks">All Tasks<span>{0}</span></div>
+                  <div className="tasks">Recieved<span>{0}</span></div>
+                  <div className="tasks">Today<span>{0}</span></div>
+                  <div className="tasks">Tomorrow<span>{0}</span></div>
+                  <div className="tasks">This Week<span>{0}</span></div>
+                  <div className="tasks">Given Tasks<span>{0}</span></div>
+                  <div className="tasks">Trash<span>{0}</span></div>
+                </div>
+              </>
               }
             </div>
-            <div className="lists-container"> Lists
-              <div className="list">Personal<span>🔽</span></div>
-              <div className="list">Work<span>🔽</span></div>
-              {/* {userLists && listsShowing && userLists.map(list =>
-                <>
-                  <div className="list">{list.name}<span>{Object.keys(list.tasks).length}</span></div>
-                </>
-              )} */}
+            <div className="lists-container burger-item" >
+              <div className="lists" onClick={updateListsShowing}>Lists</div>
+              {listsShowing &&
+                <div className="lists-list">
+                  <div className="list">Personal<span>🔽</span></div>
+                  <div className="list">Work<span>🔽</span></div>
+                  {/* {userLists && listsShowing && userLists.map(list =>
+                    <>
+                      <div className="list">{list.name}<span>{Object.keys(list.tasks).length}</span></div>
+                    </>
+                  )} */}
+              </div>
+              }
             </div>
-            <div className="contacts-container" onClick={updateContactsShowing}>
-              {/* {userContacts && contactsShowing && userContacts.map(contact => {
-                  <div>{contact.username}</div>
-                })} */}
+            <div className="contacts-container burger-item" >
+              <div className="contacts" onClick={updateContactsShowing}>Contacts</div>
+              {/* {userContacts && contactsShowing && 
+                <div className="contacts-list">
+                  {userContacts.map(contact => 
+                  <div className="contact">{contact.username}</div>
+                )}
+                </div>
+                } */}
             </div>
           </div>
           </>
@@ -138,7 +151,7 @@ const NavBar = () => {
                     <h3 className="user-details">{user.email}</h3>
                   </div>
             </div>
-            <div>
+            <div className="setting">
               Account Settings
             </div>
                 <LogoutButton />

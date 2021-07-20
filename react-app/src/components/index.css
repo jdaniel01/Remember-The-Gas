@@ -1,6 +1,4 @@
-.nav-logo {
-    width: 170px;
-}
+
 
 .nav-container{
     padding: 1rem;
@@ -11,18 +9,9 @@
     align-items: center;
 }
 
-.nav-links-container{
-    position: absolute;
-    top: 51px;
-    left: -1rem;
-    background-color: rgb(216, 175, 255);
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-    height: fit-content;
-    padding: 1rem;
-    min-width: 100px;
-
+.burger-item{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .settings-container{
@@ -33,13 +22,86 @@
 
 .user-settings{
     position: absolute;
+    min-width: 120px;
     background-color:rgb(216, 175, 255);
     color: black;
     top: 51px;
+    left: -1rem;
+    padding: 1rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+
+.setting{
+    padding-bottom: 1rem;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.user-details{
+    padding-bottom: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.tasks-container{
+    display: flex;
+    flex-flow: column nowrap;
+    border-bottom:1px solid rgb(75, 29, 119);
+}
+
+.tasks-list, .lists-list, .contacts-list{
+    position: relative;
+    left: 8px;
+    padding-top: 5px;
+}
+
+.tasks, .list {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.lists-container{
+    border-bottom:1px solid rgb(75, 29, 119);
+}
+
+
+.contacts-container{
+    border-bottom:1px solid rgb(75, 29, 119);
+}
+
+.notification-container{
+    position: relative;
+}
+
+.logout{
+    margin: 0;
+    width: 100%;
+}
+.logout:hover{
+    margin: 0;
+    width: 100%;
+}
+
+.notification-count-container{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: red;
+    aspect-ratio: 1/1;
+    min-width: 16px;
+    border: 1px solid whitesmoke;
+    border-radius: 16px;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (min-width: 670px) {
-    
     .burger-bar {
         position: relative;
         display: flex;
@@ -47,14 +109,54 @@
         box-sizing: border-box;
         margin-right: 10rem;
     }
+
+    .nav-links-container{
+        position: absolute;
+        top: 51px;
+        left: -1rem;
+        background-color: rgb(216, 175, 255);
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-around;
+        height: fit-content;
+        padding: 1rem;
+        min-width: 100px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .nav-logo {
+        width: 170px;
+    }
+
 }
 
 @media screen and (max-width: 669px) {
-     .burger-bar {
+
+    .burger-bar {
         position: relative;
         display: flex;
         flex-flow: column nowrap;
         box-sizing: border-box;
         margin-right: 5rem;
+    }
+
+    .nav-links-container{
+        position: absolute;
+        top: 51px;
+        left: -1rem;
+        background-color: rgb(216, 175, 255);
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-around;
+        height: fit-content;
+        padding: 1rem;
+        min-width: 70px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .nav-logo {
+        width: 180px;
     }
 }
