@@ -16,6 +16,8 @@ const NavBar = () => {
   const [tasksShowing, setTasksShowing] = useState(false)
   const [listsShowing, setListsShowing] = useState(false)
   const [contactsShowing, setContactsShowing] = useState(false)
+  const [searchValue, setSearchValue] = useState("")
+  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     console.log(location)
@@ -42,9 +44,19 @@ const NavBar = () => {
     setContactsShowing(!contactsShowing)
   }
 
+  const updateSearchValue = (e) => {
+    e.preventDefault()
+    setSearchValue(e.target.value)
+  }
+
+  const updateSettings = () => {
+    setShowSettings(!showSettings);
+  }
+
   return (
-    <nav className="container">
-      <div className="burger-bar" onClick={updateDisplay}><img src="/images/hamburger-bar.png" />
+    <nav className="nav-container">
+      <div className="burger-bar" >
+        <img className="burger-img" src="/images/hamburger-bar.png" onClick={updateDisplay} />
         {user && isDisplayed &&
             <>
           <div className="nav-links-container">
@@ -79,22 +91,62 @@ const NavBar = () => {
                 })} */}
             </div>
           </div>
-              <div>
-                <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active">
-                  Tour
-                </NavLink>
-              </div>
-              <div>
-                <NavLink className="nav-link" to="/about" exact={true} activeClassName="active">
-                  About
-                </NavLink>
-              </div>
-              <div>
+          </>
+        }
+        {!user && isDisplayed &&
+          <>
+            <div className="nav-links-container">
+              <NavLink to="/" className="nav-logo">
+                <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+              </NavLink>
+              <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active">
+                Tour
+              </NavLink>
+            <NavLink className="nav-link" to="/about" exact={true} activeClassName="active">
+              About
+            </NavLink>
+              <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active">
+                Sign-up
+              </NavLink>
+              <NavLink className="nav-link" to="/login" exact={true} activeClassName="active">
+                Login
+              </NavLink>
+            </div>
+          </>
+        }
+      </div>
+      <div className="search-container">
+        <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." />
+        <input className="search-input" type="search" name="searchInput" placeholder="Search" value={searchValue} onChange={updateSearchValue} />
+      </div>
+      <div className="notification-container">
+        <img src="/images/notification-bell.png" alt={`notification icon. A simple light grey icon of a bell. current notifications: ${0}`} />
+        <div className="notification-count-container">
+          <span className="count-container">{0}</span>
+        </div>
+      </div>
+      {user &&
+        <div className="settings-container">
+          <img src="/images/settings-cog.png" alt="cog icon. A simple light grey icon of a cogwheel. opens settings menu below." onClick={updateSettings} />
+          {showSettings &&
+            <>
+              <div className="user-settings">
+                <div className="user-info-container">
+                  <div className="user-info">{user.photo}</div>
+                  <div className="user-details-container">
+                    <h2 className="user-details">{user.username}</h2>
+                    <h3 className="user-details">{user.email}</h3>
+                  </div>
+            </div>
+            <div>
+              Account Settings
+            </div>
                 <LogoutButton />
               </div>
             </>
         }
       </div>
+      }
       </nav>
   );
 }

@@ -2,7 +2,59 @@
     width: 170px;
 }
 
-.container{
+.nav-container{
     padding: 1rem;
     background-color: rgb(120, 75, 161);
+    display: flex;
+    flex-flow: row nowrap;
+    height: 40px;
+    align-items: center;
+}
+
+.nav-links-container{
+    position: absolute;
+    top: 51px;
+    left: -1rem;
+    background-color: rgb(216, 175, 255);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    height: fit-content;
+    padding: 1rem;
+    min-width: 100px;
+
+}
+
+.settings-container{
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.user-settings{
+    position: absolute;
+    background-color:rgb(216, 175, 255);
+    color: black;
+    top: 51px;
+}
+
+@media screen and (min-width: 670px) {
+    
+    .burger-bar {
+        position: relative;
+        display: flex;
+        flex-flow: column nowrap;
+        box-sizing: border-box;
+        margin-right: 10rem;
+    }
+}
+
+@media screen and (max-width: 669px) {
+     .burger-bar {
+        position: relative;
+        display: flex;
+        flex-flow: column nowrap;
+        box-sizing: border-box;
+        margin-right: 5rem;
+    }
 }
