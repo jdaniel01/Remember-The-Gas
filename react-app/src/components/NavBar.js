@@ -6,10 +6,9 @@ import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
 
-const NavBar = () => {
+const NavBar = ({ location }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const user = useSelector(state => state.session.user)
-  let location = window.location.pathname;
 
   const [pathOk, setPathOk] = useState(true);
   const [isDisplayed, setIsDisplayed] = useState(false)
@@ -19,17 +18,17 @@ const NavBar = () => {
   const [searchValue, setSearchValue] = useState("")
   const [showSettings, setShowSettings] = useState(false)
 
-
   useEffect(() => {
-    console.log(location)
-    if (location === "/login" || location === "sign-up") {
+    if (location === '/login' || location === "/sign-up") {
       setPathOk(false)
-    } else {
+    }
+    else {
       setPathOk(true)
     }
-  }, [location, pathOk])
+  }, [location])
 
   const updateDisplay = () => {
+    setShowSettings(false);
     setIsDisplayed(!isDisplayed)
   }
 
@@ -51,17 +50,22 @@ const NavBar = () => {
   }
 
   const updateSettings = () => {
+    setIsDisplayed(false)
     setShowSettings(!showSettings);
   }
 
-  if (location !== "/login" && location !== "/sign-up") {
+  const closeAll = () => {
+    setIsDisplayed(false)
+    setShowSettings(false)
+  }
+
     return (
       <nav className="nav-container">
         <div className="burger-bar" >
           <img className="burger-img" src="/images/hamburger-bar.png" onClick={updateDisplay} />
           {user && isDisplayed &&
             <>
-            <div className="nav-links-container">
+            <div className="nav-links-container" >
               <NavLink to="/" className="nav-logo">
                 <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
               </NavLink>
@@ -111,19 +115,19 @@ const NavBar = () => {
           {!user && isDisplayed &&
             <>
               <div className="nav-links-container">
-                <NavLink to="/" className="nav-logo">
+              <NavLink to="/" className="nav-logo" onClick={closeAll}>
                   <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
                 </NavLink>
-                <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active">
+              <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active" onClick={closeAll}>
                   Tour
                 </NavLink>
-                <NavLink className="nav-link" to="/about" exact={true} activeClassName="active">
+              <NavLink className="nav-link" to="/about" exact={true} activeClassName="active" onClick={closeAll}>
                   About
                 </NavLink>
-                <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active">
+              <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active" onClick={closeAll}>
                   Sign-up
                 </NavLink>
-                <NavLink className="nav-link" to="/login" exact={true} activeClassName="active">
+              <NavLink className="nav-link" to="/login" exact={true} activeClassName="active" onClick={closeAll}>
                   Login
                 </NavLink>
               </div>
@@ -155,10 +159,10 @@ const NavBar = () => {
                       <h3 className="user-details">{user.email}</h3>
                     </div>
                   </div>
-                  <div className="setting">
-                    Account Settings
-                  </div>
-                  <LogoutButton />
+                <NavLink className="user-link" to={`/users/${user.id}`} onClick={closeAll}>
+                  Account Settings
+                </NavLink>
+                <LogoutButton />
                 </div>
               </>
             }
@@ -167,9 +171,6 @@ const NavBar = () => {
         }
       </nav>
     );
-  } else {
-    return null
-  }
 }
 
 export default NavBar;

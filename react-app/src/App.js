@@ -7,7 +7,8 @@ import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
-import Splash from "./components/Splash"
+import Splash from "./components/Splash";
+import Main from './components/Main';
 import { authenticate } from "./store/session";
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const user = useSelector(state => state.session.user)
+  let location = window.location.pathname;
+
 
   useEffect(() => {
     (async() => {
@@ -29,7 +32,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar location={location} />
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />
@@ -45,7 +48,7 @@ function App() {
         </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
-            <h1>My Home Page</h1>
+            <Main />
           </ProtectedRoute>
           : <Route path="/" exact={true}>
             <Splash />

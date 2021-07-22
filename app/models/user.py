@@ -10,7 +10,6 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
   photo = db.Column(db.Text)
-  share_code = db.Column(db.String(25))
 
 
   @property
@@ -50,21 +49,11 @@ class User(db.Model, UserMixin):
   def picture(self, pic):
     self.photo = pic
 
-  
-  @property
-  def shareCode(self):
-    return self.share_code
-
-  @shareCode.setter
-  def shareCode(self, code):
-    self.share_code = code
-
 
   def to_dict(self):
     return {
       "id": self.id,
       "username": self.username,
       "email": self.email,
-      "photo": self.photo,
-      "share_code": self.share_code
+      "photo": self.photo
     }

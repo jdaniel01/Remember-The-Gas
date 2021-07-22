@@ -13,8 +13,8 @@
 }
 
 .burger-item{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .settings-container{
@@ -27,7 +27,7 @@
 .user-settings{
     position: absolute;
     min-width: 120px;
-    background-color:rgb(216, 175, 255);
+    background-color:rgb(243, 228, 255);
     color: black;
     top: 52.75px;
     left: -6.67rem;
@@ -84,10 +84,12 @@
 .logout{
     margin: 0;
     width: 100%;
+    margin-top: 1rem;
 }
 .logout:hover{
     margin: 0;
     width: 100%;
+    margin-top: 1rem;
 }
 
 .user-block{
@@ -121,8 +123,8 @@
     font-size: 18pt;
     border: none;
     border-radius: 5px;
-    width: 70%;
-    background-color: rgb(216, 175, 255);
+    width: 80%;
+    background-color: rgb(217, 172, 255);
     margin-left: .5rem;
     color: whitesmoke;
 }
@@ -137,6 +139,13 @@
     color:rgb(120, 75, 161);
     outline: none;
     background-color: whitesmoke;
+}
+
+.user-link{
+    text-decoration: none;
+    font-size: 16pt;
+    color: black;
+    margin-bottom: 1rem;
 }
 
 @media screen and (min-width: 670px) {
@@ -170,7 +179,7 @@
         position: absolute;
         top: 51px;
         left: -1rem;
-        background-color: rgb(216, 175, 255);
+        background-color: rgb(243, 228, 255);
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-around;
@@ -201,7 +210,7 @@
         position: absolute;
         top: 51px;
         left: -1rem;
-        background-color: rgb(216, 175, 255);
+        background-color: rgb(243, 228, 255);
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-around;
