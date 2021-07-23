@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
+// import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
@@ -15,9 +15,27 @@ function App() {
   // const [authenticated, setAuthenticated] = useState(false);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
+  // const [pathOk, setPathOk] = useState(false);
   const user = useSelector(state => state.session.user)
-  let location = window.location.pathname;
+  // let location = window.location.pathname;
 
+  // const navigation = () => {
+  //   if (location === "/login" || location === "/sign-up") {
+  //     return null
+  //   }
+  //   else {
+  //     return <NavBar />
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (location === "/login" || location === "/sign-up") {
+  //     setPathOk(false)
+  //   }
+  //   else {
+  //     setPathOk(true)
+  //   }
+  // }, [location])
 
   useEffect(() => {
     (async() => {
@@ -32,7 +50,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar location={location} />
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />

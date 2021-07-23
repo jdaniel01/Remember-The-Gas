@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { PasswordForm, AccountForm } from "./auth/UserEdits";
+import NavBar from "./NavBar";
 import "./User.css";
 
 function User() {
@@ -12,6 +13,7 @@ function User() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [header, setHeader] = useState("User Details");
+  const [showSettings, setShowSettings] = useState(false)
 
   const { userId } = useParams();
   // Notice we use useParams here instead of getting the params
@@ -49,6 +51,8 @@ function User() {
   }
 
   return (
+    <>
+      <NavBar showSettings={showSettings} setShowSettings={setShowSettings} />
     <div className="page-container">
       <div className="account-info-container">
         <ul className="sections-list">
@@ -65,7 +69,8 @@ function User() {
           {feature()}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 export default User;

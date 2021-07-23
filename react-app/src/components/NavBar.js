@@ -6,29 +6,21 @@ import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
 
-const NavBar = ({ location }) => {
+const NavBar = ({ showSettings, setShowSettings }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const user = useSelector(state => state.session.user)
 
-  const [pathOk, setPathOk] = useState(true);
   const [isDisplayed, setIsDisplayed] = useState(false)
   const [tasksShowing, setTasksShowing] = useState(false)
   const [listsShowing, setListsShowing] = useState(false)
   const [contactsShowing, setContactsShowing] = useState(false)
   const [searchValue, setSearchValue] = useState("")
-  const [showSettings, setShowSettings] = useState(false)
 
-  useEffect(() => {
-    if (location === '/login' || location === "/sign-up") {
-      setPathOk(false)
-    }
-    else {
-      setPathOk(true)
-    }
-  }, [location])
 
   const updateDisplay = () => {
-    setShowSettings(false);
+    if (user) {
+      setShowSettings(false);
+    }
     setIsDisplayed(!isDisplayed)
   }
 
@@ -51,12 +43,16 @@ const NavBar = ({ location }) => {
 
   const updateSettings = () => {
     setIsDisplayed(false)
-    setShowSettings(!showSettings);
+    if (user) {
+      setShowSettings(!showSettings);
+    }
   }
 
   const closeAll = () => {
     setIsDisplayed(false)
-    setShowSettings(false)
+    if (user) {
+      setShowSettings(false)
+    }
   }
 
     return (

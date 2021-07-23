@@ -49,6 +49,22 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
     }
 }
 
+export const editUserInfo = (id, username, email) => async (dispatch) => {
+    console.log("@@@@@@@@@@@@@@@ in editUserInfo, Session", typeof id, id, username, email)
+    const res = await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, email })
+    });
+    if (res.ok) {
+        const user = await res.json();
+        dispatch(setUser(user))
+        return {}
+    }
+}
+
 export const demoLogin = () => async (dispatch) => {
     const response = await fetch('/api/auth/demo')
 

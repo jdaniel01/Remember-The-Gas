@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
+import { editUserInfo } from "../../store/session"
 
 
 export const AccountForm = () => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
+    const { userId } = useParams();
 
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
     const [photo, setPhoto] = useState('');
     const [errors, setErrors] = useState([]);
+    const [usersId, setUsersId] = useState(user.id)
 
     const updateUsername = (e) => {
         setUsername(e.target.value);
@@ -27,10 +30,15 @@ export const AccountForm = () => {
 
     const onEdit = (e) => {
         e.preventDefault()
-        const info = {
+        dispatch(editUserInfo(usersId, username, email, photo))
 
-        }
     }
+
+    useEffect(() => {
+        if (usersId !== user.id) {
+            setUsersId(user.id)
+        }
+    }, [user.id])
 
     return (
 
@@ -41,23 +49,36 @@ export const AccountForm = () => {
                         <div>{error}</div>
                     ))}
                 </div>
+                <input type="number" name="id" id="id" value={usersId} hidden={true} />
                 <div className="edit-input-container">
                     <input className="form-input"
                         type="text"
                         name="username"
+                        id="username"
                         placeholder="Username"
                         onChange={updateUsername}
                         value={username}
-                    ></input>
+                    />
+                </div>
+                <div className="edit-input-container">
+                    <input className="form-input"
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email"
+                        onChange={updateEmail}
+                        value={email}
+                    />
                 </div>
                 <div className="edit-input-container">
                     <input className="form-input"
                         type="text"
-                        name="email"
-                        placeholder="Email"
-                        onChange={updateEmail}
-                        value={email}
-                    ></input>
+                        name="photo"
+                        id="photo"
+                        placeholder="Photo URL"
+                        onChange={updatePhoto}
+                        value={photo}
+                    />
                 </div>
                 <button className="form-button user-form-button" type="submit">Save Changes</button>
             </form>
