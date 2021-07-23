@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { PasswordForm, AccountForm } from "./auth/UserEdits";
+import { PasswordForm, AccountForm, DeleteForm } from "./auth/UserEdits";
 import NavBar from "./NavBar";
 import "./User.css";
 
@@ -48,6 +48,9 @@ function User() {
     // else if (header === "Notifications") {
     //   return <NotificationForm />
     // }
+    else if (header === "Delete Account") {
+      return <DeleteForm />
+    }
   }
 
   return (
@@ -60,6 +63,7 @@ function User() {
           <li onClick={() => setHeader("Password")}>Password</li>
           <li onClick={() => setHeader("Notifications")}>Notifications</li>
           <li onClick={() => setHeader("Email Preferences")}>Email Preferences</li>
+            <li onClick={() => setHeader("Delete Account")}>Delete Account</li>
         </ul>
         < div className="account-body-container">
           <div className="account-header-container">

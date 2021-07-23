@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, db
 from app.forms import EditUser
+from werkzeug.wrappers import Response
 
 user_routes = Blueprint('users', __name__)
 
@@ -54,13 +55,15 @@ def editUser(id):
         user.email = form.data["email"]
         user.username = form.data["username"]
         user.photo = form.data["photo"]
-        # user.emailAddress(email)
-        # user.name(username)
-        # user.picture(photo)
         db.session.commit()
         return user.to_dict()
     print("Form Not Validated")
     return {"errors": validation_errors_to_error_messages(errors)}
 
-
-    
+@user_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def deleteUser(id):
+    user = User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return Response("User account deleted.", status=304)

@@ -45,7 +45,7 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
             return data;
         }
         dispatch(setUser(data))
-        return data //change ({} to data) why are we returning nothing?
+        return {} //change ({} to data) why are we returning nothing?
     }
 }
 
@@ -64,6 +64,16 @@ export const editUserInfo = (id, username, email, photo) => async (dispatch) => 
         }
         dispatch(setUser(data))
         return {}
+    }
+}
+
+export const deleteUser = (id) => async (dispatch) => {
+    const res = await fetch(`/api/users/${id}`, {
+        method: "DELETE"
+    })
+    if (res.status === 304) {
+        await dispatch(removeUser());
+        await dispatch(logout())
     }
 }
 

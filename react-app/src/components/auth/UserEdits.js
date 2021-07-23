@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editUserInfo } from "../../store/session"
+import { editUserInfo, deleteUser } from "../../store/session"
 
 
 export const AccountForm = () => {
@@ -178,5 +178,49 @@ export const PasswordForm = () => {
                 <button className="form-button user-form-button" type="submit">Update Password</button>
             </form >
         </div >
+    )
+}
+
+export const DeleteForm = () => {
+    const dispatch = useDispatch()
+    const [data, setData] = useState("")
+    const [errors, setErrors] = useState([])
+    const user = useSelector(state => state.session.user)
+
+    const deleteAccount = () => {
+        if (errors.length === 0) {
+            dispatch(deleteUser(user.id))
+        }
+    }
+
+    useEffect(() => {
+        const errs = [];
+        if (data !== user.username) {
+            errs.push("You must enter your username correctly.")
+        }
+        setErrors(errs)
+    }, [data])
+
+    const updateData = (e) => {
+        setData(e.target.value)
+    }
+
+    return (
+        <div className="form-container">
+            <div className="errors-container">
+                {errors && errors.map((error) => (
+                    <div>{error}</div>
+                ))}
+            </div>
+            <div className="edit-input-container">
+                <input className="form-input"
+                    type="text"
+                    placeholder="Type your username"
+                    onChange={updateData}
+                    value={data}
+                ></input>
+            </div>
+            <button className="form-button user-form-button" onClick={deleteAccount} disabled={errors.length > 0}>Delete Account</button>
+        </div>
     )
 }

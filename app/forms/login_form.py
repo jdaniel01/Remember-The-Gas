@@ -7,7 +7,7 @@ from app.models import User
 def user_exists(form, field):
     print("Checking if user exists", field.data)
     data = field.data
-    user = User.query.filter((User.email == data) | (User.username == data)).first()
+    user = User.query.filter((User.email == data) or (User.username == data)).first()
     if not user:
         raise ValidationError("User could not be found.")
 
@@ -18,7 +18,7 @@ def password_matches(form, field):
     print("$$$$$$$$$$$$$$$$$$$$$$$$", password)
     nameOrEmail = form.data['nameOrEmail']
     print("$$$$$$$$$$$$$$$$$$$$$$$$$", nameOrEmail)
-    user = User.query.filter((User.email == nameOrEmail) | (User.username == nameOrEmail)).first()
+    user = User.query.filter((User.email == nameOrEmail) or (User.username == nameOrEmail)).first()
     print("*****************************", user.to_dict())
     if not user:
         raise ValidationError("No such user exists.")
