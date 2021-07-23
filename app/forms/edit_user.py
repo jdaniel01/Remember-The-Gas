@@ -22,8 +22,6 @@ def username_exists(form, field):
 
 
 class EditUser(FlaskForm):
-
-    id = IntegerField('id', validators=[DataRequired()])
     username = StringField('username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), email_exists])
-    password = StringField('password', validators=[DataRequired()])
+    photo = StringField('photo')

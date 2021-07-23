@@ -51,9 +51,12 @@ def editUser(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         print("##################### Validated")
-        user.emailAddress(form.data["email"])
-        user.name(form.data["username"])
-        user.picture(form.data["photo"])
+        email = form.data["email"]
+        username= form.data["username"]
+        photo=form.data["photo"]
+        user.emailAddress(email)
+        user.name(username)
+        user.picture(photo)
         db.session.commit()
         return user.to_dict()
     print("Form Not Validated")
