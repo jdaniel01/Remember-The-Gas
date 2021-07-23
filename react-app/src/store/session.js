@@ -49,18 +49,20 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
     }
 }
 
-export const editUserInfo = (id, username, email) => async (dispatch) => {
-    console.log("@@@@@@@@@@@@@@@ in editUserInfo, Session", typeof id, id, username, email)
+export const editUserInfo = (id, username, email, photo) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, email })
+        body: JSON.stringify({ username, email, photo })
     });
     if (res.ok) {
-        const user = await res.json();
-        dispatch(setUser(user))
+        const data = await res.json();
+        if (data.errors) {
+            return data
+        }
+        dispatch(setUser(data))
         return {}
     }
 }

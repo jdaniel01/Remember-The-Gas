@@ -12,30 +12,12 @@ import Main from './components/Main';
 import { authenticate } from "./store/session";
 
 function App() {
-  // const [authenticated, setAuthenticated] = useState(false);
+
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  // const [pathOk, setPathOk] = useState(false);
+
   const user = useSelector(state => state.session.user)
-  // let location = window.location.pathname;
 
-  // const navigation = () => {
-  //   if (location === "/login" || location === "/sign-up") {
-  //     return null
-  //   }
-  //   else {
-  //     return <NavBar />
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (location === "/login" || location === "/sign-up") {
-  //     setPathOk(false)
-  //   }
-  //   else {
-  //     setPathOk(true)
-  //   }
-  // }, [location])
 
   useEffect(() => {
     (async() => {
