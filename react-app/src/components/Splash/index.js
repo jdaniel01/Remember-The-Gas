@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import NavBar from '../NavBar';
 import "./Splash.css"
 
 const Splash = () => {
 
     return (
-        <>
-            <NavBar />
             <article className="splash-container">
                 <div className="feature-carousel">
                     <div className="splash-item-container">
@@ -21,8 +18,7 @@ const Splash = () => {
                         place content about social links
                     </div>
                 </div>
-            </article>
-        </>
+        </article>
     )
 }
 

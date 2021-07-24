@@ -15,7 +15,7 @@ export const AccountForm = () => {
     const [photo, setPhoto] = useState('');
     const [errors, setErrors] = useState([]);
     const [usersId, setUsersId] = useState(user.id)
-
+    const [msg, setMsg] = useState("")
 
 
     const updateUsername = (e) => {
@@ -30,17 +30,26 @@ export const AccountForm = () => {
         setEmail(e.target.value);
     };
 
-    const onEdit = (e) => {
+    const onEdit = async (e) => {
         e.preventDefault()
-        dispatch(editUserInfo(usersId, username, email, photo))
+        // dispatch(editUserInfo(usersId, username, email, photo))
+        if (user.id === Number(userId)) { // comparing the Params UserId and the Session User Id
+            const data = await dispatch(editUserInfo(user.id, username, email, photo))
+            if (data.errors) {
+                setErrors(data.errors);
+            } else {
+                setErrors([])
+            }
+        }
+        // handle edit completion.
 
     }
 
-    useEffect(() => {
-        if (usersId !== user.id) {
-            setUsersId(user.id)
-        }
-    }, [user.id])
+    // useEffect(() => {
+    //     if (usersId !== user.id) {
+    //         setUsersId(user.id)
+    //     }
+    // }, [user.id])
 
     return (
 

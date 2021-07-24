@@ -14,7 +14,7 @@ def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append(f"{field} : {error}")
+            errorMessages.append(f"{error}")
     return errorMessages
 
 
@@ -58,7 +58,25 @@ def editUser(id):
         db.session.commit()
         return user.to_dict()
     print("Form Not Validated")
-    return {"errors": validation_errors_to_error_messages(errors)}
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 401
+
+# @user_routes.route('/<int:id>', methods=["PUT"])
+# @login_required
+# def editUser(id):
+#     print("$$$$$$$$$$$$$$$$$ IN User PUT", id, request.get_json())
+#     errors = []
+#     form = EditUser()
+#     user = User.query.get(id)
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     if form.validate_on_submit():
+#         print("##################### Validated")
+#         user.email = form.data["email"]
+#         user.username = form.data["username"]
+#         user.photo = form.data["photo"]
+#         db.session.commit()
+#         return user.to_dict()
+#     print("Form Not Validated")
+#     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 @user_routes.route('/<int:id>', methods=["DELETE"])
 @login_required

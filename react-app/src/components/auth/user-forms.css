@@ -34,10 +34,9 @@
         flex-flow: row nowrap;
         align-items: center;
         justify-content: flex-end;
-        padding-top: 5rem;
+        padding-top: 3rem;
         padding-bottom: 3rem;
         width: 320px;
-        margin-bottom: 5rem;
         margin-right: 2rem;
     }
 
@@ -46,7 +45,7 @@
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
-        font-size: 18pt;
+        font-size: 16pt;
         width: 320px;
     }
 
@@ -67,7 +66,7 @@
         display: flex;
         flex-flow: column wrap;
         justify-content: center;
-        font-size: 18pt;
+        font-size: 16pt;
     }
 
     .form-article {
@@ -133,18 +132,18 @@ html, body, #root, .user-form-page-container, .user-article {
     flex-flow: column nowrap;
     width: 100%;
     margin: 1rem;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 .form-input{
-    font-size: 18pt;
+    font-size: 16pt;
     border: 1px solid rgb(120, 75, 161);
     border-radius: 5px;
     width: 90%;
 
 }
 .form-input:focus {
-    font-size: 18pt;
+    font-size: 16pt;
     border: 2px solid rgb(120, 75, 161);
     color:rgb(120, 75, 161);
     box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
@@ -156,7 +155,7 @@ html, body, #root, .user-form-page-container, .user-article {
 .form-link{
     display: flex;
     text-decoration: none;
-    font-size: 18pt;
+    font-size: 16pt;
     border-radius: 5px;
     height: fit-content;
     align-items: center;
@@ -167,7 +166,7 @@ html, body, #root, .user-form-page-container, .user-article {
 .form-link:hover{
     display: flex;
     text-decoration: none;
-    font-size: 18pt;
+    font-size: 16pt;
     border-radius: 5px;
     height: fit-content;
 
@@ -186,21 +185,24 @@ html, body, #root, .user-form-page-container, .user-article {
 }
 
 .user-form-button {
-    margin: 4%;
-    font-size: 18pt;
+    margin: 1rem;
+    font-size: 16pt;
     padding: 5px;
     border: 1px solid rgb(120, 75, 161);
     border-radius: 5px;
     color:white;
     background-color: rgb(120, 75, 161);
-    width: 90%;
+    width: 100%;
 }
 .user-form-button:hover {
-    margin: 4%;
-    font-size: 18pt;
+    margin: 1rem;
+    font-size: 16pt;
     padding: 5px;
     border-radius: 5px;
     background-color:rgb(75, 29, 119);
     color: whitesmoke;
 }
 
+.errors-container {
+    font-size: 12pt;
+}

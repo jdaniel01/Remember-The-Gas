@@ -18,7 +18,7 @@ def username_exists(form, field):
     username = field.data
     user = User.query.filter(User.username == username).first()
     if user and user.id != current_user.id:
-        raise ValidationError("Email address is already in use by another user.")
+        raise ValidationError("Username is already in use by another user.")
 
 
 class EditUser(FlaskForm):

@@ -20,7 +20,14 @@ const SignUpForm = () => {
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       //TODO: check for errors
+      if (data.errors) {
+        setErrors(data.errors);
+      }
     }
+    // if (password !== repeatPassword) {
+    //   const valErrors = [...errors, "Passwords must match."]
+    //   setErrors(valErrors)
+    // }
   };
 
   const loginDemoUser = (e) => {
@@ -45,6 +52,29 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
+  useEffect(() => {
+    const errs = [];
+    if (!username) {
+      errs.push("Please provide a username")
+    }
+    if (username.length > 25 || username.length < 4) {
+      errs.push("Username must contain between 4 and 25 characters")
+    }
+    if (!email) {
+      errs.push("Please proide an email address")
+    }
+    if (!password) {
+      errs.push("Please provide a password.")
+    }
+    if (!repeatPassword) {
+      errs.push("Please confirm your password.")
+    }
+    if (password && repeatPassword && password !== repeatPassword) {
+      errs.push("Password and confirmed password must match.")
+    }
+    setErrors(errs)
+  }, [username, email, password, repeatPassword,])
+
   if (user) {
     return <Redirect to="/" />;
   }
@@ -68,7 +98,7 @@ const SignUpForm = () => {
         <form className="user-form" onSubmit={onSignUp}>
           <div className="errors-container">
             {errors && errors.map((error) => (
-              <div>{error}</div>
+              <div key={error}>{error}</div>
             ))}
           </div>
           <div className="input-container user-field">
@@ -78,6 +108,7 @@ const SignUpForm = () => {
               placeholder="Username"
           onChange={updateUsername}
           value={username}
+              required
         ></input>
       </div>
           <div className="input-container user-field">
@@ -87,6 +118,7 @@ const SignUpForm = () => {
               placeholder="Email"
           onChange={updateEmail}
           value={email}
+              required
         ></input>
       </div>
           <div className="input-container user-field">
@@ -96,6 +128,7 @@ const SignUpForm = () => {
               placeholder="Password"
           onChange={updatePassword}
           value={password}
+              required
         ></input>
       </div>
           <div className="input-container user-field">
@@ -106,6 +139,7 @@ const SignUpForm = () => {
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
+              required
         ></input>
       </div>
           <button className="form-button user-form-button" type="submit">Sign Up</button>

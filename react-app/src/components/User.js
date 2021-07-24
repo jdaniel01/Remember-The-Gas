@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { PasswordForm, AccountForm, DeleteForm } from "./auth/UserEdits";
-import NavBar from "./NavBar";
 import "./User.css";
 
 function User() {
@@ -54,8 +53,6 @@ function User() {
   }
 
   return (
-    <>
-      <NavBar showSettings={showSettings} setShowSettings={setShowSettings} />
     <div className="page-container">
       <div className="account-info-container">
         <ul className="sections-list">
@@ -73,8 +70,7 @@ function User() {
           {feature()}
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 }
 export default User;

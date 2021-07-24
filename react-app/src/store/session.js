@@ -38,15 +38,14 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
             password
         })
     });
-    if (response.ok) {
-        console.log("#############RESPONSE OK. SESSION LOGIN")
-        const data = await response.json();
-        if (data.errors) {
-            return data;
-        }
-        dispatch(setUser(data))
-        return {} //change ({} to data) why are we returning nothing?
+
+    console.log("#############RESPONSE OK. SESSION LOGIN")
+    const data = await response.json();
+    if (data.errors) {
+        return data;
     }
+    dispatch(setUser(data))
+    return data //change ({} to data) why are we returning nothing?
 }
 
 export const editUserInfo = (id, username, email, photo) => async (dispatch) => {
@@ -57,14 +56,14 @@ export const editUserInfo = (id, username, email, photo) => async (dispatch) => 
         },
         body: JSON.stringify({ username, email, photo })
     });
-    if (res.ok) {
-        const data = await res.json();
-        if (data.errors) {
-            return data
-        }
-        dispatch(setUser(data))
-        return {}
+
+    const data = await res.json();
+    if (data.errors) {
+        return data
     }
+    dispatch(setUser(data))
+    return data
+
 }
 
 export const deleteUser = (id) => async (dispatch) => {
