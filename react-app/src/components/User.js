@@ -58,9 +58,9 @@ function User() {
         <ul className="sections-list">
           <li onClick={() => setHeader("User Details")}>User Details</li>
           <li onClick={() => setHeader("Password")}>Password</li>
-          <li onClick={() => setHeader("Notifications")}>Notifications</li>
-          <li onClick={() => setHeader("Email Preferences")}>Email Preferences</li>
-            <li onClick={() => setHeader("Delete Account")}>Delete Account</li>
+          {/* <li onClick={() => setHeader("Notifications")}>Notifications</li>
+          <li onClick={() => setHeader("Email Preferences")}>Email Preferences</li> */}
+          <li onClick={() => setHeader("Delete Account")}>Delete Account</li>
         </ul>
         < div className="account-body-container">
           <div className="account-header-container">

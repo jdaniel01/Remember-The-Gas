@@ -38,8 +38,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      {location !== "/login" && location !== "/sign-up" &&
-        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} />
+      {location !== "/login" && location !== "/sign-up" ?
+        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} /> : null
       }
       <Switch>
         <Route path="/login" exact={true}>

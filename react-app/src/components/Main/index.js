@@ -12,7 +12,7 @@ const Main = () => {
             <div className="title-container">
 
             </div>
-            <div options>
+                <div className="options-container">
 
             </div>
             </div>
