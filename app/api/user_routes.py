@@ -87,7 +87,7 @@ def addList(id):
             name=form.data['name'],
             owner_id=form.data['owner_id'],
             notes=form.data['notes'] or None,
-            due_date=form.data['notes'] or None
+            due_date=form.data['due_date'] or None
         )
         db.session.add(newList)
         db.session.commit()

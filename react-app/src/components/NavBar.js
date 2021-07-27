@@ -9,6 +9,7 @@ import "./index.css"
 const NavBar = ({ showSettings, setShowSettings }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const user = useSelector(state => state.session.user)
+  const lists = useSelector(state => state.list.lists)
 
   const [isDisplayed, setIsDisplayed] = useState(false)
   const [tasksShowing, setTasksShowing] = useState(false)
@@ -90,11 +91,9 @@ const NavBar = ({ showSettings, setShowSettings }) => {
                     <div className="lists-list">
                       <div className="list">Personal<span>🔽</span></div>
                       <div className="list">Work<span>🔽</span></div>
-                      {/* {userLists && listsShowing && userLists.map(list =>
-                    <>
-                    <div className="list">{list.name}<span>{Object.keys(list.tasks).length}</span></div>
-                    </>
-                  )} */}
+                  {lists && lists.map(list =>
+                    <div className="list" key={list.id} id={list.id}>{list.name}</div>
+                  )}
                     </div>
                   }
 
