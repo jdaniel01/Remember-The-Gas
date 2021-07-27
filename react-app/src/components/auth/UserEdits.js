@@ -14,7 +14,6 @@ export const AccountForm = () => {
     const [email, setEmail] = useState(user.email);
     const [photo, setPhoto] = useState('');
     const [errors, setErrors] = useState([]);
-    const [msg, setMsg] = useState("")
 
 
     const updateUsername = (e) => {

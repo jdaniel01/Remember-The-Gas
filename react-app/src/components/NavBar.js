@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
+import { getLists } from "../store/list";
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
 
 const NavBar = ({ showSettings, setShowSettings }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
+  const dispatch = useDispatch();
+
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
 
@@ -17,6 +20,9 @@ const NavBar = ({ showSettings, setShowSettings }) => {
   const [contactsShowing, setContactsShowing] = useState(false)
   const [searchValue, setSearchValue] = useState("")
 
+  useEffect(() => {
+    dispatch(getLists(user.id))
+  }, [dispatch])
 
   const updateDisplay = () => {
     if (user) {
@@ -89,9 +95,7 @@ const NavBar = ({ showSettings, setShowSettings }) => {
                 </div>
                   {listsShowing &&
                     <div className="lists-list">
-                      <div className="list">Personal<span>🔽</span></div>
-                      <div className="list">Work<span>🔽</span></div>
-                  {lists && lists.map(list =>
+                  {lists && Object.values(lists).map(list =>
                     <div className="list" key={list.id} id={list.id}>{list.name}</div>
                   )}
                     </div>

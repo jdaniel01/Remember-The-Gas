@@ -5,6 +5,7 @@ from app.models import User, db, List
 from app.forms import EditUser, EditPassword, ListForm
 from werkzeug.wrappers import Response
 from datetime import datetime
+from sqlalchemy import desc
 
 user_routes = Blueprint('users', __name__)
 
@@ -91,10 +92,10 @@ def addList(id):
         )
         db.session.add(newList)
         db.session.commit()
-        lists = List.query.filter(List.owner_id == id).order_by(List.id).all()
+        lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
         print("#######################LISTS", lists)
-        # newLists = {i, j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-        newLists = [listed.to_dict() for listed in lists]
+        newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+        # newLists = [listed.to_dict() for listed in lists]
         print(newLists)
         return {"lists": newLists}
     print("######LIST FORM NOT VALIDATED#######")

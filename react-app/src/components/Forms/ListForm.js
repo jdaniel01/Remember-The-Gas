@@ -35,8 +35,8 @@ const ListForm = () => {
         if (!name) {
             errs.push("Please provide a name for your list.")
         }
-        if (name && (name.length < 4 || name.length > 25)) {
-            errs.push("List name must have between 4 and 25 characters.")
+        if (name && (name.length < 4 || name.length > 50)) {
+            errs.push("List name must have between 4 and 50 characters.")
         }
         setErrors(errs)
     }, [name, notes, dueDate])
