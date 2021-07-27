@@ -5,7 +5,7 @@ class List(db.Model):
   __tablename__ = 'lists'
 
   id = db.Column(db.Integer, primary_key = True)
-  name = db.Column(db.String(25), nullable=False)
+  name = db.Column(db.String(50), nullable=False)
   owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   notes = db.Column(db.Text)
   start_date = db.Column(db.DateTime, default=datetime.utcnow)

@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, db, List
 from app.forms import EditUser, EditPassword, ListForm
 from werkzeug.wrappers import Response
+from datetime import datetime
 
 user_routes = Blueprint('users', __name__)
 
@@ -84,7 +85,7 @@ def addList(id):
     if form.validate_on_submit():
         newList = List(
             name=form.data['name'],
-            owner_id=id,
+            owner_id=form.data['owner_id'],
             notes=form.data['notes'] or None,
             due_date=form.data['notes'] or None
         )

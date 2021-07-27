@@ -19,10 +19,10 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            id,
+            owner_id: id,
             name: listName,
-            notes,
-            due_date: dueDate
+            notes: notes || null,
+            due_date: dueDate.split("T").join(" ") + ":00" || null
         })
     });
     console.log("############RESPONSE OK. Data Returned #######")
