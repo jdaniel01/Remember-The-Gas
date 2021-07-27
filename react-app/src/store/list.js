@@ -46,6 +46,21 @@ export const getLists = (id) => async (dispatch) => {
     return data
 }
 
+export const getList = (id) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}`)
+    console.log("##########RESPONSE OK. Data Recieved######")
+    const list = await res.json()
+    if (list.errors) {
+        return list
+    }
+    dispatch(setList(list))
+    return list
+}
+
+export const setSingleList = (list) => async (dispatch) => {
+    dispatch(setList(list))
+}
+
 
 const initialState = { list: null, lists: null }
 

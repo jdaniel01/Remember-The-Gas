@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
-import { getLists } from "../store/list";
+import { getLists, setSingleList } from "../store/list";
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
 
-const NavBar = ({ showSettings, setShowSettings }) => {
+const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsDisplayed }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
 
-  const [isDisplayed, setIsDisplayed] = useState(false)
   const [tasksShowing, setTasksShowing] = useState(false)
   const [listsShowing, setListsShowing] = useState(false)
   const [contactsShowing, setContactsShowing] = useState(false)
@@ -96,7 +95,11 @@ const NavBar = ({ showSettings, setShowSettings }) => {
                   {listsShowing &&
                     <div className="lists-list">
                   {lists && Object.values(lists).map(list =>
-                    <div className="list" key={list.id} id={list.id}>{list.name}</div>
+                    <div className="list" key={list.id} id={list.id} onClick={() => {
+                      dispatch(setSingleList(list))
+                      setShowing("list")
+                      setIsDisplayed(false)
+                    }}>{list.name}</div>
                   )}
                     </div>
                   }

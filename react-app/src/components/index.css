@@ -27,7 +27,7 @@
 .user-settings{
     position: absolute;
     min-width: 120px;
-    background-color:rgb(243, 228, 255);
+    background-color:rgb(237, 214, 255);
     color: black;
     top: 52.75px;
     left: -6.67rem;
@@ -207,7 +207,7 @@
         position: absolute;
         top: 51px;
         left: -1rem;
-        background-color: rgb(243, 228, 255);
+        background-color: rgb(237, 214, 255);
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-around;
@@ -238,7 +238,7 @@
         position: absolute;
         top: 51px;
         left: -1rem;
-        background-color: rgb(243, 228, 255);
+        background-color: rgb(237, 214, 255);
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-around;

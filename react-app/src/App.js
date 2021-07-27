@@ -20,6 +20,8 @@ function App() {
 
   const user = useSelector(state => state.session.user)
   const [showSettings, setShowSettings] = useState(false)
+  const [showing, setShowing] = useState("list")
+  const [isDisplayed, setIsDisplayed] = useState(false)
 
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       {location !== "/login" && location !== "/sign-up" ?
-        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} /> : null
+        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} /> : null
       }
       <Switch>
         <Route path="/login" exact={true}>
@@ -58,9 +60,15 @@ function App() {
         <ProtectedRoute path="/users/:userId/lists" exact={true}>
           <ListForm />
         </ProtectedRoute>
+        <ProtectedRoute path="/lists/">
+          <Main showing={showing} setShowing={setShowing} />
+        </ProtectedRoute>
+        <ProtectedRoute path="/lists/:listId">
+          <Main showing={showing} setShowing={setShowing} />
+        </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
-            <Main />
+            <Main showing={showing} setShowing={setShowing} />
           </ProtectedRoute>
           : <Route path="/" exact={true}>
             <Splash />

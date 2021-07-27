@@ -93,10 +93,16 @@ def addList(id):
         db.session.add(newList)
         db.session.commit()
         lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
-        print("#######################LISTS", lists)
         newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
         # newLists = [listed.to_dict() for listed in lists]
-        print(newLists)
         return {"lists": newLists}
     print("######LIST FORM NOT VALIDATED#######")
     return {"errors": validation_errors_to_error_messages(form.errors)}
+
+@user_routes.route('/<int:id>/lists')
+@login_required
+def getLists(id):
+    print("##########GET LISTS#########", id)
+    lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
+    newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+    return {"lists": newLists}
