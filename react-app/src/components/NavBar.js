@@ -85,18 +85,19 @@ const NavBar = ({ showSettings, setShowSettings }) => {
                 <div className="lists">
                   <div className="lists-title" onClick={updateListsShowing}>Lists</div>
                   <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink>
+                </div>
                   {listsShowing &&
                     <div className="lists-list">
                       <div className="list">Personal<span>🔽</span></div>
                       <div className="list">Work<span>🔽</span></div>
                       {/* {userLists && listsShowing && userLists.map(list =>
-                      <>
-                      <div className="list">{list.name}<span>{Object.keys(list.tasks).length}</span></div>
-                      </>
-                    )} */}
+                    <>
+                    <div className="list">{list.name}<span>{Object.keys(list.tasks).length}</span></div>
+                    </>
+                  )} */}
                     </div>
                   }
-                </div>
+
               </div>
               <div className="contacts-container burger-item" >
                 <div className="contacts" onClick={updateContactsShowing}>Contacts</div>

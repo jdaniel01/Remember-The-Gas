@@ -74,7 +74,30 @@
     top: 0;
     text-decoration: none;
     aspect-ratio: 1/2;
-    border: 1px solid lightgrey;
+    color: rgb(75, 29, 119);
+    border: 1px solid rgb(75, 29, 119);
+    background-color: whitesmoke;
+    padding-block-start: 0px;
+    padding-block-end: 0;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-bottom: .25rem;
+    margin: 1rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exit:hover {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-decoration: none;
+    aspect-ratio: 1/2;
+    color: whitesmoke;
+    background-color:rgb(75, 29, 119);
+    border: 1px solid whitesmoke;
     padding-block-start: 0px;
     padding-block-end: 0;
     padding-left: .5rem;
