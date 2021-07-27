@@ -66,6 +66,25 @@ export const editUserInfo = (id, username, email, photo) => async (dispatch) => 
 
 }
 
+
+export const editPassword = (id, currentPassword, password, repeatPassword) => async (dispatch) => {
+    const res = await fetch(`/api/users/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ currentPassword, password, repeatPassword })
+    });
+
+    const data = await res.json();
+    if (data.errors) {
+        return data
+    }
+    dispatch(setUser(data))
+    return data
+}
+
+
 export const deleteUser = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}`, {
         method: "DELETE"

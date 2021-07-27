@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, db
-from app.forms import EditUser
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.models import User, db, List
+from app.forms import EditUser, EditPassword, ListForm
 from werkzeug.wrappers import Response
 
 user_routes = Blueprint('users', __name__)
@@ -39,16 +40,6 @@ def editUser(id):
     errors = []
     form = EditUser()
     user = User.query.get(id)
-    testUsername = User.query.filter(User.username == form.data['username']).first()
-    testEmail = User.query.filter(User.email == form.data['email']).first()
-    if testUsername and testUsername.id != user.id:
-        print("testusername != user")
-        errors.append("Username is already in use.")
-    if testEmail and testEmail.id != user.id:
-        errors.append("Email is already in use.")
-        print("testusername != user")
-    if len(errors) > 0:
-        print("Errors length greater than 0")
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         print("##################### Validated")
@@ -60,23 +51,20 @@ def editUser(id):
     print("Form Not Validated")
     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
-# @user_routes.route('/<int:id>', methods=["PUT"])
-# @login_required
-# def editUser(id):
-#     print("$$$$$$$$$$$$$$$$$ IN User PUT", id, request.get_json())
-#     errors = []
-#     form = EditUser()
-#     user = User.query.get(id)
-#     form['csrf_token'].data = request.cookies['csrf_token']
-#     if form.validate_on_submit():
-#         print("##################### Validated")
-#         user.email = form.data["email"]
-#         user.username = form.data["username"]
-#         user.photo = form.data["photo"]
-#         db.session.commit()
-#         return user.to_dict()
-#     print("Form Not Validated")
-#     return {"errors": validation_errors_to_error_messages(form.errors)}, 401
+@user_routes.route('/<int:id>', methods=["PATCH"])
+@login_required
+def editUserInfo(id):
+    print("$$$$$$$$$$$$$$$$$ IN User PATCH", id, request.get_json())
+    form = EditPassword()
+    user = User.query.get(id)
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        print("##################### Validated")
+        user.password = form.data["password"]
+        db.session.commit()
+        return user.to_dict()
+    print("Form Not Validated")
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 @user_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
@@ -85,3 +73,28 @@ def deleteUser(id):
     db.session.delete(user)
     db.session.commit()
     return Response("User account deleted.", status=304)
+
+
+@user_routes.route('/<int:id>/lists', methods=['POST'])
+@login_required
+def addList(id):
+    print("@@@@@@@@ USER/ID/LISTS route @@@@@@@")
+    form = ListForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        newList = List(
+            name=form.data['name'],
+            owner_id=id,
+            notes=form.data['notes'] or None,
+            due_date=form.data['notes'] or None
+        )
+        db.session.add(newList)
+        db.session.commit()
+        lists = List.query.filter(List.owner_id == id).order_by(List.id).all()
+        print("#######################LISTS", lists)
+        # newLists = {i, j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+        newLists = [listed.to_dict() for listed in lists]
+        print(newLists)
+        return {"lists": newLists}
+    print("######LIST FORM NOT VALIDATED#######")
+    return {"errors": validation_errors_to_error_messages(form.errors)}

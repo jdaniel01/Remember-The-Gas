@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
   hashed_password = db.Column(db.String(255), nullable = False)
   photo = db.Column(db.Text)
 
+  lists = db.relationship("List", back_populates="owner")
 
   @property
   def password(self):
@@ -55,5 +56,6 @@ class User(db.Model, UserMixin):
       "id": self.id,
       "username": self.username,
       "email": self.email,
-      "photo": self.photo
+      "photo": self.photo,
+      "lists": [l.to_dict() for l in self.lists]
     }

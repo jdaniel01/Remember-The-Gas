@@ -62,7 +62,7 @@
     padding-top: 5px;
 }
 
-.tasks, .list {
+.tasks, .list, .lists {
     display: flex;
     justify-content: space-between;
     width: 95%;
@@ -146,6 +146,34 @@
     font-size: 16pt;
     color: black;
     margin-bottom: 1rem;
+}
+
+.lists{
+    width: 100%;
+}
+
+.add-list-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color:rgb(75, 29, 119);
+    background-color: whitesmoke;
+    border: 1px solid rgb(75, 29, 119);
+    padding-left: .25rem;
+    padding-right: .25rem;
+}
+
+.add-list-icon:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: whitesmoke;
+    background-color: rgb(75, 29, 119);
+    border: 1px solid whitesmoke;
+    padding-left: .25rem;
+    padding-right: .25rem;
 }
 
 @media screen and (min-width: 670px) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { PasswordForm, AccountForm, DeleteForm } from "./auth/UserEdits";
 import "./User.css";
 
@@ -36,10 +36,10 @@ function User() {
 
   const feature = () => {
     if (header === "User Details") {
-      return <AccountForm user={user} />
+      return <AccountForm user={user} setShowSettings={setShowSettings} />
     }
     else if (header === "Password") {
-      return <PasswordForm />
+      return <PasswordForm setShowSettings={setShowSettings} />
     }
     // else if (header === "Email Preferences") {
     //   return <EmailForm />
@@ -65,7 +65,7 @@ function User() {
         < div className="account-body-container">
           <div className="account-header-container">
             <h3 className="account-header">{header}</h3>
-            <div className="exit">×</div>
+            <NavLink to="/" className="exit">×</NavLink>
           </div>
           {feature()}
         </div>

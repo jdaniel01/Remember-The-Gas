@@ -1,16 +1,19 @@
 from .db import db
 from datetime import datetime
 
-
 class List(db.Model):
   __tablename__ = 'lists'
 
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(25), nullable=False)
-  owner_id = db.Column(db.Integer, nullable=False)
+  owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   notes = db.Column(db.Text)
-  due_date = db.Column(db.Datetime, default=datetime.utcnow)
+  start_date = db.Column(db.DateTime, default=datetime.utcnow)
+  due_date = db.Column(db.DateTime)
+  status = db.Column(db.String, default="open", nullable=False)
+  priority = db.Column(db.Integer, default=0, nullable=False)
 
+  owner = db.relationship("User", back_populates="lists")
 
 
   @property
@@ -37,11 +40,42 @@ class List(db.Model):
   def dueDate(self, newDue):
     self.due_date = newDue
 
+  
+  @property
+  def startDate(self):
+    return self.start_date
+
+  @startDate.setter
+  def startDate(self, newDate):
+    self.start_date = newDate
+
+  
+  @property
+  def currStatus(self):
+    return self.status
+
+  @currStatus.setter
+  def currStatus(self, newStatus):
+    self.status = newStatus
+
+  
+  @property
+  def currPrior(self):
+    return self.priority
+
+  @currPrior.setter
+  def currPriro(self, prior):
+    self.priority = prior
+
+
   def to_dict(self):
     return {
       "id": self.id,
       "name": self.name,
       "owner_id": self.owner_id,
       "notes": self.notes,
-      "due_date": self.due_date
+      "start_date": self.start_date,
+      "due_date": self.due_date,
+      "status": self.status,
+      "priority": self.priority
     }

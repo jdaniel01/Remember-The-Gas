@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editUserInfo, deleteUser } from "../../store/session"
+import { editUserInfo, deleteUser, editPassword } from "../../store/session"
 
 
 export const AccountForm = () => {
@@ -14,7 +14,6 @@ export const AccountForm = () => {
     const [email, setEmail] = useState(user.email);
     const [photo, setPhoto] = useState('');
     const [errors, setErrors] = useState([]);
-    const [usersId, setUsersId] = useState(user.id)
     const [msg, setMsg] = useState("")
 
 
@@ -32,7 +31,7 @@ export const AccountForm = () => {
 
     const onEdit = async (e) => {
         e.preventDefault()
-        // dispatch(editUserInfo(usersId, username, email, photo))
+        // dispatch(editUserInfo(user.id, username, email, photo))
         if (user.id === Number(userId)) { // comparing the Params UserId and the Session User Id
             const data = await dispatch(editUserInfo(user.id, username, email, photo))
             if (data.errors) {
@@ -46,8 +45,8 @@ export const AccountForm = () => {
     }
 
     // useEffect(() => {
-    //     if (usersId !== user.id) {
-    //         setUsersId(user.id)
+    //     if (user.id !== user.id) {
+    //         setuser.id(user.id)
     //     }
     // }, [user.id])
 
@@ -60,7 +59,7 @@ export const AccountForm = () => {
                         <div>{error}</div>
                     ))}
                 </div>
-                <input type="number" name="id" id="id" value={usersId} hidden={true} />
+                <input type="number" name="id" id="id" value={user.id} hidden={true} />
                 <div className="edit-input-container">
                     <input className="form-input"
                         type="text"
@@ -101,6 +100,8 @@ export const AccountForm = () => {
 export const PasswordForm = () => {
 
     const dispatch = useDispatch()
+    const { userId } = useParams()
+    const user = useSelector(state => state.session.user)
 
     const [currentPassword, setCurrentPassword] = useState("");
     const [password, setPassword] = useState("");
@@ -119,14 +120,19 @@ export const PasswordForm = () => {
         setCurrentPassword(e.target.value);
     };
 
-    const onEdit = (e) => {
+    const onEdit = async (e) => {
         e.preventDefault()
-        const info = {
-            currentPassword,
-            password,
-            repeatPassword
+        if (user.id === Number(userId)) {
+            const data = dispatch(editPassword(Number(userId), currentPassword, password, repeatPassword))
+            if (data.id) {
+                setPassword("")
+                setRepeatPassword("")
+                setCurrentPassword("")
+                setErrors([])
+            } else {
+                setErrors(data.errors);
+            }
         }
-        // dispatch(editPassword(info))
     }
 
     useEffect(() => {
@@ -176,7 +182,7 @@ export const PasswordForm = () => {
                     <div className="edit-input-container">
                         <input className="form-input"
                             type="password"
-                            name="repeat_password"
+                            name="repeatPassword"
                             placeholder="Confirm Password"
                             onChange={updateRepeatPassword}
                             value={repeatPassword}

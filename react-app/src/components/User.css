@@ -72,13 +72,14 @@
     position: absolute;
     right: 0;
     top: 0;
-    font-size: 25pt;
-    aspect-ratio: 1/1;
+    text-decoration: none;
+    aspect-ratio: 1/2;
     border: 1px solid lightgrey;
     padding-block-start: 0px;
     padding-block-end: 0;
     padding-left: .5rem;
     padding-right: .5rem;
+    padding-bottom: .25rem;
     margin: 1rem;
     border-radius: 5px;
     display: flex;

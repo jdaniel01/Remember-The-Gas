@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, NavLink, useHistory } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { signUp, demoLogin } from '../../store/session';
 import "./user-forms.css"
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const user = useSelector(state => state.session.user)
   const [username, setUsername] = useState("");
@@ -19,9 +18,11 @@ const SignUpForm = () => {
     e.preventDefault();
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
-      //TODO: check for errors
       if (data.errors) {
         setErrors(data.errors);
+      }
+      else {
+        setErrors([])
       }
     }
     // if (password !== repeatPassword) {
@@ -103,44 +104,43 @@ const SignUpForm = () => {
           </div>
           <div className="input-container user-field">
             <input className="form-input"
-          type="text"
+              type="text"
               name="username"
               placeholder="Username"
-          onChange={updateUsername}
-          value={username}
+              onChange={updateUsername}
+              value={username}
               required
-        ></input>
+            ></input>
       </div>
           <div className="input-container user-field">
             <input className="form-input"
-          type="text"
+              type="text"
               name="email"
               placeholder="Email"
-          onChange={updateEmail}
-          value={email}
+              onChange={updateEmail}
+              value={email}
               required
-        ></input>
+            ></input>
       </div>
           <div className="input-container user-field">
             <input className="form-input"
-          type="password"
+              type="password"
               name="password"
               placeholder="Password"
-          onChange={updatePassword}
-          value={password}
+              onChange={updatePassword}
+              value={password}
               required
-        ></input>
+            ></input>
       </div>
           <div className="input-container user-field">
             <input className="form-input"
-          type="password"
+              type="password"
               name="repeat_password"
               placeholder="Confirm Password"
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
+              onChange={updateRepeatPassword}
+              value={repeatPassword}
               required
-        ></input>
+            ></input>
       </div>
           <button className="form-button user-form-button" type="submit">Sign Up</button>
           <button className="demo-login-button user-form-button" onClick={loginDemoUser}>Demo Login</button>

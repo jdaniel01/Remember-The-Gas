@@ -10,6 +10,7 @@ import User from "./components/User";
 import Splash from "./components/Splash";
 import Main from './components/Main';
 import { authenticate } from "./store/session";
+import ListForm from "./components/Forms/ListForm";
 
 function App() {
 
@@ -53,6 +54,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/lists" exact={true}>
+          <ListForm />
         </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
