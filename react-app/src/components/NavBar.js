@@ -20,7 +20,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [searchValue, setSearchValue] = useState("")
 
   useEffect(() => {
-    dispatch(getLists(user.id))
+    if (user) {
+      dispatch(getLists(user.id))
+    }
   }, [dispatch])
 
   const updateDisplay = () => {

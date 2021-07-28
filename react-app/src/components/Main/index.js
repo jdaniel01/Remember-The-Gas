@@ -17,7 +17,9 @@ const Main = ({ showing, setShowing }) => {
     const [shownType, setShownType] = useState("todo")
     const [showBulkSelect, setShowBulkSelect] = useState(false);
     const [showBulkActions, setShowBulkActions] = useState(false);
-
+    const [taskInfo, setTaskInfo] = useState("");
+    const [errors, setErrors] = useState([])
+    const [showTaskButton, setShowTaskButton] = useState(false)
 
     const todoStyle = () => {
         if (shownType === "todo") {
@@ -53,6 +55,19 @@ const Main = ({ showing, setShowing }) => {
             setIcon("◁")
         }
     }
+
+    const submitTask = (e) => {
+        e.preventDefault()
+
+    }
+
+    useEffect(() => {
+        const errs = []
+        if (taskInfo.length < 1) {
+            errs.push("Your task must have a name.")
+        }
+        setErrors(errs);
+    }, [taskInfo])
 
     // useEffect(() => {
     //     if (shownType === "todo") {
@@ -150,6 +165,12 @@ const Main = ({ showing, setShowing }) => {
                                 </div>
                             }
                         </div>
+                    </div>
+                    <div className="form-container add-task-form-container">
+                        <form className="user-form add-task-form" onSubmit={submitTask} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null}>
+                            <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} />
+                            <button className="form-button" type="submit" hidden={!showTaskButton}>Add Task</button>
+                        </form>
                     </div>
                 </div>
             </div>

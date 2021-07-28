@@ -83,7 +83,7 @@ body{
     font-size: 16pt;
     justify-content: flex-end;
     padding-right: 2rem;
-    border-bottom: 1px dotted grey;
+    border-bottom: 1px dotted lightgrey;
     box-sizing: border-box;
     position: relative;
     height: 40px;
@@ -219,8 +219,70 @@ body{
     margin-bottom: .25rem;
 }
 
+.select-container{
+    width: 110px;
+    height: 120px;
+}
 
+.action-container {
+    width: 105px;
+    height: 50px;
+}
 
+.form-container.add-task-form-container{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    border-top: 1px dotted lightgrey;
+}
+
+.user-form.add-task-form{
+    display: flex;
+    width: 100%;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 14pt;
+}
+
+.form-input{
+    width: 100%;
+    padding: .5rem;
+    font-size: 14pt;
+    border: 1px solid rgb(120, 75, 161);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    font-size: 14pt;
+    border: 2px solid rgb(120, 75, 161);
+    color:rgb(120, 75, 161);
+    box-shadow: 0 0 .6em .05em rgba(120, 75, 161, .5);
+    outline: 2px solid rgb(120, 75, 161);
+    outline: none;
+}
+
+.form-button {
+    margin-top: 1rem;
+    font-size: 16pt;
+    padding: 5px;
+    border: 1px solid rgb(120, 75, 161);
+    border-radius: 5px;
+    color:white;
+    background-color: rgb(120, 75, 161);
+    box-sizing: border-box;
+}
+.form-button:hover {
+    margin-top: 1rem;
+    font-size: 16pt;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:rgb(75, 29, 119);
+    color: whitesmoke;
+}
 
 
 
