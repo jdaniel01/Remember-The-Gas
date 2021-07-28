@@ -156,9 +156,68 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: black;
 }
 
+.bulk-button:hover {
+    margin-right: .5rem;
+    color: whitesmoke;
+    background-color: rgb(120, 75, 161);
+    outline: none;
+    border: 1.25px solid lightgrey;
+    border-radius: 3px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: 16pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.share-button{
+    border: 1.25px solid lightgrey;
+    border-radius: 3px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: 16pt;
+}
+
+.share-button:hover{
+    border: 1.25px solid lightgrey;
+    border-radius: 3px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: 16pt;
+    background-color: rgb(120, 75, 161);
+    color: whitesmoke;
+}
+
+.bulk-button-container{
+    position: relative;
+}
+
+.bulk-container{
+    display: flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    background-color: whitesmoke;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color:whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 0 .25rem .1rem lightgray;
+    font-size: 12pt;
+}
+
+.select-option, .action-option {
+    margin-bottom: .25rem;
+}
 
 
 

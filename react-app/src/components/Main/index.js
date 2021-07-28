@@ -15,6 +15,9 @@ const Main = ({ showing, setShowing }) => {
     const [showFilters, setShowFilters] = useState(false)
     const [filter, setFilter] = useState("priority")
     const [shownType, setShownType] = useState("todo")
+    const [showBulkSelect, setShowBulkSelect] = useState(false);
+    const [showBulkActions, setShowBulkActions] = useState(false);
+
 
     const todoStyle = () => {
         if (shownType === "todo") {
@@ -127,10 +130,25 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     <div className="bulk-actions-container">
                         <div className="bulk-button-container">
-                            <button className="bulk-button">▢▾</button>
+                            <button className="bulk-button" onClick={() => setShowBulkSelect(!showBulkSelect)}>▢▾</button>
+                            {showBulkSelect &&
+                                <div className="select-container bulk-container">
+                                    <div className="select-option">Select All</div>
+                                    <div className="select-option">Select None</div>
+                                    <div className="select-option">Due Today</div>
+                                    <div className="select-option">Due Tomorrow</div>
+                                    <div className="select-option">Overdue</div>
+                                </div>
+                            }
                         </div>
                         <div className="bulk-button-container">
-                            <button className="bulk-button">•••▾</button>
+                            <button className="bulk-button" onClick={() => setShowBulkActions(!showBulkActions)}>•••▾</button>
+                            {showBulkActions &&
+                                <div className="action-container bulk-container">
+                                    <div className="action-option">Update Task(s)</div>
+                                    <div className="action-option">Delete Task(s)</div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
