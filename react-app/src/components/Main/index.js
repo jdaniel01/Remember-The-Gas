@@ -14,6 +14,33 @@ const Main = ({ showing, setShowing }) => {
     const [icon, setIcon] = useState("◁")
     const [showFilters, setShowFilters] = useState(false)
     const [filter, setFilter] = useState("priority")
+    const [shownType, setShownType] = useState("todo")
+
+    const todoStyle = () => {
+        if (shownType === "todo") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
+
+    const doneStyle = () => {
+        if (shownType === "done") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
     const updateIcon = (e) => {
         if (e.target.innerText === "◁") {
@@ -23,6 +50,13 @@ const Main = ({ showing, setShowing }) => {
             setIcon("◁")
         }
     }
+
+    // useEffect(() => {
+    //     if (shownType === "todo") {
+
+    //     }
+    // }, [shownType])
+
 
     // const feature = () => {
     //     if (showing === "list") {
@@ -72,8 +106,8 @@ const Main = ({ showing, setShowing }) => {
                 <div className="tasks-container">
                     <div className="options-container">
                         <div className="print-button task-option">🖨</div>
-                        <div className="unfinished-tab task-option">Unfinished</div>
-                        <div className="finished-tab task-option">Finished</div>
+                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
@@ -91,9 +125,13 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                     </div>
-
-                    <div className="">
-
+                    <div className="bulk-actions-container">
+                        <div className="bulk-button-container">
+                            <button className="bulk-button">▢▾</button>
+                        </div>
+                        <div className="bulk-button-container">
+                            <button className="bulk-button">•••▾</button>
+                        </div>
                     </div>
                 </div>
             </div>

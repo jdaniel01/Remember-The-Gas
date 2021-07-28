@@ -81,7 +81,6 @@ body{
     display: flex;
     flex-flow: row nowrap;
     font-size: 16pt;
-    padding: .5rem;
     justify-content: flex-end;
     padding-right: 2rem;
     border-bottom: 1px dotted grey;
@@ -96,7 +95,11 @@ body{
     align-items: flex-end;
     padding-left: .5rem;
     padding-right: .5rem;
+    padding-bottom: .5rem;
     color: black;
+    box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .filter-button{
@@ -115,7 +118,7 @@ body{
     grid-template-rows: 1fr;
     justify-content: space-between;
     padding: 1rem;
-    background-color:rgb(237, 214, 255);
+    background-color:whitesmoke;
     border-radius: 5px;
     box-shadow: 0 0 .25rem .1rem lightgray;
     font-size: 12pt;
@@ -127,17 +130,35 @@ body{
     justify-content: space-between;
 }
 
-/* .checker{
-    width: 15px;
-    height: 15px;
-    color: rgb
-} */
+.bulk-actions-container{
+    display: flex;
+    flex-flow: row nowrap;
+    padding: .5rem;
+}
 
 .task-filters{
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
 }
+
+.bulk-button{
+    margin-right: .5rem;
+    background-color: whitesmoke;
+    outline: none;
+    border: 1.25px solid lightgrey;
+    border-radius: 3px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: 16pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 
 
