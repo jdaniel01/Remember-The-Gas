@@ -121,7 +121,7 @@ const Main = ({ showing, setShowing }) => {
                         </div>
                     </div>
                 }
-                <div className="tasks-container">
+                <div className="list-tasks-container">
                     <div className="options-container">
                         <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
