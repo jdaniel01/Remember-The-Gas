@@ -115,7 +115,8 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
             <>
             <div className="nav-links-container" >
               <NavLink to="/" className="nav-logo">
-                <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+                {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+                <div className="nav-logo">⛽</div>
               </NavLink>
               <div className="tasks-container burger-item">
                 <div className="upcoming-tasks" onClick={updateTasksShowing}>Upcoming Tasks</div>
@@ -185,8 +186,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
             <>
               <div className="nav-links-container">
               <NavLink to="/" className="nav-logo" onClick={closeAll}>
-                  <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
-                </NavLink>
+                {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+                <div className="nav-logo">⛽</div>
+              </NavLink>
               <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active" onClick={closeAll}>
                   Tour
                 </NavLink>

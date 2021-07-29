@@ -326,6 +326,7 @@
 
 
 
+
 @media screen and (min-width: 670px) {
     .burger-bar {
         position: relative;
@@ -343,7 +344,7 @@
         width: 50%;
     }
 
-     .nav-link:hover{
+    .nav-link:hover{
         text-decoration: none;
         color: black;
         padding: .5rem;
@@ -355,7 +356,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 51px;
+        top: 68px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;
@@ -370,6 +371,7 @@
 
     .nav-logo {
         width: 170px;
+        font-size: 50pt;
     }
 
 }
@@ -386,7 +388,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 51px;
+        top: 68px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;
@@ -401,5 +403,9 @@
 
     .nav-logo {
         width: 180px;
+        font-size: 50pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
