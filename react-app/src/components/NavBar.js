@@ -109,7 +109,8 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     return (
       <nav className="nav-container">
         <div className="burger-bar" >
-          <img className="burger-img" src="/images/hamburger-bar.png" onClick={updateDisplay} />
+          {/* <img className="burger-img" src="/images/hamburger-bar.png" onClick={updateDisplay} /> */}
+          <div className="burger-img" onClick={updateDisplay}>≡</div>
           {user && isDisplayed &&
             <>
             <div className="nav-links-container" >
@@ -203,20 +204,23 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           }
         </div>
         <div className="search-container">
-          <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." />
+          {/* <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." /> */}
+          <div className="search-icon">🔍</div>
           <input className="search-input" type="search" name="searchInput" placeholder="Search" value={searchValue} onChange={updateSearchValue} />
         </div>
         {user &&
           <div className="user-block">
           <div className="notification-container">
-            <img src="/images/notification-bell.png" alt={`notification icon. A simple light grey icon of a bell. current notifications: ${0}`} />
+            {/* <img src="/images/notification-bell.png" alt={`notification icon. A simple light grey icon of a bell. current notifications: ${0}`} /> */}
+            <div className="notification-icon">🔔</div>
             <div className="notification-count-container">
               <span className="count-container">{0}</span>
             </div>
           </div>
 
           <div className="settings-container">
-            <img src="/images/settings-cog.png" alt="cog icon. A simple light grey icon of a cogwheel. opens settings menu below." onClick={updateSettings} />
+            {/* <img src="/images/settings-cog.png" alt="cog icon. A simple light grey icon of a cogwheel. opens settings menu below." onClick={updateSettings} /> */}
+            <div className="settings-icon" onClick={updateSettings}>⚙</div>
             {showSettings &&
               <>
                 <div className="user-settings">

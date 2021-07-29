@@ -1,4 +1,25 @@
 
+.burger-img {
+    font-size: 40pt;
+    box-sizing: border-box;
+    color: lightgrey;
+}
+
+.search-icon, .notification-icon {
+    font-size: 20pt;
+    box-sizing: border-box;
+    color: lightgrey;
+}
+
+.settings-icon{
+    font-size: 25pt;
+    box-sizing: border-box;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    padding: 0;
+}
 
 .nav-container{
     padding: 1rem;
