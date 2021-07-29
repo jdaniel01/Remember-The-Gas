@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
   photo = db.Column(db.Text)
 
   lists = db.relationship("List", back_populates="owner")
+  tasks = db.relationship("Task", back_populates="owner")
 
   @property
   def password(self):

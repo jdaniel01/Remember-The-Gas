@@ -1,7 +1,7 @@
 import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { getList } from '../../store/list';
+import { getList, addTask } from '../../store/list';
 import "./Main.css";
 
 const Main = ({ showing, setShowing }) => {
@@ -20,6 +20,21 @@ const Main = ({ showing, setShowing }) => {
     const [taskInfo, setTaskInfo] = useState("");
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
+
+
+
+    useEffect(() => {
+        if (showing === "list") {
+            if (alist && title !== alist.name) {
+                setTitle(alist.name)
+            }
+        }
+        else if (showing === "allTasks") {
+            if (title !== "All Tasks") {
+                setTitle("All Tasks")
+            }
+        }
+    }, [dispatch, showing])
 
     const todoStyle = () => {
         if (shownType === "todo") {
@@ -56,9 +71,15 @@ const Main = ({ showing, setShowing }) => {
         }
     }
 
-    const submitTask = (e) => {
+    const submitTask = async (e) => {
         e.preventDefault()
+        console.log("#########SUBMITTING Task#######", alist.id, taskInfo)
         //TODO: Add task, store, route, link store and link forms
+        const data = await dispatch(addTask(alist.id, taskInfo))
+        if (data.errors) {
+            setErrors(data.errors)
+        }
+        else setErrors([])
     }
 
     useEffect(() => {
@@ -107,12 +128,12 @@ const Main = ({ showing, setShowing }) => {
 
     }
 
-    const feature = () => {
-        if (showing === "list") {
-            if (alist && title !== alist.name) {
-                setTitle(alist.name)
-            }
-        }
+    // const feature = () => {
+        // if (showing === "list") {
+        //     if (alist && title !== alist.name) {
+        //         setTitle(alist.name)
+        //     }
+        // }
         // else if (showing === "allTasks") {
         //     if (allTasks && title !== allTasks.name) {
         //         setTitle("All Tasks")
@@ -122,15 +143,7 @@ const Main = ({ showing, setShowing }) => {
     //     }
     //     else if (showing === "contacts") {
     //     }
-    }
-
-    useEffect(() => {
-        if (showing === "list") {
-            if (alist) {
-                setTitle(alist.name)
-            }
-        }
-    }, [dispatch, showing])
+    // }
 
     return (
         <>
@@ -198,14 +211,16 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                     </div>
-                    <div className="form-container add-task-form-container">
-                        <form className="user-form add-task-form" onSubmit={submitTask} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null}>
-                            <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} />
+                    {showing !== "All Tasks" &&
+                        <div className="form-container add-task-form-container">
+                        <form className="user-form add-task-form" onSubmit={submitTask} >
+                            <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null} />
                             <button className="form-button" type="submit" hidden={!showTaskButton}>Add Task</button>
                         </form>
                     </div>
+                    }
                     <div className="user-tasks-container">
-                        {feature()}
+                        {/* {feature()} */}
                     </div>
                     <div className="empty-lines-container">
                         {lines()}
@@ -216,4 +231,4 @@ const Main = ({ showing, setShowing }) => {
     )
 }
 
-export default Main;
+export default Main

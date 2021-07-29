@@ -1,20 +1,21 @@
 from .db import db
 from datetime import datetime
 
-class List(db.Model):
-  __tablename__ = 'lists'
+class Task(db.Model):
+  __tablename__ = 'tasks'
 
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(50), nullable=False)
-  owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  owner_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
   notes = db.Column(db.Text)
   start_date = db.Column(db.DateTime, default=datetime.utcnow)
   due_date = db.Column(db.DateTime)
-  status = db.Column(db.String, default="open", nullable=False)
-  priority = db.Column(db.Integer, default=0, nullable=False)
+  status = db.Column(db.String, default="open")
+  priority = db.Column(db.Integer, default=0)
 
-  owner = db.relationship("User", back_populates="lists")
-  tasks = db.relationship("Task", back_populates="fromList")
+  fromList = db.relationship("List", back_populates="tasks")
+  owner = db.relationship("User", back_populates="tasks")
 
   @property
   def title(self):
@@ -64,25 +65,34 @@ class List(db.Model):
     return self.priority
 
   @currPrior.setter
-  def currPriro(self, prior):
+  def currPrior(self, prior):
     self.priority = prior
 
+  @property
+  def currList(self):
+      return self.list_id
+
+  @currList.setter
+  def currList(self, id):
+      self.list_id = id
+
+  @property
+  def currOwner(self):
+      return self.list_id
+
+  @currOwner.setter
+  def currOwner(self, id):
+      self.list_id = id
 
   def to_dict(self):
     return {
       "id": self.id,
       "name": self.name,
-      "owner_id": self.owner_id,
+      "owner_id": self.fromList.to_detail()["owner_id"],
       "notes": self.notes,
       "start_date": self.start_date,
       "due_date": self.due_date,
       "status": self.status,
-      "priority": self.priority
-    }
-
-  def to_detail(self):
-    return {
-      "owner_id": self.owner_id,
-      "id": self.id,
-      "name": self.name
+      "priority": self.priority,
+      "owner_id": self.owner_id
     }

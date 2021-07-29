@@ -1,3 +1,5 @@
+import { setAllTasks } from "./task"
+
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
 const SET_ORDER = 'list/SET_ORDER'
@@ -88,6 +90,25 @@ export const editName = (id, name) => async (dispatch) => {
     const data = await res.json()
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
+    dispatch(setOrder(data.order))
+    return data
+}
+
+export const addTask = (id, name) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}/tasks`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setLists(data.lists))
+    dispatch(setList(data.list))
+    dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
     return data
 }
