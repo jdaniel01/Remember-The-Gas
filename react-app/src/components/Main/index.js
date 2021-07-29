@@ -25,16 +25,16 @@ const Main = ({ showing, setShowing }) => {
 
     useEffect(() => {
         if (showing === "list") {
-            if (alist && title !== alist.name) {
+            if (alist.name && title !== alist.name) {
                 setTitle(alist.name)
             }
         }
-        else if (showing === "allTasks") {
+        if (showing === "All Tasks") {
             if (title !== "All Tasks") {
                 setTitle("All Tasks")
             }
         }
-    }, [dispatch, showing])
+    }, [dispatch, showing, alist])
 
     const todoStyle = () => {
         if (shownType === "todo") {
@@ -79,7 +79,11 @@ const Main = ({ showing, setShowing }) => {
         if (data.errors) {
             setErrors(data.errors)
         }
-        else setErrors([])
+        else {
+            setErrors([])
+            setTaskInfo("")
+        }
+
     }
 
     useEffect(() => {
@@ -211,7 +215,7 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                     </div>
-                    {showing !== "All Tasks" &&
+                    {showing === "list" &&
                         <div className="form-container add-task-form-container">
                         <form className="user-form add-task-form" onSubmit={submitTask} >
                             <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null} />

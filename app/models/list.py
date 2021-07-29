@@ -77,7 +77,8 @@ class List(db.Model):
       "start_date": self.start_date,
       "due_date": self.due_date,
       "status": self.status,
-      "priority": self.priority
+      "priority": self.priority,
+      "tasks": dict([(task.id, task.to_dict()) for task in self.tasks])
     }
 
   def to_detail(self):
