@@ -25,9 +25,9 @@ def validation_errors_to_error_messages(validation_errors):
 def getLists():
     print("###########REQUESTING LISTS######## / ", current_user.id)
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-    print("###########LISTS##########", lists)
-    newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-    return newLists
+    newLists = dict([(j.id, j.to_dict()) for j in lists])
+    order = [l.id for l in lists]
+    return {"lists": newLists, "order": order}
 
 
 @list_routes.route("/<int:id>")
@@ -48,9 +48,11 @@ def dropList(id):
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
     # ids = [l.id for l in lists]
     # print("$$$$$$$$$$$$$IDS$$$$$$$")
+    order = [l.id for l in lists]
+    newLists = dict([(j.id, j.to_dict()) for j in lists])
     # newLists = {i: j.to_dict() for i, j in dict(zip(ids, lists))}
-    newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-    return newLists
+    # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+    return {"lists": newLists, "order": order}
 
 @list_routes.route("/<int:id>/name", methods=["PUT"])
 @login_required
@@ -63,8 +65,10 @@ def editName(id):
         alist.name = form.data["name"]
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-        newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-        print("#########List Name Validated#######")
-        return {"lists": newLists, "list": newLists.id}
+        order = [l.id for l in lists]
+        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+        print("#########List Name Validated#######", newLists)
+        return {"lists": newLists, "list": newLists[id], "order": order}
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}

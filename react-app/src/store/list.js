@@ -1,6 +1,6 @@
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
-
+const SET_ORDER = 'list/SET_ORDER'
 
 const setLists = (lists) => ({
     type: SET_LISTS,
@@ -10,6 +10,11 @@ const setLists = (lists) => ({
 const setList = (list) => ({
     type: SET_LIST,
     payload: list
+})
+
+const setOrder = (order) => ({
+    type: SET_ORDER,
+    payload: order
 })
 
 export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
@@ -30,9 +35,11 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
     if (data.errors) {
         return data
     }
-    let newList = Object.values(data.lists)[0]
+    // let newList = Object.values(data.lists)[0]
     dispatch(setLists(data.lists))
-    dispatch(setList(newList))
+    dispatch(setList(data.list))
+    dispatch(setOrder(data.order))
+    // dispatch(setList(newList))
     return data
 }
 
@@ -40,9 +47,10 @@ export const getLists = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`)
     console.log("##########RESPONSE OK. Data Recieved######")
     const data = await res.json()
-    let newList = Object.values(data.lists)[0]
+    // let newList = Object.values(data.lists)[0]
     dispatch(setLists(data.lists))
-    dispatch(setList(newList))
+    dispatch(setOrder(data.order))
+    // dispatch(setList(newList))
     return data
 }
 
@@ -80,10 +88,11 @@ export const editName = (id, name) => async (dispatch) => {
     const data = await res.json()
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
+    dispatch(setOrder(data.order))
     return data
 }
 
-const initialState = { list: null, lists: null }
+const initialState = { list: {}, lists: {}, order: [] }
 
 export default function listReducer(state = initialState, action) {
     switch (action.type) {
@@ -91,6 +100,8 @@ export default function listReducer(state = initialState, action) {
             return { ...state, lists: action.payload }
         case SET_LIST:
             return { ...state, list: action.payload }
+        case SET_ORDER:
+            return { ...state, order: action.payload }
         default:
             return state;
     }

@@ -5,7 +5,7 @@ import { addList } from "../../store/list"
 import "./Forms.css";
 
 
-const ListForm = () => {
+const ListForm = ({ setShowNewListForm }) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
@@ -25,6 +25,7 @@ const ListForm = () => {
             }
             else {
                 setErrors([])
+                setShowNewListForm(false)
                 return Redirect('/')
             }
         }
@@ -42,6 +43,7 @@ const ListForm = () => {
     }, [name, notes, dueDate])
 
     return (
+        <div className="dimmer">
         <div className="form-container">
             <form className="user-form" onSubmit={onSubmit}>
                 <div className="errors-container">
@@ -75,6 +77,7 @@ const ListForm = () => {
                 </div>
                 <button className="form-button user-form-button" type="submit">Add List</button>
             </form>
+            </div>
         </div>
     )
 }

@@ -6,7 +6,8 @@ import "./user-forms.css"
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
+
   const user = useSelector(state => state.session.user)
   const [errors, setErrors] = useState([]);
   const [nameOrEmail, setNameOrEmail] = useState("");

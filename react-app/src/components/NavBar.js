@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
 import { getLists, setSingleList, dropList, editName } from "../store/list";
+import ListForm from './Forms/ListForm';
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
@@ -13,7 +14,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
 
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
-
+  const order = useSelector(state => state.list.order)
 
   const [editingList, setEditingList] = useState({})
   const [tasksShowing, setTasksShowing] = useState(false)
@@ -23,16 +24,15 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [showListOptions, setShowListOptions] = useState(false);
   const [listOptionsShown, setListOptionsShown] = useState();
   const [showForm, setShowForm] = useState(false)
-  const [name, setName] = useState(editingList ? editingList.name : "")
+  const [name, setName] = useState(editingList.name)
   const [errors, setErrors] = useState([])
+  const [showNewListForm, setShowNewListForm] = useState(false);
 
-  const setShowListForm = (bool, id) => {
-    console.log(typeof id, id, lists)
-    setShowForm(bool)
-    if (id && lists.id) {
-      setEditingList(lists.id)
-    }
-  }
+
+  useEffect(() => {
+    setName(editingList.name)
+  }, [editingList])
+
 
   useEffect(() => {
     if (user) {
@@ -135,24 +135,29 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
               <div className="lists-container burger-item" >
                 <div className="lists">
                   <div className="lists-title" onClick={updateListsShowing}>Lists</div>
-                  <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink>
+                  {/* <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink> */}
+                  <div classname="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
                 </div>
                   {listsShowing &&
                     <div className="lists-list">
-                  {lists && Object.values(lists).map(list =>
-                    <div className="list-wrapper" key={list.id}>
-                      <div className="list" key={list.id} id={list.id} onClick={async () => {
-                        await dispatch(setSingleList(list))
+                  {lists && order && order.map(id =>
+                    <div className="list-wrapper" key={id}>
+                      <div className="list" key={id} id={id} onClick={async () => {
+                        await dispatch(setSingleList(lists[id]))
                       setShowing("list")
                       setIsDisplayed(false)
-                      }} >{list.name}</div>
+                      }} >{lists[id].name}</div>
                       <div className="list-options-wrapper" >
-                        <div className="list-options-button" id={list.id} onClick={updateListOptions}>+</div>
-                        {listOptionsShown === list.id &&
+                        <div className="list-options-button" id={id} onClick={updateListOptions}>+</div>
+                        {listOptionsShown === id &&
                           <div className="list-edit-options" >
-                            <button className="list-option" id={list.id} onClick={(e) => setShowListForm(true, Number(e.target.id))}>Edit List</button>
-                            <button className="list-option" id={list.id} onClick={shareList}>Share List</button>
-                            <button className="list-option" id={list.id} onClick={deleteList}>Delete List</button>
+                          <button className="list-option" id={id} onClick={(e) => {
+                            console.log(lists[id])
+                            setEditingList(lists[id])
+                            setShowForm(true)
+                          }}>Edit List</button>
+                          <button className="list-option" id={id} onClick={shareList}>Share List</button>
+                          <button className="list-option" id={id} onClick={deleteList}>Delete List</button>
                           </div>
                         }
                       </div>
@@ -232,7 +237,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           </div>
         </div>
         }
-        {showForm &&
+        {showForm && editingList &&
           <>
             <div className="dimmer">
               <div className="name-form-container">
@@ -247,6 +252,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
               </div>
             </div>
           </>
+        }
+        {showNewListForm &&
+          <ListForm setShowNewListForm={setShowNewListForm} />
         }
       </nav>
     );

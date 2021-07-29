@@ -57,9 +57,9 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/lists" exact={true}>
+        {/* <ProtectedRoute path="/users/:userId/lists" exact={true}>
           <ListForm />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         <ProtectedRoute path="/lists/">
           <Main showing={showing} setShowing={setShowing} exact={true} />
         </ProtectedRoute>
