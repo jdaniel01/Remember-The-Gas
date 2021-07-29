@@ -93,9 +93,13 @@ def addList(id):
         db.session.add(newList)
         db.session.commit()
         lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
+        
+        # ids = [l.id for l in lists]
+        # newLists = {i: j.to_dict() for i, j in dict(zip(ids, lists))}
+
         newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
         # newLists = [listed.to_dict() for listed in lists]
-        return {"lists": newLists}
+        return {"lists": newLists, "list": lists[0].to_dict()}
     print("######LIST FORM NOT VALIDATED#######")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 

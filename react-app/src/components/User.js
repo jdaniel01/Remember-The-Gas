@@ -8,9 +8,9 @@ function User() {
   const [user, setUser] = useState({});
 
   const [showAccount, setShowAccount] = useState(true);
-  const [showEmailPreferences, setShowEmailPreferences] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showEmailPreferences, setShowEmailPreferences] = useState(false);
+  // const [showNotifications, setShowNotifications] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const [header, setHeader] = useState("User Details");
   const [showSettings, setShowSettings] = useState(false)
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { getList } from '../../store/list';
@@ -58,7 +58,7 @@ const Main = ({ showing, setShowing }) => {
 
     const submitTask = (e) => {
         e.preventDefault()
-
+        //TODO: Add task, store, route, link store and link forms
     }
 
     useEffect(() => {
@@ -74,31 +74,63 @@ const Main = ({ showing, setShowing }) => {
 
     //     }
     // }, [shownType])
+    const lines = () => {
+        return (
+            <>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+                <div className="empty-line"></div>
+            </>
+        )
 
+    }
 
-    // const feature = () => {
-    //     if (showing === "list") {
-    //         if (alist && title !== alist.name) {
-    //             setTitle(alist.name)
-    //         }
-    //     }
-    //     else if (showing === "allTasks") {
-    //         if (allTasks && title !== allTasks.name) {
-    //             setTitle("All Tasks")
-    //         }
-    //     }
+    const feature = () => {
+        if (showing === "list") {
+            if (alist && title !== alist.name) {
+                setTitle(alist.name)
+            }
+        }
+        // else if (showing === "allTasks") {
+        //     if (allTasks && title !== allTasks.name) {
+        //         setTitle("All Tasks")
+        //     }
+        // }
     //     else if (showing === "contact") {
     //     }
     //     else if (showing === "contacts") {
     //     }
-    // }
+    }
 
-    // useEffect(() => {
-    //     if (showing === "list") {
-    //         dispatch(getList(alist.id))
-    //         setTitle(alist.name)
-    //     }
-    // }, [dispatch, showing])
+    useEffect(() => {
+        if (showing === "list") {
+            if (alist) {
+                setTitle(alist.name)
+            }
+        }
+    }, [dispatch, showing])
 
     return (
         <>
@@ -171,6 +203,12 @@ const Main = ({ showing, setShowing }) => {
                             <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} />
                             <button className="form-button" type="submit" hidden={!showTaskButton}>Add Task</button>
                         </form>
+                    </div>
+                    <div className="user-tasks-container">
+                        {feature()}
+                    </div>
+                    <div className="empty-lines-container">
+                        {lines()}
                     </div>
                 </div>
             </div>

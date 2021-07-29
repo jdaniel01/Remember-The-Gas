@@ -61,9 +61,9 @@ function App() {
           <ListForm />
         </ProtectedRoute>
         <ProtectedRoute path="/lists/">
-          <Main showing={showing} setShowing={setShowing} />
+          <Main showing={showing} setShowing={setShowing} exact={true} />
         </ProtectedRoute>
-        <ProtectedRoute path="/lists/:listId">
+        <ProtectedRoute path="/lists/:listId" exact={true}>
           <Main showing={showing} setShowing={setShowing} />
         </ProtectedRoute>
         {user ?

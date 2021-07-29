@@ -61,6 +61,27 @@ export const setSingleList = (list) => async (dispatch) => {
     dispatch(setList(list))
 }
 
+export const dropList = (id) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}`, {
+        method: "DELETE"
+    })
+    const lists = await res.json();
+    dispatch(setLists(lists))
+}
+
+export const editName = (id, name) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}/name`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name })
+    })
+    const data = await res.json()
+    dispatch(setLists(data.lists))
+    dispatch(setList(data.list))
+    return data
+}
 
 const initialState = { list: null, lists: null }
 

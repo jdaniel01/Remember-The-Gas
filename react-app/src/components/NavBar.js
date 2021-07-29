@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
-import { getLists, setSingleList } from "../store/list";
+import { getLists, setSingleList, dropList, editName } from "../store/list";
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
@@ -14,10 +14,25 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
 
+
+  const [editingList, setEditingList] = useState({})
   const [tasksShowing, setTasksShowing] = useState(false)
   const [listsShowing, setListsShowing] = useState(false)
   const [contactsShowing, setContactsShowing] = useState(false)
   const [searchValue, setSearchValue] = useState("")
+  const [showListOptions, setShowListOptions] = useState(false);
+  const [listOptionsShown, setListOptionsShown] = useState();
+  const [showForm, setShowForm] = useState(false)
+  const [name, setName] = useState(editingList ? editingList.name : "")
+  const [errors, setErrors] = useState([])
+
+  const setShowListForm = (bool, id) => {
+    console.log(typeof id, id, lists)
+    setShowForm(bool)
+    if (id && lists.id) {
+      setEditingList(lists.id)
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -30,6 +45,34 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
       setShowSettings(false);
     }
     setIsDisplayed(!isDisplayed)
+  }
+
+  const updateListOptions = (e) => {
+    if (listOptionsShown !== Number(e.target.id)) {
+      setListOptionsShown(Number(e.target.id))
+    }
+    else {
+      setListOptionsShown()
+    }
+
+  }
+  const submitName = (e) => {
+    e.preventDefault()
+    if (errors.length === 0) {
+      dispatch(editName(editingList.id, name))
+      setShowForm(false)
+    }
+  }
+
+  const shareList = (e) => {
+    //TODO: Create Share with Number(e.target.id) and user.id as owner_id or user_id check model
+    console.log("Sharing is Caring")
+  }
+
+  const deleteList = (e) => {
+    console.log("#######ATTEMPTING TO DELETE", Number(e.target.id))
+    //TODO: add window confirmation for delete
+    dispatch(dropList(Number(e.target.id)))
   }
 
   const updateTasksShowing = () => {
@@ -97,11 +140,23 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                   {listsShowing &&
                     <div className="lists-list">
                   {lists && Object.values(lists).map(list =>
-                    <div className="list" key={list.id} id={list.id} onClick={() => {
-                      dispatch(setSingleList(list))
+                    <div className="list-wrapper" key={list.id}>
+                      <div className="list" key={list.id} id={list.id} onClick={async () => {
+                        await dispatch(setSingleList(list))
                       setShowing("list")
                       setIsDisplayed(false)
-                    }}>{list.name}</div>
+                      }} >{list.name}</div>
+                      <div className="list-options-wrapper" >
+                        <div className="list-options-button" id={list.id} onClick={updateListOptions}>+</div>
+                        {listOptionsShown === list.id &&
+                          <div className="list-edit-options" >
+                            <button className="list-option" id={list.id} onClick={(e) => setShowListForm(true, Number(e.target.id))}>Edit List</button>
+                            <button className="list-option" id={list.id} onClick={shareList}>Share List</button>
+                            <button className="list-option" id={list.id} onClick={deleteList}>Delete List</button>
+                          </div>
+                        }
+                      </div>
+                    </div>
                   )}
                     </div>
                   }
@@ -176,6 +231,22 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
             }
           </div>
         </div>
+        }
+        {showForm &&
+          <>
+            <div className="dimmer">
+              <div className="name-form-container">
+                <div className="name-form-header-container">
+                  <h3 className="name-form-header">Rename List</h3>
+                  <div className="exit" onClick={() => setShowForm(false)}>×</div>
+                </div>
+                <form className="form user-form" onSubmit={submitName}>
+                  <input className="form-input user-input" name="name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <button type="submit-button form-button">Update List Name</button>
+                </form>
+              </div>
+            </div>
+          </>
         }
       </nav>
     );

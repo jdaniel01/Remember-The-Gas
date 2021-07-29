@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, List
-from app.forms import ListForm
+from app.forms import ListForm, ListNameForm
 from werkzeug.wrappers import Response
 from datetime import datetime
 from sqlalchemy import desc
@@ -34,5 +34,37 @@ def getLists():
 @login_required
 def getList(id):
     print("########Requesting List#######", id)
-    alist = List.query.get(id).first()
+    alist = List.query.get(id)
     return alist.to_dict()
+
+
+@list_routes.route("/<int:id>", methods=["DELETE"])
+@login_required
+def dropList(id):
+    print("########Deleting List#######", id)
+    alist = List.query.get(id)
+    db.session.delete(alist)
+    db.session.commit()
+    lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
+    # ids = [l.id for l in lists]
+    # print("$$$$$$$$$$$$$IDS$$$$$$$")
+    # newLists = {i: j.to_dict() for i, j in dict(zip(ids, lists))}
+    newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+    return newLists
+
+@list_routes.route("/<int:id>/name", methods=["PUT"])
+@login_required
+def editName(id):
+    print("########Editing List Name#######", id)
+    alist = List.query.get(id)
+    form = ListNameForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        alist.name = form.data["name"]
+        db.session.commit()
+        lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
+        newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+        print("#########List Name Validated#######")
+        return {"lists": newLists, "list": newLists.id}
+    print("#########List Name Failed to Validated#####")
+    return {"errors": validation_errors_to_error_messages(form.errors)}
