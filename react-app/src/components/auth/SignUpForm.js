@@ -77,7 +77,7 @@ const SignUpForm = () => {
   }, [username, email, password, repeatPassword,])
 
   if (user) {
-    return <Redirect to="/" />;
+    return <Redirect to={`/users/${user.id}/tasks`} />;
   }
 
   return (

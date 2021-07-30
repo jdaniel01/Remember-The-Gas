@@ -1,4 +1,4 @@
-import { setAllTasks } from "./task"
+import { setAllTasks, setTasksOrder } from "./task"
 
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
@@ -41,6 +41,8 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
     dispatch(setOrder(data.order))
+    dispatch(setAllTasks(data.tasks))
+    dispatch(setTasksOrder(data.tasksOrder))
     // dispatch(setList(newList))
     return data
 }

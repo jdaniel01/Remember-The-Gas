@@ -65,7 +65,7 @@ function User() {
         < div className="account-body-container">
           <div className="account-header-container">
             <h3 className="account-header">{header}</h3>
-            <NavLink to="/" className="exit">×</NavLink>
+            <NavLink to={`/users/${user.id}/tasks`} className="exit">×</NavLink>
           </div>
           {feature()}
         </div>

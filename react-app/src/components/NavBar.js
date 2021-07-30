@@ -116,7 +116,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           {user && isDisplayed &&
             <>
             <div className="nav-links-container" >
-              <NavLink to="/" className="nav-logo">
+              <NavLink to={`/users/${user.id}/tasks`} className="nav-logo">
                 {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
                 <div className="nav-logo">⛽</div>
               </NavLink>
@@ -209,20 +209,20 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
             </>
           }
         </div>
-        <div className="search-container">
-          {/* <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." /> */}
+        {/* <div className="search-container">
+          <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." />
           <div className="search-icon">🔍</div>
           <input className="search-input" type="search" name="searchInput" placeholder="Search" value={searchValue} onChange={updateSearchValue} />
-        </div>
+        </div> */}
         {user &&
           <div className="user-block">
-          <div className="notification-container">
-            {/* <img src="/images/notification-bell.png" alt={`notification icon. A simple light grey icon of a bell. current notifications: ${0}`} /> */}
+          {/* <div className="notification-container">
+            <img src="/images/notification-bell.png" alt={`notification icon. A simple light grey icon of a bell. current notifications: ${0}`} />
             <div className="notification-icon">🔔</div>
             <div className="notification-count-container">
               <span className="count-container">{0}</span>
             </div>
-          </div>
+          </div> */}
 
           <div className="settings-container">
             {/* <img src="/images/settings-cog.png" alt="cog icon. A simple light grey icon of a cogwheel. opens settings menu below." onClick={updateSettings} /> */}

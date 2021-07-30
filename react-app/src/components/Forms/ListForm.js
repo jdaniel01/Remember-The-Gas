@@ -9,6 +9,7 @@ const ListForm = ({ setShowNewListForm }) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
+    const alist = useSelector(state => state.list.list)
 
     const [name, setName] = useState("");
     const [notes, setNotes] = useState("");
@@ -26,8 +27,9 @@ const ListForm = ({ setShowNewListForm }) => {
             else {
                 setErrors([])
                 setShowNewListForm(false)
-                return Redirect('/')
+                return Redirect(`/lists/${alist.id}`)
             }
+
         }
     }
 

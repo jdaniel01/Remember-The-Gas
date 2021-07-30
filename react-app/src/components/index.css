@@ -52,7 +52,7 @@
     min-width: 120px;
     background-color:rgb(237, 214, 255);
     color: black;
-    top: 52.75px;
+    top: 58.2px;
     left: -6.67rem;
     padding: 1rem;
     border-bottom-left-radius: 5px;
@@ -358,7 +358,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 68px;
+        top: 67.2px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;
@@ -390,7 +390,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 68px;
+        top: 67.2px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;

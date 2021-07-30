@@ -53,7 +53,7 @@ const Main = ({ showing, setShowing }) => {
                 }
                 else {
                     setTitle("All Tasks")
-                    history.push("/")
+                    history.push(`/users/${user.id}/tasks`)
                 }
             }
         }
@@ -161,27 +161,27 @@ const Main = ({ showing, setShowing }) => {
             <div className="main-container">
                 <div className="title-container">
                     <div className="header-title">{title}  <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div>
-                    <div className="title-options-container">
+                    {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
-                    </div>
+                    </div> */}
                 </div>
                 {icon === "—" &&
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                            <div className="tasks-total">{0}</div>
+                        <div className="tasks-total">{tasksOrder[filter].length}</div>
                         <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
-                            <div className="tasks-total">{0}</div>
+                        <div className="tasks-total">{0}</div>
                             <div className="tasks-detail">completed</div>
                         </div>
                     </div>
                 }
                 <div className="list-tasks-container">
                     <div className="options-container">
-                        <div className="print-button task-option">🖨</div>
+                        {/* <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
-                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div> */}
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">

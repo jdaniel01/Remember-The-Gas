@@ -20,6 +20,10 @@ export const setAllTasks = (tasks, taskOrders) => async (dispatch) => {
     dispatch(setOrder(taskOrders))
 }
 
+export const setTasksOrder = (order) => async (dispatch) => {
+    dispatch(setOrder(order))
+}
+
 export const getAllTasks = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/tasks`)
     const data = await res.json()
@@ -57,8 +61,8 @@ export const deleteTask = (id) => async (dispatch) => {
         const data = await res.json()
         dispatch(setAllLists(data.lists))
         dispatch(setSingleList(data.list))
-        dispatch(setTasks(data.tasks))
         dispatch(setListOrder(data.order))
+        dispatch(setTasks(data.tasks))
         dispatch(setOrder(data.tasksOrder))
         return data
     }
