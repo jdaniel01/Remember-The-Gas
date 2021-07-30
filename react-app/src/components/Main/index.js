@@ -2,13 +2,19 @@ import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
+import { getAllTasks } from '../../store/task';
 import "./Main.css";
 
 const Main = ({ showing, setShowing }) => {
 
     const dispatch = useDispatch()
+
+    const user = useSelector(state => state.session.user)
     const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
+    const allTasks = useSelector(state => state.task.tasks)
+    const tasksOrder = useSelector(state => state.task.orderBy)
+
     // const allTasks = useSelector(state => state.tasks)
     const [title, setTitle] = useState("All Tasks")
     const [icon, setIcon] = useState("◁")
@@ -71,10 +77,20 @@ const Main = ({ showing, setShowing }) => {
         }
     }
 
+    useEffect(() => {
+
+
+        dispatch(getAllTasks(user.id))
+
+
+    }, [dispatch, lists])
+
+
     const submitTask = async (e) => {
         e.preventDefault()
         console.log("#########SUBMITTING Task#######", alist.id, taskInfo)
         //TODO: Add task, store, route, link store and link forms
+        console.log("##########testing##########", allTasks, tasksOrder.created)
         const data = await dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
@@ -215,7 +231,7 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                     </div>
-                    {showing === "list" &&
+                    {showing !== "All Tasks" &&
                         <div className="form-container add-task-form-container">
                         <form className="user-form add-task-form" onSubmit={submitTask} >
                             <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null} />
@@ -224,7 +240,26 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {/* {feature()} */}
+                        {showing === "All Tasks" && allTasks && tasksOrder.created.map(taskId =>
+                            <div className="task-container" key={taskId}>
+                                <div className="task-options-container">
+                                    <div className="task-options-icon">⋮</div>
+                                </div>
+                                <div className="task-details-container">
+                                    <div className="task-name">{allTasks[taskId].name}</div>
+                                </div>
+                            </div>
+                        )}
+                        {/* {allTasks && tasksOrder && tasksOrder.created.map(id =>
+                            <div className="task-container" key={id}>
+                                <div className="task-options-container">
+                                    <div className="task-options-icon">⋮</div>
+                                </div>
+                                <div className="task-details-container">
+                                    <div className="task-name">{allTasks[id].name}</div>
+                                </div>
+                            </div>
+                        )} */}
                     </div>
                     <div className="empty-lines-container">
                         {lines()}

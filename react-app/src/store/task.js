@@ -23,6 +23,17 @@ export const setAllTasks = (tasks, taskOrders) => async (dispatch) => {
     dispatch(setOrder(taskOrders))
 }
 
+export const getAllTasks = (id) => async (dispatch) => {
+    const res = await fetch(`/api/users/${id}/tasks`)
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setTasks(data.tasks))
+    dispatch(setOrder(data.taskOrders))
+    return data
+}
+
 // export const addTask = (listId, taskName, ownerId) => async (dispatch) => {
 //     const res = await fetch(`/api/lists/${listId}/tasks`, {
 //         method: "POST",

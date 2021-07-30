@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import User, db, List
+from app.models import User, db, List, Task
 from app.forms import EditUser, EditPassword, ListForm
 from werkzeug.wrappers import Response
 from datetime import datetime
@@ -113,3 +113,15 @@ def getLists(id):
     newLists = dict([(j.id, j.to_dict()) for j in lists])
     # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
     return {"lists": newLists, "order": order}
+
+
+@user_routes.route('/<int:id>/tasks')
+@login_required
+def getTasks(id):
+    print("##########GET TASKS#########", id)
+    tasks = Task.query.filter(Task.owner_id == id).order_by(desc(Task.id)).all()
+    taskCreatedOrder = [t.id for t in tasks]
+    newTasks = dict([(t.id, t.to_dict()) for t in tasks])
+    # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+    print("#######got tasks######", {"tasks": newTasks, "taskOrders": {"created": taskCreatedOrder}})
+    return {"tasks": newTasks, "taskOrders": {"created": taskCreatedOrder}}

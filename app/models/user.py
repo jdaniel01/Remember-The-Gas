@@ -58,5 +58,6 @@ class User(db.Model, UserMixin):
       "username": self.username,
       "email": self.email,
       "photo": self.photo,
-      "lists": [l.to_dict() for l in self.lists]
+      "lists": [l.to_dict() for l in self.lists],
+      "tasks": dict([(t.id, t.to_dict()) for t in self.tasks]),
     }
