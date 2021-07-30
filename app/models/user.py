@@ -59,5 +59,6 @@ class User(db.Model, UserMixin):
       "email": self.email,
       "photo": self.photo,
       "lists": [l.to_dict() for l in self.lists],
-      "tasks": dict([(t.id, t.to_dict()) for t in self.tasks]),
+      "tasks": dict([(task.id, task.to_dict()) for task in self.tasks]),
+      "orderBy": [task.id for task in reversed(self.tasks)]
     }

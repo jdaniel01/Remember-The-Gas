@@ -89,6 +89,8 @@
     display: flex;
     justify-content: space-between;
     width: 95%;
+    text-decoration: none;
+    color: black;
 }
 
 .lists-container{

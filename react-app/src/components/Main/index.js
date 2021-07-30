@@ -1,6 +1,6 @@
 import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
 import { getAllTasks } from '../../store/task';
 import "./Main.css";
@@ -8,6 +8,8 @@ import "./Main.css";
 const Main = ({ showing, setShowing }) => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
+    const { listId } = useParams()
 
     const user = useSelector(state => state.session.user)
     const lists = useSelector(state => state.list.lists)
@@ -15,12 +17,11 @@ const Main = ({ showing, setShowing }) => {
     const allTasks = useSelector(state => state.task.tasks)
     const tasksOrder = useSelector(state => state.task.orderBy)
 
-    // const allTasks = useSelector(state => state.tasks)
     const [title, setTitle] = useState("All Tasks")
     const [icon, setIcon] = useState("◁")
     const [showFilters, setShowFilters] = useState(false)
-    const [filter, setFilter] = useState("priority")
-    const [shownType, setShownType] = useState("todo")
+    const [filter, setFilter] = useState("created")//"created", "due_date", "status"
+    const [shownType, setShownType] = useState("todo")//"finished"
     const [showBulkSelect, setShowBulkSelect] = useState(false);
     const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
@@ -31,13 +32,25 @@ const Main = ({ showing, setShowing }) => {
 
     useEffect(() => {
         if (showing === "list") {
+            if (!alist) {
+                dispatch(getList(Number(listId)))
+            }
             if (alist.name && title !== alist.name) {
                 setTitle(alist.name)
             }
         }
         if (showing === "All Tasks") {
             if (title !== "All Tasks") {
-                setTitle("All Tasks")
+                if (listId) {
+                    if (!alist) {
+                        dispatch(getList(Number(listId)))
+                    }
+                    setTitle(alist.name)
+                }
+                else {
+                    setTitle("All Tasks")
+                    history.push("/")
+                }
             }
         }
     }, [dispatch, showing, alist])
@@ -77,13 +90,9 @@ const Main = ({ showing, setShowing }) => {
         }
     }
 
-    useEffect(() => {
-
-
-        dispatch(getAllTasks(user.id))
-
-
-    }, [dispatch, lists])
+    // useEffect(() => {
+    //     dispatch(getAllTasks(user.id))
+    // }, [lists])
 
 
     const submitTask = async (e) => {
@@ -200,6 +209,7 @@ const Main = ({ showing, setShowing }) => {
                                         <div className="checker">{filter === "priority" ? "✔" : null}</div>
                                     </div>
                                     <div className="task-filters">
+                                    <div className="filter" onClick={() => setFilter("created")}>Creation Date</div>
                                         <div className="filter" onClick={() => setFilter("name")}>Task Name</div>
                                         <div className="filter" onClick={() => setFilter("due")}>Due Date</div>
                                         <div className="filter" onClick={() => setFilter("priority")}>Priority</div>
@@ -240,26 +250,28 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && tasksOrder.created.map(taskId =>
+                        {showing === "All Tasks" && tasksOrder[filter] && tasksOrder[filter].map(taskId =>
+                            // showing === "All Tasks" && user.orderBy.map(taskId =>
                             <div className="task-container" key={taskId}>
                                 <div className="task-options-container">
                                     <div className="task-options-icon">⋮</div>
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{allTasks[taskId].name}</div>
+                                    {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
                                 </div>
                             </div>
                         )}
-                        {/* {allTasks && tasksOrder && tasksOrder.created.map(id =>
+                        {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
                             <div className="task-container" key={id}>
                                 <div className="task-options-container">
                                     <div className="task-options-icon">⋮</div>
                                 </div>
                                 <div className="task-details-container">
-                                    <div className="task-name">{allTasks[id].name}</div>
+                                    <div className="task-name">{alist.tasks[id].name}</div>
                                 </div>
                             </div>
-                        )} */}
+                        )}
                     </div>
                     <div className="empty-lines-container">
                         {lines()}

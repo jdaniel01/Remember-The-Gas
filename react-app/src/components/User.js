@@ -7,7 +7,7 @@ function User() {
 
   const [user, setUser] = useState({});
 
-  const [showAccount, setShowAccount] = useState(true);
+  // const [showAccount, setShowAccount] = useState(true);
   // const [showEmailPreferences, setShowEmailPreferences] = useState(false);
   // const [showNotifications, setShowNotifications] = useState(false);
   // const [showPassword, setShowPassword] = useState(false);

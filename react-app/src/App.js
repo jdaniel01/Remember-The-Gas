@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -15,12 +15,13 @@ import ListForm from "./components/Forms/ListForm";
 function App() {
 
   const dispatch = useDispatch();
+
   const [loaded, setLoaded] = useState(false);
   const location = window.location.pathname
 
   const user = useSelector(state => state.session.user)
   const [showSettings, setShowSettings] = useState(false)
-  const [showing, setShowing] = useState("list")
+  const [showing, setShowing] = useState("All Tasks")
   const [isDisplayed, setIsDisplayed] = useState(false)
 
 
@@ -35,9 +36,6 @@ function App() {
     return null;
   }
 
-  // const navigation = () => {
-
-  // }
 
   return (
     <BrowserRouter>
@@ -60,9 +58,9 @@ function App() {
         {/* <ProtectedRoute path="/users/:userId/lists" exact={true}>
           <ListForm />
         </ProtectedRoute> */}
-        <ProtectedRoute path="/lists/">
-          <Main showing={showing} setShowing={setShowing} exact={true} />
-        </ProtectedRoute>
+        {/* <ProtectedRoute path="/lists/" exact={true} >
+          <Main showing={showing} setShowing={setShowing} />
+        </ProtectedRoute> */}
         <ProtectedRoute path="/lists/:listId" exact={true}>
           <Main showing={showing} setShowing={setShowing} />
         </ProtectedRoute>

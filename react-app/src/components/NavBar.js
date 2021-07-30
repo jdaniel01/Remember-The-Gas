@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
 import { getLists, setSingleList, dropList, editName } from "../store/list";
+import { getAllTasks } from '../store/task';
 import ListForm from './Forms/ListForm';
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
@@ -37,6 +38,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   useEffect(() => {
     if (user) {
       dispatch(getLists(user.id))
+      dispatch(getAllTasks(user.id))
     }
   }, [dispatch])
 
@@ -123,7 +125,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 {tasksShowing &&
                   <>
                     <div className="tasks-list">
-                      <div className="tasks">All Tasks<span>{0}</span></div>
+                    <div className="tasks" onClick={() => {
+                      setShowing("All Tasks")
+                      closeAll()
+                    }}>All Tasks<span>{0}</span></div>
                       <div className="tasks">Recieved<span>{0}</span></div>
                       <div className="tasks">Today<span>{0}</span></div>
                       <div className="tasks">Tomorrow<span>{0}</span></div>
@@ -138,23 +143,22 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 <div className="lists">
                   <div className="lists-title" onClick={updateListsShowing}>Lists</div>
                   {/* <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink> */}
-                  <div classname="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
+                  <div className="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
                 </div>
                   {listsShowing &&
                     <div className="lists-list">
                   {lists && order && order.map(id =>
                     <div className="list-wrapper" key={id}>
-                      <div className="list" key={id} id={id} onClick={async () => {
+                      <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={async () => {
                         await dispatch(setSingleList(lists[id]))
-                      setShowing("list")
-                      setIsDisplayed(false)
-                      }} >{lists[id].name}</div>
+                        setShowing("list")
+                        closeAll()
+                      }} >{lists[id].name}</NavLink>
                       <div className="list-options-wrapper" >
                         <div className="list-options-button" id={id} onClick={updateListOptions}>+</div>
                         {listOptionsShown === id &&
                           <div className="list-edit-options" >
-                          <button className="list-option" id={id} onClick={(e) => {
-                            console.log(lists[id])
+                          <button className="list-option" id={id} onClick={() => {
                             setEditingList(lists[id])
                             setShowForm(true)
                           }}>Edit List</button>
