@@ -88,11 +88,11 @@ class Task(db.Model):
     return {
       "id": self.id,
       "name": self.name,
-      "owner_id": self.fromList.to_detail()["owner_id"],
+      "owner_id": self.owner_id,
       "notes": self.notes,
       "start_date": self.start_date,
       "due_date": self.due_date,
       "status": self.status,
       "priority": self.priority,
-      "owner_id": self.owner_id
+      "list_id": self.list_id
     }

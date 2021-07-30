@@ -71,6 +71,14 @@ export const setSingleList = (list) => async (dispatch) => {
     dispatch(setList(list))
 }
 
+export const setAllLists = (lists) => async (dispatch) => {
+    dispatch(setLists(lists))
+}
+
+export const setListOrder = (order) => async (dispatch) => {
+    dispatch(setOrder(order))
+}
+
 export const dropList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`, {
         method: "DELETE"

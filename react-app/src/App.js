@@ -64,6 +64,9 @@ function App() {
         <ProtectedRoute path="/lists/:listId" exact={true}>
           <Main showing={showing} setShowing={setShowing} />
         </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/tasks" exact={true}>
+          <Main showing={showing} setShowing={setShowing} />
+        </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
             <Main showing={showing} setShowing={setShowing} />

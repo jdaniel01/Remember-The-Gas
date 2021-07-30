@@ -1,5 +1,6 @@
+import { setSingleList, setAllLists, setListOrder } from "./list"
+
 const SET_TASKS = "task/SET_TASKS"
-// const SET_TASK = "task/SET_TASK"
 const SET_ORDER = "task/SET_ORDER"
 
 const setTasks = (tasks) => ({
@@ -7,10 +8,6 @@ const setTasks = (tasks) => ({
     payload: tasks
 })
 
-// const setTask = (task) => ({
-//     type: SET_TASK,
-//     payload: task
-// })
 
 const setOrder = (orders) => ({
     type: SET_ORDER,
@@ -32,6 +29,39 @@ export const getAllTasks = (id) => async (dispatch) => {
     dispatch(setTasks(data.tasks))
     dispatch(setOrder(data.taskOrders))
     return data
+}
+
+export const changeTaskName = (id, name) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}/name`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setAllLists(data.lists))
+    dispatch(setSingleList(data.list))
+    dispatch(setTasks(data.tasks))
+    dispatch(setListOrder(data.order))
+    dispatch(setOrder(data.tasksOrder))
+    return data
+}
+
+export const deleteTask = (id) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" })
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(setAllLists(data.lists))
+        dispatch(setSingleList(data.list))
+        dispatch(setTasks(data.tasks))
+        dispatch(setListOrder(data.order))
+        dispatch(setOrder(data.tasksOrder))
+        return data
+    }
 }
 
 // export const addTask = (listId, taskName, ownerId) => async (dispatch) => {

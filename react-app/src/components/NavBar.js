@@ -125,10 +125,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 {tasksShowing &&
                   <>
                     <div className="tasks-list">
-                    <div className="tasks" onClick={() => {
+                    <NavLink to={`/users/${user.id}/tasks`} className="tasks" onClick={() => {
                       setShowing("All Tasks")
                       closeAll()
-                    }}>All Tasks<span>{0}</span></div>
+                    }}>All Tasks<span>{0}</span></NavLink>
                       <div className="tasks">Recieved<span>{0}</span></div>
                       <div className="tasks">Today<span>{0}</span></div>
                       <div className="tasks">Tomorrow<span>{0}</span></div>
@@ -149,8 +149,8 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                     <div className="lists-list">
                   {lists && order && order.map(id =>
                     <div className="list-wrapper" key={id}>
-                      <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={async () => {
-                        await dispatch(setSingleList(lists[id]))
+                      <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={() => {
+                        dispatch(setSingleList(lists[id]))
                         setShowing("list")
                         closeAll()
                       }} >{lists[id].name}</NavLink>
