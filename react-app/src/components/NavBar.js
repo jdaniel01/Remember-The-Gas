@@ -16,6 +16,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
   const order = useSelector(state => state.list.order)
+  const tasks = useSelector(state => state.task.tasks)
+  const taskOrders = useSelector(state => state.task.orderBy)
+
+  const location = window.location.pathname
 
   const [editingList, setEditingList] = useState({})
   const [tasksShowing, setTasksShowing] = useState(false)
@@ -28,7 +32,17 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [name, setName] = useState(editingList.name)
   const [errors, setErrors] = useState([])
   const [showNewListForm, setShowNewListForm] = useState(false);
+  const [pathOk, setPathOk] = useState(true);
 
+  useEffect(() => {
+    console.log(location, typeof location)
+    if (location === "/login" || location === "/sign-up") {
+      setPathOk(false)
+    }
+    else {
+      setPathOk(true)
+    }
+  }, [location])
 
   useEffect(() => {
     setName(editingList.name)
@@ -71,12 +85,6 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     console.log("Sharing is Caring")
   }
 
-  const deleteList = (e) => {
-    console.log("#######ATTEMPTING TO DELETE", Number(e.target.id))
-    //TODO: add window confirmation for delete
-    dispatch(dropList(Number(e.target.id)))
-  }
-
   const updateTasksShowing = () => {
     setTasksShowing(!tasksShowing)
   }
@@ -108,6 +116,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     }
   }
 
+  if (!pathOk) {
+    return null
+  }
+  else {
     return (
       <nav className="nav-container">
         <div className="burger-bar" >
@@ -128,7 +140,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                     <NavLink to={`/users/${user.id}/tasks`} className="tasks" onClick={() => {
                       setShowing("All Tasks")
                       closeAll()
-                    }}>All Tasks<span>{0}</span></NavLink>
+                    }}>All Tasks<span>{taskOrders.created.length}</span></NavLink>
                       <div className="tasks">Recieved<span>{0}</span></div>
                       <div className="tasks">Today<span>{0}</span></div>
                       <div className="tasks">Tomorrow<span>{0}</span></div>
@@ -163,7 +175,11 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                             setShowForm(true)
                           }}>Edit List</button>
                           <button className="list-option" id={id} onClick={shareList}>Share List</button>
-                          <button className="list-option" id={id} onClick={deleteList}>Delete List</button>
+                          <button className="list-option" id={id} onClick={() => {
+                            console.log(typeof id, id)
+                            dispatch(dropList(id))
+                          }
+                          }>Delete List</button>
                           </div>
                         }
                       </div>
@@ -225,13 +241,13 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           </div> */}
 
           <div className="settings-container">
-            {/* <img src="/images/settings-cog.png" alt="cog icon. A simple light grey icon of a cogwheel. opens settings menu below." onClick={updateSettings} /> */}
+            {/* <img className="settings-icon" src="http://simpleicon.com/wp-content/uploads/user1.png" alt="user icon. redirects to Account Settings." onClick={updateSettings} /> */}
             <div className="settings-icon" onClick={updateSettings}>⚙</div>
             {showSettings &&
               <>
                 <div className="user-settings">
                   <div className="user-info-container">
-                    <div className="user-info">{user.photo}</div>
+                  <img className="user-image" src="http://simpleicon.com/wp-content/uploads/user1.png" alt="user icon. redirects to Account Settings." onClick={updateSettings} />
                     <div className="user-details-container">
                       <h2 className="user-details">{user.username}</h2>
                       <h3 className="user-details">{user.email}</h3>
@@ -264,10 +280,11 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           </>
         }
         {showNewListForm &&
-          <ListForm setShowNewListForm={setShowNewListForm} />
+          <ListForm setShowNewListForm={setShowNewListForm} setShowing={setShowing} setIsDisplayed={setIsDisplayed} />
         }
       </nav>
     );
+  }
 }
 
 export default NavBar;

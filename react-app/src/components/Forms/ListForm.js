@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Redirect, useLocation } from 'react-router-dom';
-import { addList } from "../../store/list"
+import { NavLink, Redirect, useLocation, useHistory } from 'react-router-dom';
+import { addList, setSingleList } from "../../store/list"
 import "./Forms.css";
 
 
-const ListForm = ({ setShowNewListForm }) => {
+const ListForm = ({ setShowNewListForm, setShowing, setIsDisplayed }) => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector(state => state.session.user)
-    const alist = useSelector(state => state.list.list)
 
     const [name, setName] = useState("");
     const [notes, setNotes] = useState("");
@@ -21,13 +21,16 @@ const ListForm = ({ setShowNewListForm }) => {
         console.log("@@@@@@LIST FORM.JS@@@@@@", name, notes, dueDate)
         if (errors.length === 0) {
             const data = await dispatch(addList(user.id, name, notes, dueDate))
+            setShowNewListForm(false)
             if (data.errors) {
                 setErrors(data.errors);
             }
             else {
                 setErrors([])
-                setShowNewListForm(false)
-                return Redirect(`/lists/${alist.id}`)
+                console.log("#######attempting to redirect##", user.lists[0].id)
+                setShowing("list")
+                setIsDisplayed(false)
+                history.push(`/lists/${user.lists[0].id}`)
             }
 
         }

@@ -95,12 +95,11 @@ def addList(id):
         lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
         order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
-        # ids = [l.id for l in lists]
-        # newLists = {i: j.to_dict() for i, j in dict(zip(ids, lists))}
-
-        # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-        # newLists = [listed.to_dict() for listed in lists]
-        return {"lists": newLists, "list": lists[0].to_dict(), "order": order}
+        tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
+        taskCreatedOrder = [t.id for t in tasks]
+        newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        print("#########List Added#######", newLists)
+        return {"lists": newLists, "list": newLists[order[0]], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     print("######LIST FORM NOT VALIDATED#######")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
@@ -111,8 +110,11 @@ def getLists(id):
     lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
     order = [l.id for l in lists]
     newLists = dict([(j.id, j.to_dict()) for j in lists])
-    # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-    return {"lists": newLists, "order": order}
+    tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
+    taskCreatedOrder = [t.id for t in tasks]
+    newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+    print("#########Lists Retrieved#######", newLists)
+    return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
 
 
 @user_routes.route('/<int:id>/tasks')
@@ -122,6 +124,5 @@ def getTasks(id):
     tasks = Task.query.filter(Task.owner_id == id).order_by(desc(Task.id)).all()
     taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(t.id, t.to_dict()) for t in tasks])
-    # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
-    print("#######got tasks######", {"tasks": newTasks, "taskOrders": {"created": taskCreatedOrder}})
-    return {"tasks": newTasks, "taskOrders": {"created": taskCreatedOrder}}
+    print("#######got tasks######", {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}})
+    return {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}

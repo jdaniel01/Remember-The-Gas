@@ -25,6 +25,17 @@ function App() {
   const [isDisplayed, setIsDisplayed] = useState(false)
   const [pathOk, setPathOk] = useState(true)
 
+
+  useEffect(() => {
+    console.log(location, typeof location)
+    if (location === "/login" || location === "/sign-up") {
+      setPathOk(false)
+    }
+    else {
+      setPathOk(true)
+    }
+  }, [location])
+
   useEffect(() => {
     (async() => {
       await dispatch(authenticate());
@@ -32,19 +43,16 @@ function App() {
     })();
   }, []);
 
+
   if (!loaded) {
     return null;
   }
 
-  // useEffect(() => {
-  //   if (location !== "/login" && location !== "/sign-up")
-  // }, [location])
+
 
   return (
     <BrowserRouter>
-      {location !== "/login" && location !== "/sign-up" ?
-        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} /> : null
-      }
+      <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} />
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />

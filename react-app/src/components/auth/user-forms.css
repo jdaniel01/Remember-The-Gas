@@ -51,6 +51,18 @@
 
 }
 
+.form-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.user-account-image{
+    height: 100px;
+    width: 100px;
+    align-content: center;
+}
+
 @media screen and (max-width: 768px) {
 
     .logo-article{

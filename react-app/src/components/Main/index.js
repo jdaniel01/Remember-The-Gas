@@ -17,7 +17,7 @@ const Main = ({ showing, setShowing }) => {
     const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task.tasks)
-    const tasksOrder = useSelector(state => state.task.orderBy)
+    const taskOrders = useSelector(state => state.task.orderBy)
 
 
     const [title, setTitle] = useState("All Tasks")
@@ -46,6 +46,9 @@ const Main = ({ showing, setShowing }) => {
 
 
     useEffect(() => {
+
+        console.log(alist.orderBy)
+
         if (showing === "list") {
             if (!alist) {
                 dispatch(getList(Number(listId)))
@@ -131,7 +134,7 @@ const Main = ({ showing, setShowing }) => {
         e.preventDefault()
         console.log("#########SUBMITTING Task#######", alist.id, taskInfo)
         //TODO: Add task, store, route, link store and link forms
-        console.log("##########testing##########", allTasks, tasksOrder.created)
+        console.log("##########testing##########", allTasks, taskOrders.created)
         const data = await dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
@@ -186,7 +189,8 @@ const Main = ({ showing, setShowing }) => {
         e.preventDefault()
         if (errors.length < 1) {
             dispatch(deleteTask(focusTask))
-            setFocusTask(0);
+            setFocusTask();
+            setTaskInfo("")
             setEditTaskName(false)
             setShowingTaskOptions(false);
         }
@@ -207,7 +211,8 @@ const Main = ({ showing, setShowing }) => {
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                            <div className="tasks-total">{tasksOrder[filter].length}</div>
+                            {title === "list" && alist && <div className="tasks-total">{0}</div>}
+                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>}
                             <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
@@ -272,8 +277,11 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && tasksOrder[filter] && tasksOrder[filter].map(taskId =>
-                            // showing === "All Tasks" && user.orderBy.map(taskId =>
+                        {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
+                        // showing === "All Tasks" && user.orderBy.map(taskId =>
+                            <>
+                                {
+                                    allTasks[taskId] &&
                             <div className="task-container" key={taskId}>
                                 <div className="task-options-container" id={taskId} onClick={() => {
                                     setFocusTask(taskId)
@@ -295,6 +303,8 @@ const Main = ({ showing, setShowing }) => {
                                     {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
                                 </div>
                             </div>
+                                }
+                            </>
                         )}
                         {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
                             <div className="task-container" key={id}>
@@ -375,7 +385,7 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     <article className="task-article-wrapper">
                         <div className="task-attribute-container">
-                            <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div>
+                            <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date ? allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ") : null}</span><span className="edit-icon">✍</span></div>
                             {editTaskStart &&
                                 <form className="edit-form edit-start-form" onSubmit={submitTaskStart}>
                                     <input type="date"
@@ -389,7 +399,7 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                         <div className="task-attribute-container">
-                            <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div>
+                            <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date ? allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ") : null}</span><span className="edit-icon">✍</span></div>
                             {editTaskDue &&
                                 <form className="edit-form edit-due-form" onSubmit={submitTaskDue}>
                                     <input type="date"

@@ -35,14 +35,13 @@ def changeName(id):
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
-        # newLists = {i: j.to_dict() for i, j in dict(zip(range(len(lists)), lists)).items()}
+
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
         return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-        # print("#########List Name Validated#######", newLists)
-        # return {"lists": newLists, "list": newLists[id], "order": order}
+        
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 

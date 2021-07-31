@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { editUserInfo, deleteUser, editPassword } from "../../store/session"
-
+import "./user-forms.css"
 
 export const AccountForm = () => {
 
@@ -52,6 +52,7 @@ export const AccountForm = () => {
     return (
 
         <div className="form-container">
+            <img className="user-account-image" src="http://simpleicon.com/wp-content/uploads/user1.png" alt="user image." />
             <form className="edit-form" onSubmit={onEdit}>
                 <div className="errors-container">
                     {errors && errors.map((error) => (
@@ -156,7 +157,7 @@ export const PasswordForm = () => {
             <form className="edit-form" onSubmit={onEdit}>
                 <div className="errors-container">
                     {errors && errors.map((error) => (
-                        <div>{error}</div>
+                        <div key={error}>{error}</div>
                     ))}
                 </div>
                 <div className="edit-input-container current-password-container">
@@ -221,9 +222,10 @@ export const DeleteForm = () => {
 
     return (
         <div className="form-container">
+            <div className="edit-form">
             <div className="errors-container">
                 {errors && errors.map((error) => (
-                    <div>{error}</div>
+                    <div key={error}>{error}</div>
                 ))}
             </div>
             <div className="edit-input-container">
@@ -235,6 +237,7 @@ export const DeleteForm = () => {
                 ></input>
             </div>
             <button className="form-button user-form-button" onClick={deleteAccount} disabled={errors.length > 0}>Delete Account</button>
+            </div>
         </div>
     )
 }

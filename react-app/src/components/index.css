@@ -13,6 +13,18 @@
 
 .settings-icon{
     font-size: 25pt;
+    /* height: 40px; */
+    box-sizing: border-box;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    padding: 0;
+
+}
+
+.user-image{
+    height: 40px;
     box-sizing: border-box;
     display:flex;
     justify-content: center;

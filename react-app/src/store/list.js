@@ -37,13 +37,11 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
     if (data.errors) {
         return data
     }
-    // let newList = Object.values(data.lists)[0]
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
     dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
     dispatch(setTasksOrder(data.tasksOrder))
-    // dispatch(setList(newList))
     return data
 }
 
@@ -51,10 +49,8 @@ export const getLists = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`)
     console.log("##########RESPONSE OK. Data Recieved######")
     const data = await res.json()
-    // let newList = Object.values(data.lists)[0]
     dispatch(setLists(data.lists))
     dispatch(setOrder(data.order))
-    // dispatch(setList(newList))
     return data
 }
 
@@ -120,6 +116,7 @@ export const addTask = (id, name) => async (dispatch) => {
     dispatch(setList(data.list))
     dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
+    dispatch(setTasksOrder(data.tasksOrder))
     return data
 }
 
