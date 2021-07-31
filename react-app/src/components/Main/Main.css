@@ -306,6 +306,7 @@ body{
     align-items: center;
     width: 100%;
     box-sizing: border-box;
+    justify-content: flex-start;
 }
 
 .main-container{
@@ -322,10 +323,12 @@ body{
 
 .task-options-wrapper{
     position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
     height: 100%;
     width: 100%;
     background-color: whitesmoke;
-    z-index: 15;
+    z-index: 8;
     border-radius: 5px;
 }
 
@@ -425,5 +428,40 @@ body{
 }
 
 
+.task-details-container{
+    display: grid;
+    grid-template-areas:
+    "n d";
+    grid-template-columns: 2fr 4fr;
+    width: 100%;
+    justify-content: space-between;
+}
 
+.task-deets-wrapper{
+    grid-area: d;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.priority-level{
+    margin-left: 2rem;
+    margin-right: 1rem;
+}
+
+.task-article-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 2rem;
+    font-size: 12pt;
+}
+
+.task-name{
+    font-size: 14pt;
+}
+
+.attribute-data{
+    margin-left: 2rem;
+}
 

@@ -2,7 +2,9 @@ import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
-import { getAllTasks, changeTaskName, deleteTask } from '../../store/task';
+import { getAllTasks, changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus } from '../../store/task';
+import { sortCompleted } from "./sort";
+
 import "./Main.css";
 
 const Main = ({ showing, setShowing }) => {
@@ -31,6 +33,15 @@ const Main = ({ showing, setShowing }) => {
     const [focusTask, setFocusTask] = useState(0);
     const [showingTaskOptions, setShowingTaskOptions] = useState(false);
     const [editTaskName, setEditTaskName] = useState(false);
+    const [editTaskDue, setEditTaskDue] = useState(false)
+    const [editTaskList, setEditTaskList] = useState(false);
+    const [editStartDate, setEditStartDate] = useState(false);
+    const [taskStatus, setTaskStatus] = useState("open");
+    const [taskPriority, setTaskPriority] = useState(0);
+    const [dueDate, setDueDate] = useState("")
+    const [editTaskStart, setEditTaskStart] = useState(false);
+    const [startDate, setStartDate] = useState("")
+    const [editTaskStatus, setEditTaskStatus] = useState(false)
 
 
 
@@ -62,6 +73,11 @@ const Main = ({ showing, setShowing }) => {
     useEffect(() => {
         if (allTasks && focusTask) {
             setTaskInfo(allTasks[focusTask].name)
+            setTaskPriority(allTasks[focusTask].priority)
+            setTaskStatus(allTasks[focusTask].status)
+            setStartDate(allTasks[focusTask].start_date)
+            setDueDate(allTasks[focusTask].due_date)
+            //TODO: set task notes and owner. create to_detail() for task/list owner
         }
     }, [focusTask])
 
@@ -143,6 +159,28 @@ const Main = ({ showing, setShowing }) => {
         setErrors(errs)
     }
 
+    const submitTaskDue = (e) => {
+        e.preventDefault()
+        const errs = [];
+        dispatch(changeTaskDue(allTasks[focusTask].id, dueDate))
+        setEditTaskDue(false)
+        setDueDate("")
+    }
+
+
+    const submitTaskStart = (e) => {
+        e.preventDefault()
+        dispatch(changeTaskStart(allTasks[focusTask].id, startDate))
+        setEditTaskStart(false)
+        setStartDate("")
+    }
+
+    const submitTaskStatus = (e) => {
+        e.preventDefault();
+        dispatch(changeTaskStatus(allTasks[focusTask].id, taskStatus))
+        setEditTaskStatus(false)
+        setTaskStatus("open")
+    }
 
     const deleteATask = (e) => {
         e.preventDefault()
@@ -166,16 +204,18 @@ const Main = ({ showing, setShowing }) => {
                     </div> */}
                 </div>
                 {icon === "—" &&
+                    <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                        <div className="tasks-total">{tasksOrder[filter].length}</div>
-                        <div className="tasks-detail">tasks</div>
+                            <div className="tasks-total">{tasksOrder[filter].length}</div>
+                            <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
-                        <div className="tasks-total">{0}</div>
+                            <div className="tasks-total">{0}</div>
                             <div className="tasks-detail">completed</div>
                         </div>
                     </div>
+                </>
                 }
                 <div className="list-tasks-container">
                     <div className="options-container">
@@ -244,6 +284,14 @@ const Main = ({ showing, setShowing }) => {
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{allTasks[taskId].name}</div>
+                                    <div className="task-deets-wrapper">
+                                        {allTasks[taskId].due_date &&
+                                            <div className="task-due">{allTasks[taskId].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                        }
+                                        {allTasks[taskId].priority <= 3 && allTasks[taskId].priority >= 0 &&
+                                            <div className="priority-level">{allTasks[taskId].priority}</div>
+                                        }
+                                    </div>
                                     {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
                                 </div>
                             </div>
@@ -314,17 +362,67 @@ const Main = ({ showing, setShowing }) => {
                                 setEditTaskName(true)
                                 setTaskInfo(allTasks[focusTask].name)
                             }}>{allTasks && focusTask && allTasks[focusTask].name}</div>
-                            {!editTaskName &&
+                        {!editTaskName &&
                                 <button className="delete-button edit-form-button" onClick={deleteATask}>Erase Task</button>
                             }
-                            {editTaskName &&
+                        {editTaskName &&
                                 <form className="task-name-form edit-name-form name-form" onSubmit={submitTaskName}>
                                     <input className="edit-name-input edit-input" type="text" name="name" value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} />
                                     <button className="edit-form-button" type="submit" hidden={errors.length > 0 || taskInfo === allTasks[focusTask].name}>Update</button>
-                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskName(false)}>Cancel</button>
+                                <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskName(false)}>Cancel</button>
+                            </form>
+                        }
+                    </div>
+                    <article className="task-article-wrapper">
+                        <div className="task-attribute-container">
+                            <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div>
+                            {editTaskStart &&
+                                <form className="edit-form edit-start-form" onSubmit={submitTaskStart}>
+                                    <input type="date"
+                                        className="date-input"
+                                        name="start_date"
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                        value={startDate} />
+                                    <button className="edit-form-button" type="submit" hidden={errors.length > 0 || dueDate === allTasks[focusTask].start_date}>Update</button>
+                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskStart(false)}>Cancel</button>
                                 </form>
                             }
-                    </div>
+                        </div>
+                        <div className="task-attribute-container">
+                            <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div>
+                            {editTaskDue &&
+                                <form className="edit-form edit-due-form" onSubmit={submitTaskDue}>
+                                    <input type="date"
+                                        className="date-input"
+                                        name="due_date"
+                                        onChange={(e) => setDueDate(e.target.value)}
+                                        value={dueDate} />
+                                    <button className="edit-form-button" type="submit" hidden={errors.length > 0 || dueDate === allTasks[focusTask].due_date}>Update</button>
+                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskDue(false)}>Cancel</button>
+                                </form>
+                            }
+                        </div>
+                        <div className="task-attribute-container">
+                            <div className="task-attribute" hidden={editTaskStatus}>Status: <span className="attribute-data" onClick={() => setEditTaskStatus(true)}>{allTasks[focusTask].status}</span><span className="edit-icon">✍</span></div>
+                            {editTaskStatus &&
+                                <form onSubmit={submitTaskStatus}>
+                                    <input hidden className="status-input edit-input" value={taskStatus} />
+                                    {editTaskStatus &&
+                                        <div className="tasks-status-container">
+                                            <div className="checker-container">
+                                                <div className="status-checker">{taskStatus === "open" ? "✔" : null}</div>
+                                                <div className="status-checker">{taskStatus === "closed" ? "✔" : null}</div>
+                                            </div>
+                                            <div className="statuses-container">
+                                                <div className="checker-status" onClick={() => setTaskStatus("open")}>Open</div>
+                                                <div className="checker-status" onClick={() => setTaskStatus("closed")}>Closed</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </form>
+                            }
+                        </div>
+                    </article>
                 </div>
                 }
             </div>

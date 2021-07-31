@@ -35,6 +35,9 @@ const LoginForm = () => {
     if (data.errors) {
       setErrors(data.errors);
     }
+    else {
+      setErrors([])
+    }
   }
 
   if (user) {

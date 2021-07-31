@@ -1,7 +1,7 @@
 from app.models import db, Task
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 
-date1 = datetime.utcnow()
+date1 = date.today()
 
 def seed_tasks():
 

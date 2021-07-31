@@ -42,6 +42,7 @@ const ListForm = ({ setShowNewListForm }) => {
             errs.push("List name must have between 4 and 50 characters.")
         }
         setErrors(errs)
+        console.log(dueDate)
     }, [name, notes, dueDate])
 
     return (
@@ -71,7 +72,7 @@ const ListForm = ({ setShowNewListForm }) => {
                         value={notes} />
                 </div>
                 <div className="input-container user-field">
-                    <input type="datetime-local"
+                        <input type="date"
                         className="form-input"
                         name="due_date"
                         onChange={(e) => setDueDate(e.target.value)}

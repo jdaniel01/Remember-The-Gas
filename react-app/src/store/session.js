@@ -105,7 +105,7 @@ export const demoLogin = () => async (dispatch) => {
             return data;
         }
         dispatch(setUser(data))
-        return {} //change ({} to data) why are we returning nothing?
+        return data //change ({} to data) why are we returning nothing?
         // Question Answered. By changing data to an empty object, it fixed an error which said data.errors was undefined (login form)
     }
 }

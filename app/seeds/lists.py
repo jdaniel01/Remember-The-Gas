@@ -1,7 +1,7 @@
 from app.models import db, List
-from datetime import datetime, timedelta
+from datetime import timedelta, date
 
-date1 = datetime.utcnow()
+date1 = date.today()
 
 def seed_lists():
 

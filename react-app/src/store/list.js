@@ -29,7 +29,7 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
             owner_id: id,
             name: listName,
             notes: notes || null,
-            due_date: dueDate.split("T").join(" ") + ":00" || null
+            due_date: dueDate || null
         })
     });
     console.log("############RESPONSE OK. Data Returned #######")

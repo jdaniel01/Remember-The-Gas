@@ -1,5 +1,5 @@
 from .db import db
-from datetime import datetime
+from datetime import date
 
 class Task(db.Model):
   __tablename__ = 'tasks'
@@ -9,8 +9,8 @@ class Task(db.Model):
   owner_id = db.Column(db.Integer, db.ForeignKey("users.id"))
   list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
   notes = db.Column(db.Text)
-  start_date = db.Column(db.DateTime, default=datetime.utcnow)
-  due_date = db.Column(db.DateTime)
+  start_date = db.Column(db.Date, default=date.today())
+  due_date = db.Column(db.Date)
   status = db.Column(db.String, default="open")
   priority = db.Column(db.Integer, default=0)
 

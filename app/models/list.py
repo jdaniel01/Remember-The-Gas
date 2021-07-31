@@ -1,5 +1,5 @@
 from .db import db
-from datetime import datetime
+from datetime import date
 
 class List(db.Model):
   __tablename__ = 'lists'
@@ -8,8 +8,8 @@ class List(db.Model):
   name = db.Column(db.String(50), nullable=False)
   owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   notes = db.Column(db.Text)
-  start_date = db.Column(db.DateTime, default=datetime.utcnow)
-  due_date = db.Column(db.DateTime)
+  start_date = db.Column(db.Date, default=date.today())
+  due_date = db.Column(db.Date)
   status = db.Column(db.String, default="open", nullable=False)
   priority = db.Column(db.Integer, default=0, nullable=False)
 

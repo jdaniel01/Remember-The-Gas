@@ -17,13 +17,13 @@ function App() {
   const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
-  const location = window.location.pathname
+  let location = window.location.pathname
 
   const user = useSelector(state => state.session.user)
   const [showSettings, setShowSettings] = useState(false)
   const [showing, setShowing] = useState("All Tasks")
   const [isDisplayed, setIsDisplayed] = useState(false)
-
+  const [pathOk, setPathOk] = useState(true)
 
   useEffect(() => {
     (async() => {
@@ -36,6 +36,9 @@ function App() {
     return null;
   }
 
+  // useEffect(() => {
+  //   if (location !== "/login" && location !== "/sign-up")
+  // }, [location])
 
   return (
     <BrowserRouter>

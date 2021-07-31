@@ -55,6 +55,69 @@ export const changeTaskName = (id, name) => async (dispatch) => {
     return data
 }
 
+export const changeTaskDue = (id, date) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}/due`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ due_date: date })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setAllLists(data.lists))
+    dispatch(setSingleList(data.list))
+    dispatch(setTasks(data.tasks))
+    dispatch(setListOrder(data.order))
+    dispatch(setOrder(data.tasksOrder))
+    return data
+}
+
+export const changeTaskStart = (id, date) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}/start`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ start_date: date })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setAllLists(data.lists))
+    dispatch(setSingleList(data.list))
+    dispatch(setTasks(data.tasks))
+    dispatch(setListOrder(data.order))
+    dispatch(setOrder(data.tasksOrder))
+    return data
+}
+
+
+export const changeTaskStatus = (id, status) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}/status`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ status })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setAllLists(data.lists))
+    dispatch(setSingleList(data.list))
+    dispatch(setTasks(data.tasks))
+    dispatch(setListOrder(data.order))
+    dispatch(setOrder(data.tasksOrder))
+    return data
+}
+
+
+
 export const deleteTask = (id) => async (dispatch) => {
     const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" })
     if (res.ok) {
