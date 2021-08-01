@@ -52,7 +52,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} />
+      {user &&
+        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} />
+      }
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />

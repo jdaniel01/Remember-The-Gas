@@ -116,10 +116,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     }
   }
 
-  if (!pathOk) {
-    return null
-  }
-  else {
+  // if (!pathOk) {
+  //   return null
+  // }
+  // else {
     return (
       <nav className="nav-container">
         <div className="burger-bar" >
@@ -284,7 +284,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
         }
       </nav>
     );
-  }
+  // }
 }
 
 export default NavBar;
