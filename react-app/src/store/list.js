@@ -80,8 +80,13 @@ export const dropList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`, {
         method: "DELETE"
     })
-    const lists = await res.json();
-    dispatch(setLists(lists))
+    const data = await res.json();
+    dispatch(setLists(data.lists))
+    dispatch(setList(data.list))
+    dispatch(setOrder(data.order))
+    dispatch(setAllTasks(data.tasks))
+    dispatch(setTasksOrder(data.tasksOrder))
+    return data
 }
 
 export const editName = (id, name) => async (dispatch) => {

@@ -47,8 +47,6 @@ const Main = ({ showing, setShowing }) => {
 
     useEffect(() => {
 
-        console.log(alist.orderBy)
-
         if (showing === "list") {
             if (!alist) {
                 dispatch(getList(Number(listId)))
