@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { authenticate } from '../store/session';
 import { getLists, setSingleList, dropList, editName } from "../store/list";
 import { getAllTasks } from '../store/task';
@@ -9,7 +9,7 @@ import LogoutButton from './auth/LogoutButton';
 import "./index.css"
 // import "./auth/user-forms.css"
 
-const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsDisplayed }) => {
+const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsDisplayed, setShowingTaskOptions }) => {
   //get current location  href and if it is equal to /login or /sign-up do not display navbar.
   const dispatch = useDispatch();
 
@@ -20,6 +20,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const taskOrders = useSelector(state => state.task.orderBy)
 
   const location = window.location.pathname
+  const history = useHistory()
 
   const [editingList, setEditingList] = useState({})
   const [tasksShowing, setTasksShowing] = useState(false)
@@ -29,7 +30,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [showListOptions, setShowListOptions] = useState(false);
   const [listOptionsShown, setListOptionsShown] = useState();
   const [showForm, setShowForm] = useState(false)
-  const [name, setName] = useState(editingList.name)
+  const [name, setName] = useState("")
   const [errors, setErrors] = useState([])
   const [showNewListForm, setShowNewListForm] = useState(false);
   const [pathOk, setPathOk] = useState(true);
@@ -56,6 +57,18 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     }
   }, [dispatch])
 
+  useEffect(() => {
+    const errs = [];
+
+    if (!name) {
+      errs.push("Please enter a name for your list.")
+    }
+    else if (name.length < 4) {
+      errs.push("List name must have between 4 and 50 characters.")
+    }
+    setErrors(errs);
+  }, [name])
+
   const updateDisplay = () => {
     if (user) {
       setShowSettings(false);
@@ -79,6 +92,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
       setShowForm(false)
     }
   }
+
 
   const shareList = (e) => {
     //TODO: Create Share with Number(e.target.id) and user.id as owner_id or user_id check model
@@ -128,7 +142,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
           {user && isDisplayed &&
             <>
             <div className="nav-links-container" >
-              <NavLink to={`/users/${user.id}/tasks`} className="nav-logo">
+              <NavLink to={`/users/${user.id}/tasks`} className="nav-logo" onClick={closeAll}>
                 {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
                 <div className="nav-logo">⛽</div>
               </NavLink>
@@ -141,12 +155,12 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                       setShowing("All Tasks")
                       closeAll()
                     }}>All Tasks<span>{taskOrders.created.length}</span></NavLink>
-                      <div className="tasks">Recieved<span>{0}</span></div>
+                    {/* <div className="tasks">Recieved<span>{0}</span></div>
                       <div className="tasks">Today<span>{0}</span></div>
                       <div className="tasks">Tomorrow<span>{0}</span></div>
                       <div className="tasks">This Week<span>{0}</span></div>
                       <div className="tasks">Given Tasks<span>{0}</span></div>
-                      <div className="tasks">Trash<span>{0}</span></div>
+                      <div className="tasks">Trash<span>{0}</span></div> */}
                     </div>
                   </>
                 }
@@ -163,7 +177,8 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                       <div className="list-wrapper" key={id}>
                         <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={() => {
                           dispatch(setSingleList(lists[id]))
-                          setShowing("list")
+                        setShowing("list")
+                        setShowingTaskOptions(false)
                           closeAll()
                         }} >{lists[id].name}</NavLink>
                         <div className="list-options-wrapper" >
@@ -171,14 +186,17 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                           {listOptionsShown === id &&
                             <div className="list-edit-options" >
                               <button className="list-option" id={id} onClick={() => {
-                                setEditingList(lists[id])
+                            setEditingList(lists[id])
+                            setName(editingList.name)
                                 setShowForm(true)
                               }}>Edit List</button>
-                              <button className="list-option" id={id} onClick={shareList}>Share List</button>
+                          {/* <button className="list-option" id={id} onClick={shareList}>Share List</button> */}
                               <button className="list-option" id={id} onClick={() => {
                             console.log(typeof id, id)
                             setShowing("All Tasks")
                             dispatch(dropList(id))
+                            setShowingTaskOptions(false)
+                            history.push(`/users/${user.id}/tasks`)
                           }
                           }>Delete List</button>
                           </div>
@@ -190,16 +208,16 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 )}
 
               </div>
-              <div className="contacts-container burger-item" >
+              {/* <div className="contacts-container burger-item" >
                 <div className="contacts" onClick={updateContactsShowing}>Contacts</div>
-                {/* {userContacts && contactsShowing &&
+                {userContacts && contactsShowing &&
                 <div className="contacts-list">
                   {userContacts.map(contact => 
                   <div className="contact">{contact.username}</div>
                 )}
                 </div>
-                } */}
-                </div>
+                }
+                </div> */}
               </div>
             </>
           }
@@ -271,11 +289,20 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 <div className="name-form-header-container">
                   <h3 className="name-form-header">Rename List</h3>
                   <div className="exit" onClick={() => setShowForm(false)}>×</div>
-                </div>
+              </div>
+              <div className="errors-container">
+                {errors && errors.map((error) => (
+                  <div className="dimmer-errors" key={error}>{error}</div>
+                ))}
+              </div>
                 <form className="form user-form" onSubmit={submitName}>
                   <input className="form-input user-input" name="name" value={name} onChange={(e) => setName(e.target.value)} />
-                  <button type="submit-button form-button">Update List Name</button>
-                </form>
+                <button className="submit-button edit-form-button" type="submit" disabled={errors.length > 0}>Update List Name</button>
+                <button className="cancel cancel-button edit-form-button" onClick={() => {
+                  setShowForm(false)
+                  setName("");
+                }}>Cancel</button>
+              </form>
               </div>
             </div>
           </>

@@ -24,6 +24,7 @@ function App() {
   const [showing, setShowing] = useState("All Tasks")
   const [isDisplayed, setIsDisplayed] = useState(false)
   const [pathOk, setPathOk] = useState(true)
+  const [showingTaskOptions, setShowingTaskOptions] = useState(false);
 
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function App() {
   return (
     <BrowserRouter>
       {user &&
-        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} />
+        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} setShowingTaskOptions={setShowingTaskOptions} />
       }
       <Switch>
         <Route path="/login" exact={true}>
@@ -75,14 +76,14 @@ function App() {
           <Main showing={showing} setShowing={setShowing} />
         </ProtectedRoute> */}
         <ProtectedRoute path="/lists/:listId" exact={true}>
-          <Main showing={showing} setShowing={setShowing} />
+          <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/tasks" exact={true}>
-          <Main showing={showing} setShowing={setShowing} />
+          <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
         </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
-            <Main showing={showing} setShowing={setShowing} />
+            <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
           </ProtectedRoute>
           : <Route path="/" exact={true}>
             <Splash />

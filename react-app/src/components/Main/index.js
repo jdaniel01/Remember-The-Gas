@@ -7,7 +7,7 @@ import { sortCompleted } from "./sort";
 
 import "./Main.css";
 
-const Main = ({ showing, setShowing }) => {
+const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,7 +31,7 @@ const Main = ({ showing, setShowing }) => {
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
     const [focusTask, setFocusTask] = useState(0);
-    const [showingTaskOptions, setShowingTaskOptions] = useState(false);
+    // const [showingTaskOptions, setShowingTaskOptions] = useState(false);
     const [editTaskName, setEditTaskName] = useState(false);
     const [editTaskDue, setEditTaskDue] = useState(false)
     const [editTaskList, setEditTaskList] = useState(false);
@@ -43,7 +43,8 @@ const Main = ({ showing, setShowing }) => {
     const [startDate, setStartDate] = useState("")
     const [editTaskStatus, setEditTaskStatus] = useState(false)
     const [editTaskPriority, setEditTaskPriority] = useState(false)
-
+    const [editTaskInfo, setEditTaskInfo] = useState("")
+    const [editErrors, setEditErrors] = useState([]);
 
     useEffect(() => {
 
@@ -73,7 +74,7 @@ const Main = ({ showing, setShowing }) => {
 
     useEffect(() => {
         if (allTasks && focusTask) {
-            setTaskInfo(allTasks[focusTask].name)
+            setEditTaskInfo(allTasks[focusTask].name)
             setTaskPriority(allTasks[focusTask].priority)
             setTaskStatus(allTasks[focusTask].status)
             setStartDate(allTasks[focusTask].start_date)
@@ -88,12 +89,32 @@ const Main = ({ showing, setShowing }) => {
 
 
     useEffect(() => {
+        console.log(errors, taskInfo)
         const errs = []
-        if (taskInfo.length < 1) {
-            errs.push("Your task must have a name.")
+        if (editTaskName) {
+            if (taskInfo.length < 1) {
+                errs.push("Your task must have a name.")
+            }
+            if (taskInfo === allTasks[focusTask].name) {
+                errs.push("No changes were made.")
+            }
         }
         setErrors(errs);
     }, [taskInfo])
+
+    useEffect(() => {
+        console.log(editTaskInfo, editErrors)
+        const errs = []
+        if (editTaskName) {
+            if (editTaskInfo.length < 1) {
+                errs.push("Your task must have a name.")
+            }
+            if (editTaskInfo === allTasks[focusTask].name) {
+                errs.push("No changes were made.")
+            }
+        }
+        setEditErrors(errs);
+    }, [editTaskInfo])
 
 
     const todoStyle = () => {
@@ -142,27 +163,26 @@ const Main = ({ showing, setShowing }) => {
             setErrors(data.errors)
         }
         else {
-            setErrors([])
             setTaskInfo("")
             setShowTaskButton(false)
+            setErrors([])
         }
 
     }
 
-    const submitTaskName = (e) => {
+    const submitTaskName = async (e) => {
         e.preventDefault()
-        const errs = [];
-        if (taskInfo.length < 1) {
-            errs.push("Please enter a task name.")
+
+        const data = await dispatch(changeTaskName(focusTask, editTaskInfo))
+        if (data.errors) {
+            setErrors(data.errors)
         }
-        if (taskInfo === allTasks[focusTask].name) {
-            errs.push("No changes were made.")
-        }
-        if (!errs.length) {
-            dispatch(changeTaskName(focusTask, taskInfo))
+        else {
             setEditTaskName(false)
+            setErrors([])
         }
-        setErrors(errs)
+
+
     }
 
     const submitTaskDue = (e) => {
@@ -197,10 +217,11 @@ const Main = ({ showing, setShowing }) => {
 
     const deleteATask = (e) => {
         e.preventDefault()
-        if (errors.length < 1) {
+        if (editErrors.length < 1) {
             dispatch(deleteTask(focusTask))
             setFocusTask();
             setTaskInfo("")
+            setEditTaskInfo("")
             setEditTaskName(false)
             setShowingTaskOptions(false);
         }
@@ -212,12 +233,12 @@ const Main = ({ showing, setShowing }) => {
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}  <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div>
+                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
                 </div>
-                {icon === "—" &&
+                {/* {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
@@ -231,12 +252,12 @@ const Main = ({ showing, setShowing }) => {
                         </div>
                     </div>
                 </>
-                }
+                } */}
                 <div className="list-tasks-container">
-                    <div className="options-container">
-                        {/* <div className="print-button task-option">🖨</div>
+                    {/*<div className="options-container">
+                         <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
-                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div> */}
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
@@ -277,28 +298,29 @@ const Main = ({ showing, setShowing }) => {
                                 </div>
                             }
                         </div>
-                    </div>
+                    </div> */}
                     {showing !== "All Tasks" &&
                         <div className="form-container add-task-form-container">
                         <form className="user-form add-task-form" onSubmit={submitTask} >
                             <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null} />
-                            <button className="form-button" type="submit" hidden={!showTaskButton}>Add Task</button>
+                            <button className="form-button" type="submit" hidden={!showTaskButton} disabled={errors.length > 0}>Add Task</button>
                         </form>
                     </div>
                     }
                     <div className="user-tasks-container">
                         {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
                         // showing === "All Tasks" && user.orderBy.map(taskId =>
-                            <>
-                                {
-                                    allTasks[taskId] &&
+                            // <>
+                            //     {
+                            //         allTasks[taskId] &&
                             <div className="task-container" key={taskId}>
                                 <div className="task-options-container" id={taskId} onClick={() => {
                                     setFocusTask(taskId)
                                     setShowingTaskOptions(true)
+                                    setErrors([])
 
                                 }} key={taskId}>
-                                    <div className="task-options-icon" >⋮</div>
+                                    <div className="task-options-icon" >Edit Task</div>
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{allTasks[taskId].name}</div>
@@ -313,8 +335,8 @@ const Main = ({ showing, setShowing }) => {
                                     {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
                                 </div>
                             </div>
-                                }
-                            </>
+                            //     }
+                            // </>
                         )}
                         {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
                             <div className="task-container" key={id}>
@@ -323,7 +345,7 @@ const Main = ({ showing, setShowing }) => {
                                     setShowingTaskOptions(true)
 
                                 }} key={id}>
-                                    <div className="task-options-icon">⋮</div>
+                                    <div className="task-options-icon">Edit Task</div>
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{alist.tasks[id].name}</div>
@@ -380,17 +402,25 @@ const Main = ({ showing, setShowing }) => {
                             <div className="task-name-style"></div>
                             <div className="task-name" hidden={editTaskName} onClick={() => {
                                 setEditTaskName(true)
-                                setTaskInfo(allTasks[focusTask].name)
+                            setEditTaskInfo(allTasks[focusTask].name)
                             }}>{allTasks && focusTask && allTasks[focusTask].name}</div>
                         {!editTaskName &&
                                 <button className="delete-button edit-form-button" onClick={deleteATask}>Erase Task</button>
                             }
                         {editTaskName &&
-                                <form className="task-name-form edit-name-form name-form" onSubmit={submitTaskName}>
-                                    <input className="edit-name-input edit-input" type="text" name="name" value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} />
-                                    <button className="edit-form-button" type="submit" hidden={errors.length > 0 || taskInfo === allTasks[focusTask].name}>Update</button>
-                                <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskName(false)}>Cancel</button>
+                            <div className="form-wrapper">
+                                {editErrors && editErrors.map((error) => (
+                                    <div key={error}>{error}</div>
+                                ))}
+                            <form className="task-name-form edit-name-form name-form" onSubmit={submitTaskName}>
+                                <input className="edit-name-input edit-input" type="text" name="name" value={editTaskInfo} onChange={(e) => setEditTaskInfo(e.target.value)} />
+                                <button className="edit-form-button" type="submit" hidden={editTaskInfo === allTasks[focusTask].name} disabled={editErrors.length}>Update</button>
+                                <button className="cancel cancel-button edit-form-button" onClick={() => {
+                                    setEditTaskName(false)
+                                    setEditTaskInfo("")
+                                }}>Cancel</button>
                             </form>
+                        </div>
                         }
                     </div>
                     <article className="task-article-wrapper">
@@ -406,7 +436,7 @@ const Main = ({ showing, setShowing }) => {
                                         name="start_date"
                                         onChange={(e) => setStartDate(e.target.value)}
                                         value={startDate} />
-                                    <button className="edit-form-button" type="submit" hidden={errors.length > 0 || dueDate === allTasks[focusTask].start_date}>Update</button>
+                                <button className="edit-form-button" type="submit" hidden={dueDate === allTasks[focusTask].start_date}>Update</button>
                                     <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskStart(false)}>Cancel</button>
                                 </form>
                             }
@@ -423,7 +453,7 @@ const Main = ({ showing, setShowing }) => {
                                         name="due_date"
                                         onChange={(e) => setDueDate(e.target.value)}
                                         value={dueDate} />
-                                    <button className="edit-form-button" type="submit" hidden={errors.length > 0 || dueDate === allTasks[focusTask].due_date}>Update</button>
+                                <button className="edit-form-button" type="submit" hidden={dueDate === allTasks[focusTask].due_date}>Update</button>
                                     <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskDue(false)}>Cancel</button>
                                 </form>
                             }

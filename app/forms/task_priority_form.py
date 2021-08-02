@@ -8,4 +8,4 @@ def verify_priority(form, field):
         raise ValidationError("Priority did not validate. Please try again.")
 
 class TaskPriorityForm(FlaskForm):
-    priority = IntegerField('priority', validators=[DataRequired(message="Please enter a priority for your task."), verify_priority])
+    priority = IntegerField('priority', validators=[verify_priority])

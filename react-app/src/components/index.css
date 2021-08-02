@@ -338,8 +338,41 @@
     z-index: 20;
 }
 
+.edit-form-button {
+    margin-top: 1rem;
+    font-size: 16pt;
+    padding: 5px;
+    border: 1px solid rgb(120, 75, 161);
+    border-radius: 5px;
+    color:white;
+    background-color: rgb(120, 75, 161);
+    box-sizing: border-box;
+}
+.edit-form-button:hover {
+    margin-top: 1rem;
+    font-size: 16pt;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:rgb(75, 29, 119);
+    color: whitesmoke;
+}
 
+.dimmer-errors {
+    color: whitesmoke;
+    background-color: red;
+    width: fit-content;
+    border-radius: 5px;
+    padding: .25rem;
+    border: 1px solid whitesmoke;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 18pt;
+}
 
+.name-form-header{
+    font-size: 24pt;
+    color: whitesmoke;
+}
 
 @media screen and (min-width: 670px) {
     .burger-bar {
