@@ -10,3 +10,4 @@ from .task_due_form import TaskDueForm
 from .task_start_form import TaskStartForm
 from .task_status_form import TaskStatusForm
 from .task_priority_form import TaskPriorityForm
+from .list_start_form import ListStartForm

@@ -14,7 +14,7 @@ class List(db.Model):
   priority = db.Column(db.Integer, default=0, nullable=False)
 
   owner = db.relationship("User", back_populates="lists")
-  tasks = db.relationship("Task", back_populates="fromList")
+  tasks = db.relationship("Task", cascade="all,delete", back_populates="fromList")
 
   @property
   def title(self):

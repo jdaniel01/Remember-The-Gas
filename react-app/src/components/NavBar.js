@@ -157,36 +157,37 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                   {/* <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink> */}
                   <div className="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
                 </div>
-                  {listsShowing &&
-                    <div className="lists-list">
-                  {lists && order && order.map(id =>
-                    <div className="list-wrapper" key={id}>
-                      <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={() => {
-                        dispatch(setSingleList(lists[id]))
-                        setShowing("list")
-                        closeAll()
-                      }} >{lists[id].name}</NavLink>
-                      <div className="list-options-wrapper" >
-                        <div className="list-options-button" id={id} onClick={updateListOptions}>+</div>
-                        {listOptionsShown === id &&
-                          <div className="list-edit-options" >
-                          <button className="list-option" id={id} onClick={() => {
-                            setEditingList(lists[id])
-                            setShowForm(true)
-                          }}>Edit List</button>
-                          <button className="list-option" id={id} onClick={shareList}>Share List</button>
-                          <button className="list-option" id={id} onClick={() => {
+                {listsShowing && lists && order && order.map((id, index) =>
+                  <div className="lists-list" key={index}>
+                    {lists[id] &&
+                      <div className="list-wrapper" key={id}>
+                        <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={() => {
+                          dispatch(setSingleList(lists[id]))
+                          setShowing("list")
+                          closeAll()
+                        }} >{lists[id].name}</NavLink>
+                        <div className="list-options-wrapper" >
+                          <div className="list-options-button" id={id} onClick={updateListOptions}>+</div>
+                          {listOptionsShown === id &&
+                            <div className="list-edit-options" >
+                              <button className="list-option" id={id} onClick={() => {
+                                setEditingList(lists[id])
+                                setShowForm(true)
+                              }}>Edit List</button>
+                              <button className="list-option" id={id} onClick={shareList}>Share List</button>
+                              <button className="list-option" id={id} onClick={() => {
                             console.log(typeof id, id)
+                            setShowing("All Tasks")
                             dispatch(dropList(id))
                           }
                           }>Delete List</button>
                           </div>
                         }
                       </div>
+                      </div>
+                    }
                     </div>
-                  )}
-                    </div>
-                  }
+                )}
 
               </div>
               <div className="contacts-container burger-item" >

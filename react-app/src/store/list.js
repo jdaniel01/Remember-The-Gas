@@ -119,6 +119,26 @@ export const addTask = (id, name) => async (dispatch) => {
     return data
 }
 
+export const changeListStart = (id, date) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}/start`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ start_date: date })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setLists(data.lists))
+    dispatch(setList(data.list))
+    dispatch(setAllTasks(data.tasks))
+    dispatch(setOrder(data.order))
+    dispatch(setTasksOrder(data.tasksOrder))
+    return data
+}
+
 const initialState = { list: {}, lists: {}, order: [] }
 
 export default function listReducer(state = initialState, action) {
