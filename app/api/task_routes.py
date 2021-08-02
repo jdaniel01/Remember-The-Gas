@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, List, Task
-from app.forms import NewTaskForm, TaskNameForm, TaskDueForm, TaskStartForm
+from app.forms import NewTaskForm, TaskNameForm, TaskDueForm, TaskStartForm, TaskStatusForm, TaskPriorityForm
 from werkzeug.wrappers import Response
 from datetime import datetime
 from sqlalchemy import desc
@@ -42,7 +42,7 @@ def changeName(id):
         print("#########Task Validated#######", newLists)
         return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
         
-    print("#########List Name Failed to Validated#####")
+    print("#########task Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
 
@@ -66,7 +66,7 @@ def changeDue(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
         return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-    print("#########List due date Failed to Validated#####")
+    print("#########task due date Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
 
@@ -91,7 +91,7 @@ def changeStart(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
         return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-    print("#########List Start Date Failed to Validated#####")
+    print("#########task Start Date Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
 
@@ -102,6 +102,7 @@ def changeStatus(id):
     print("###########CHANGING TASK status ######## / ", id)
     form = TaskStatusForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print(form.data["status"])
     if form.validate_on_submit():
         print("#########TASK status VALIDATED######")
         task.status = form.data["status"]
@@ -115,7 +116,32 @@ def changeStatus(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Status Validated#######", newLists)
         return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-    print("#########List Start Date Failed to Validated#####")
+    print("#########task status Failed to Validated#####")
+    return {"errors": validation_errors_to_error_messages(form.errors)}
+
+
+@task_routes.route("/<int:id>/priority", methods=["PUT"])
+@login_required
+def changePriority(id):
+    task = Task.query.get(id)
+    print("###########CHANGING TASK priority ######## / ", id)
+    form = TaskPriorityForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    print(form.data["priority"])
+    if form.validate_on_submit():
+        print("#########TASK priority VALIDATED######")
+        task.priority = form.data["priority"]
+        db.session.commit()
+        print("##########new priority######", task.priority)
+        lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
+        order = [l.id for l in lists]
+        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
+        taskCreatedOrder = [t.id for t in tasks]
+        newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        print("#########Task priority Validated#######", newLists)
+        return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    print("#########task priority Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
 

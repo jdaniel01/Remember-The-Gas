@@ -116,6 +116,26 @@ export const changeTaskStatus = (id, status) => async (dispatch) => {
 }
 
 
+export const changeTaskPriority = (id, priority) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${id}/priority`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ priority })
+    })
+    const data = await res.json()
+    if (data.errors) {
+        return data
+    }
+    dispatch(setAllLists(data.lists))
+    dispatch(setSingleList(data.list))
+    dispatch(setTasks(data.tasks))
+    dispatch(setListOrder(data.order))
+    dispatch(setOrder(data.tasksOrder))
+    return data
+}
+
 
 export const deleteTask = (id) => async (dispatch) => {
     const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" })

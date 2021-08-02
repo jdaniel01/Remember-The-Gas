@@ -19,7 +19,7 @@ const setOrder = (order) => ({
     payload: order
 })
 
-export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
+export const addList = (id, listName, notes) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`, {
         method: "POST",
         headers: {
@@ -29,7 +29,6 @@ export const addList = (id, listName, notes, dueDate) => async (dispatch) => {
             owner_id: id,
             name: listName,
             notes: notes || null,
-            due_date: dueDate || null
         })
     });
     console.log("############RESPONSE OK. Data Returned #######")

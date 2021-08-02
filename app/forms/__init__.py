@@ -8,3 +8,5 @@ from .new_task_form import NewTaskForm
 from .task_name_form import TaskNameForm
 from .task_due_form import TaskDueForm
 from .task_start_form import TaskStartForm
+from .task_status_form import TaskStatusForm
+from .task_priority_form import TaskPriorityForm

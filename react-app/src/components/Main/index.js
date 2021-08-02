@@ -2,7 +2,7 @@ import React, { createElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
-import { getAllTasks, changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus } from '../../store/task';
+import { getAllTasks, changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
 import { sortCompleted } from "./sort";
 
 import "./Main.css";
@@ -42,7 +42,7 @@ const Main = ({ showing, setShowing }) => {
     const [editTaskStart, setEditTaskStart] = useState(false);
     const [startDate, setStartDate] = useState("")
     const [editTaskStatus, setEditTaskStatus] = useState(false)
-
+    const [editTaskPriority, setEditTaskPriority] = useState(false)
 
 
     useEffect(() => {
@@ -83,6 +83,10 @@ const Main = ({ showing, setShowing }) => {
             //TODO: set task notes and owner. create to_detail() for task/list owner
         }
     }, [focusTask])
+
+    useEffect(() => {
+        changeTaskStatus(focusTask, taskStatus)
+    }, [taskStatus])
 
 
     useEffect(() => {
@@ -134,7 +138,7 @@ const Main = ({ showing, setShowing }) => {
         e.preventDefault()
         console.log("#########SUBMITTING Task#######", alist.id, taskInfo)
         //TODO: Add task, store, route, link store and link forms
-        console.log("##########testing##########", allTasks, taskOrders.created)
+        // console.log("##########testing##########", allTasks, taskOrders.created)
         const data = await dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
@@ -142,6 +146,7 @@ const Main = ({ showing, setShowing }) => {
         else {
             setErrors([])
             setTaskInfo("")
+            setShowTaskButton(false)
         }
 
     }
@@ -183,6 +188,13 @@ const Main = ({ showing, setShowing }) => {
         dispatch(changeTaskStatus(allTasks[focusTask].id, taskStatus))
         setEditTaskStatus(false)
         setTaskStatus("open")
+    }
+
+    const submitTaskPriority = (e) => {
+        e.preventDefault()
+        dispatch(changeTaskPriority(allTasks[focusTask].id, taskPriority))
+        setEditTaskPriority(false)
+        setTaskPriority()
     }
 
     const deleteATask = (e) => {
@@ -385,7 +397,10 @@ const Main = ({ showing, setShowing }) => {
                     </div>
                     <article className="task-article-wrapper">
                         <div className="task-attribute-container">
-                            <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date ? allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ") : null}</span><span className="edit-icon">✍</span></div>
+                            {allTasks[focusTask].start_date ?
+                                <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div> :
+                                <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">Add a Task</span><span className="edit-icon">✍</span></div>
+                            }
                             {editTaskStart &&
                                 <form className="edit-form edit-start-form" onSubmit={submitTaskStart}>
                                     <input type="date"
@@ -399,7 +414,10 @@ const Main = ({ showing, setShowing }) => {
                             }
                         </div>
                         <div className="task-attribute-container">
-                            <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date ? allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ") : null}</span><span className="edit-icon">✍</span></div>
+                            {allTasks[focusTask].due_date ?
+                                <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon">✍</span></div> :
+                                <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">Add a due date</span><span className="edit-icon">✍</span></div>
+                            }
                             {editTaskDue &&
                                 <form className="edit-form edit-due-form" onSubmit={submitTaskDue}>
                                     <input type="date"
@@ -415,20 +433,54 @@ const Main = ({ showing, setShowing }) => {
                         <div className="task-attribute-container">
                             <div className="task-attribute" hidden={editTaskStatus}>Status: <span className="attribute-data" onClick={() => setEditTaskStatus(true)}>{allTasks[focusTask].status}</span><span className="edit-icon">✍</span></div>
                             {editTaskStatus &&
-                                <form onSubmit={submitTaskStatus}>
-                                    <input hidden className="status-input edit-input" value={taskStatus} />
-                                    {editTaskStatus &&
-                                        <div className="tasks-status-container">
-                                            <div className="checker-container">
-                                                <div className="status-checker">{taskStatus === "open" ? "✔" : null}</div>
-                                                <div className="status-checker">{taskStatus === "closed" ? "✔" : null}</div>
-                                            </div>
-                                            <div className="statuses-container">
-                                                <div className="checker-status" onClick={() => setTaskStatus("open")}>Open</div>
-                                                <div className="checker-status" onClick={() => setTaskStatus("closed")}>Closed</div>
-                                            </div>
-                                        </div>
-                                    }
+                                <form onSubmit={submitTaskStatus} className="task-status-form">
+                                    <div className="status-input-container input-container">
+                                        <input type="radio" name="status" id="open" className="status-radio" value="open" onClick={(e) => {
+                                            setTaskStatus(e.target.value)
+                                        }} />
+                                        <label htmlFor="open">Open</label>
+                                    </div>
+                                    <div className="status-input-container input-container">
+                                        <input type="radio" name="status" id="closed" className="status-radio" value="closed" onClick={(e) => {
+                                            setTaskStatus(e.target.value)
+                                        }} />
+                                        <label htmlFor="closed">Closed</label>
+                                    </div>
+                                    <button className="edit-form-button" type="submit" hidden={taskStatus === allTasks[focusTask].status}>Update</button>
+                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskStatus(false)}>Cancel</button>
+                                </form>
+                            }
+                        </div>
+                        <div className="task-attribute-container">
+                            <div className="task-attribute" hidden={editTaskPriority}>Priority: <span className="attribute-data" onClick={() => setEditTaskPriority(true)}>{allTasks[focusTask].priority}</span><span className="edit-icon">✍</span></div>
+                            {editTaskPriority &&
+                                <form onSubmit={submitTaskPriority}>
+                                    <div className="priority-input-container input-container">
+                                        <input type="radio" name="priority" id="priority0" className="priority-radio" value={0} onClick={(e) => {
+                                            setTaskPriority(e.target.value)
+                                        }} />
+                                        <label htmlFor="priority0">No Priority</label>
+                                    </div>
+                                    <div className="priority-input-container input-container">
+                                        <input type="radio" name="priority" id="priority1" className="priority-radio" value={1} onClick={(e) => {
+                                            setTaskPriority(e.target.value)
+                                        }} />
+                                        <label htmlFor="priority1">Low Priority</label>
+                                    </div>
+                                <div className="priority-input-container input-container">
+                                    <input type="radio" name="priority" id="priority2" className="priority-radio" value={2} onClick={(e) => {
+                                        setTaskPriority(e.target.value)
+                                    }} />
+                                    <label htmlFor="priority2">Moderate Priority</label>
+                                </div>
+                                <div className="priority-input-container input-container">
+                                    <input type="radio" name="priority" id="priority3" className="priority-radio" value={3} onClick={(e) => {
+                                        setTaskPriority(e.target.value)
+                                    }} />
+                                    <label htmlFor="priority3">High Priority</label>
+                                </div>
+                                <button className="edit-form-button" type="submit" hidden={taskPriority === allTasks[focusTask].priority}>Update</button>
+                                <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskPriority(false)}>Cancel</button>
                                 </form>
                             }
                         </div>
