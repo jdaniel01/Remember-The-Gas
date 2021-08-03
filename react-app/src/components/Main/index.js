@@ -357,6 +357,14 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{alist.tasks[id].name}</div>
+                                    <div className="task-deets-wrapper">
+                                        {alist && alist.tasks[id].due_date &&
+                                            <div className="task-due">{alist.tasks[id].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                        }
+                                        {alist && alist.tasks[id].priority <= 3 && alist.tasks[id].priority >= 0 &&
+                                            <div className="priority-level">{alist.tasks[id].priority}</div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         )}
