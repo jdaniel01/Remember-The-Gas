@@ -34,7 +34,12 @@
     margin-left: 2rem;
 }
 
-.footer-header{
+.media-image:hover{
+    cursor:pointer;
+
+}
+
+.about-header{
     display: flex;
     flex-flow: column nowrap;
     padding-left: 2rem;
@@ -42,7 +47,7 @@
     border-top: 1px solid rgb(75, 29, 119);
 }
 
-.footer-header h2{
+.about-header h2{
     border-bottom: 2px dotted rgb(75, 29, 119);
     width: fit-content;
     box-sizing: border-box;
@@ -50,7 +55,29 @@
     font-size: 25pt;
 }
 
-.footer-header h3{
-    
+.about-header h3{
+    font-size: 18pt;
+}
+
+.nav-links-container{
+    top: 75.5px;
+
+}
+
+.nav-logo{
+    display: flex;
+    justify-content: center;
+}
+
+.rtg-description{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.rtg-description h1{
+    font-size: 30pt;
 }
 

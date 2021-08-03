@@ -99,7 +99,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             }
         }
         setErrors(errs);
-    }, [taskInfo, editTaskInfo, allTasks])
+    }, [taskInfo, editTaskInfo, allTasks, focusTask, editTaskName])
 
     useEffect(() => {
         const errs = []
@@ -250,6 +250,13 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </>
                 } */}
+                <div className="list-tasks-column-headers">
+                    <div className="task-column-header name-header">Name</div>
+                    <div className="task-column-grid">
+                        <div className="task-column-header due-header">Due</div>
+                        <div className="task-column-header priority-header">Priority</div>
+                    </div>
+                </div>
                 <div className="list-tasks-container">
                     {/*<div className="options-container">
                          <div className="print-button task-option">🖨</div>
@@ -398,7 +405,8 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                 setEditTaskName(false)
                                 setFocusTask(0)
                             }}>×</div>
-                        </div>
+                    </div>
+                    <p className="task-article-instructions">Click on a field to edit.</p>
                         <div className="task-name-container">
                             <div className="task-name-style"></div>
                             <div className="task-name" hidden={editTaskName} onClick={() => {
@@ -424,7 +432,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         </div>
                         }
                     </div>
-                    <p className="task-article-instructions">Click on a field to edit.</p>
                     <article className="task-article-wrapper">
                         <div className="task-attribute-container">
                             {allTasks[focusTask].start_date ?

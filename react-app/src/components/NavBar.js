@@ -35,7 +35,6 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [pathOk, setPathOk] = useState(true);
 
   useEffect(() => {
-    console.log(location, typeof location)
     if (location === "/login" || location === "/sign-up") {
       setPathOk(false)
     }
@@ -190,8 +189,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                                 setShowForm(true)
                               }}>Edit List</button>
                           {/* <button className="list-option" id={id} onClick={shareList}>Share List</button> */}
-                              <button className="list-option" id={id} onClick={() => {
-                            console.log(typeof id, id)
+                          <button className="list-option" id={id} onClick={() => {
                             setShowing("All Tasks")
                             dispatch(dropList(id))
                             setShowingTaskOptions(false)
@@ -207,6 +205,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 )}
 
               </div>
+              <NavLink to="/about" className="about-link burger-item">About</NavLink>
               {/* <div className="contacts-container burger-item" >
                 <div className="contacts" onClick={updateContactsShowing}>Contacts</div>
                 {userContacts && contactsShowing &&

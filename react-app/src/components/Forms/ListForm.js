@@ -18,7 +18,6 @@ const ListForm = ({ setShowNewListForm, setShowing, setIsDisplayed }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log("@@@@@@LIST FORM.JS@@@@@@", name, notes)
         if (errors.length === 0) {
             const data = await dispatch(addList(user.id, name, notes))
             if (data.errors) {
@@ -26,7 +25,6 @@ const ListForm = ({ setShowNewListForm, setShowing, setIsDisplayed }) => {
             }
             else {
                 setErrors([])
-                console.log("#######attempting to redirect##", user.lists[0].id)
                 setShowing("list")
                 setIsDisplayed(false)
                 setShowNewListForm(false)

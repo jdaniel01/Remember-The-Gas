@@ -12,12 +12,12 @@ const About = () => {
 
     return (
         <>
-            {user &&
+            {/* {user &&
                 <NavBar />
             }
             {!user &&
                 <nav className="splash-nav-container">
-                    <div className="splash-nav-logo" onClick={() => setIsDisplayed(!isDisplayed)}>⛽<span className="splash-temp-title">Remember The Gas</span></div>
+                <div className="splash-nav-logo" onClick={() => setIsDisplayed(!isDisplayed)} role="img" aria-label="Remember the gas logo">⛽<span className="splash-temp-title">Remember The Gas</span></div>
                     <div className="splash-user-container">
                         <button className="splash-login splash-button" onClick={() => history.push("/login")}>Login</button>
                         <button className="splash-signup splash-button" onClick={() => history.push("/sign-up")}> Sign-up</button>
@@ -26,7 +26,7 @@ const About = () => {
                         <>
                             <div className="nav-links-container">
                                 <NavLink to="/" className="nav-logo" onClick={() => setIsDisplayed(!isDisplayed)}>
-                                    {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+                                    <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
                                     <div className="nav-logo"><span role="img" aria-label="Remember the gas logo">⛽</span></div>
                                 </NavLink>
                                 <NavLink className="nav-link" to="/about" exact={true} activeClassName="active" onClick={() => setIsDisplayed(!isDisplayed)}>
@@ -42,9 +42,14 @@ const About = () => {
                         </>
                     }
                 </nav>
-            }
-            <div className="footer-container">
-                <div className="footer-header">
+            } */}
+            <div className="rtg-description">
+                <h1>Remember The Gas</h1>
+                <p>Remember The Gas is a list making clone of "Remember the Milk". With this application you can create and modify lists and the tasks or items associated with them. You're able to change: priority level, start and due dates, completion and (of course) the name. The intuitive feel of the app make it easy for anyone to use with any screen size.</p>
+                <p>Features to come include adding contacts and sharing your lists and tasks with your contacts as well as a dynamic search feature that will allow you to search for tasks, lists, and contacts all in one search.</p>
+            </div>
+            <div className="about-container">
+                <div className="about-header">
                     <h3>The Developer</h3>
                     <h2>James Daniel Jr.</h2>
                 </div>
@@ -94,10 +99,10 @@ const About = () => {
                     <img className="media-image " src="" style={{ height: "100px" }} />
                 </div> */}
                     <div className="social-media">
-                        <img className="github media-image" src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{ height: "100px" }} onClick={() => window.open("https://github.com/jdaniel01")} />
+                        <img className="github media-image" alt="github logo" src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{ height: "100px" }} onClick={() => window.open("https://github.com/jdaniel01")} />
                     </div>
                     <div className="social-media" onClick={() => window.open("https://www.linkedin.com/in/james-daniel-jr-403178189?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BVwQ9TThBT6OMT41JzUhOAw%3D%3D")}>
-                        <img className="media-image linked-in" src="https://image.flaticon.com/icons/png/512/174/174857.png" style={{ height: "100px" }} />
+                        <img className="media-image linked-in" alt="linked in logo" src="https://image.flaticon.com/icons/png/512/174/174857.png" style={{ height: "100px" }} />
                     </div>
                 </div>
             </div>

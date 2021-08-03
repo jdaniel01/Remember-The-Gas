@@ -37,6 +37,13 @@
     padding: 1rem;
 }
 
+.sections-list li:hover{
+    list-style-type: none;
+    padding: 1rem;
+    cursor:pointer;
+    color: rgb(75, 29, 119);
+}
+
 .account-body-container {
     grid-area: b;
     width: 100%;

@@ -77,6 +77,45 @@ body{
     padding-top: 2rem;
 }
 
+.list-tasks-column-headers{
+    width: 100%;
+    background: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    font-size: 14pt;
+}
+
+.task-column-grid{
+    display: grid;
+    grid-template-areas:
+    "n d";
+    grid-template-columns: 4fr 1fr;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.name-header{
+    margin-left: 5rem;
+}
+
+.due-header{
+    grid-area: n;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.priority-header{
+    grid-area: d;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    margin-left: 4rem;
+}
+
 .options-container{
     display: flex;
     flex-flow: row nowrap;
@@ -125,6 +164,7 @@ body{
     border-radius: 5px;
     font-size: 14pt;
     margin-right: .25rem;
+    cursor: pointer;
 }
 
 .filter-button{
@@ -326,11 +366,12 @@ body{
 .task-container{
     display: flex;
     flex-flow: row nowrap;
-    height: 2.5rem;
+    min-height: 2.5rem;
+    height: fit-content;
     border-top: 1px dotted lightgrey;
     align-items: center;
     width: 100%;
-    box-sizing: content-box;
+    box-sizing: border-box;
     justify-content: flex-start;
     padding: .25rem;
 }
@@ -388,6 +429,7 @@ body{
     color: whitesmoke;
     background-color: rgb(75, 29, 119);
     margin: 1rem;
+    cursor: pointer;
 }
 
 .exit-container{
@@ -428,6 +470,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .task-name-style{
@@ -471,6 +514,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .edit-input{
@@ -513,11 +557,12 @@ body{
     flex-flow: row wrap;
     width: 100%;
     justify-content: flex-end;
+    margin-right: 2rem;
+    box-sizing: border-box;
 }
 
 .priority-level{
-    margin-left: 2rem;
-    margin-right: 1rem;
+    margin-right: 2rem;
     display: flex;
     font-size: 14pt;
     justify-content: center;
@@ -532,7 +577,7 @@ body{
 }
 
 .task-name{
-    font-size: 14pt;
+    font-size: 18pt;
     display: flex;
     flex-flow: row nowrap;
     width: 15rem;
@@ -544,6 +589,7 @@ body{
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    padding-right: 5rem;
 }
 
 .attribute-data{
@@ -552,7 +598,6 @@ body{
 
 .task-article-instructions{
     margin-left: 2rem;
-    margin-bottom: -1rem;
     font-size: 16pt;
     font-weight: 600;
 }
@@ -563,7 +608,7 @@ body{
 }
 
 .task-attribute{
-    font-size: 20pt;
+    font-size: 16pt;
     padding: .5rem;
 }
 

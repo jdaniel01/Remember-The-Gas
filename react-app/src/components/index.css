@@ -5,6 +5,13 @@
     color: lightgrey;
 }
 
+.burger-img:hover {
+    font-size: 40pt;
+    box-sizing: border-box;
+    color: lightgrey;
+    cursor:pointer;
+}
+
 .search-icon, .notification-icon {
     font-size: 20pt;
     box-sizing: border-box;
@@ -20,7 +27,18 @@
     align-items: center;
     color: lightgrey;
     padding: 0;
+}
 
+.settings-icon:hover{
+    font-size: 25pt;
+    /* height: 40px; */
+    box-sizing: border-box;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    padding: 0;
+    cursor:pointer;
 }
 
 .user-image{
@@ -47,9 +65,20 @@
 }
 
 .burger-item{
+    text-decoration: none;
+    color: black;
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: rgb(237, 214, 255);
+}
+
+.burger-item:hover{
+    text-decoration: none;
+    color: black;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: rgb(237, 214, 255);
+    cursor:pointer;
 }
 
 .settings-container{
@@ -127,6 +156,7 @@
     margin: 0;
     width: 100%;
     margin-top: 1rem;
+    cursor:pointer;
 }
 
 .user-block{

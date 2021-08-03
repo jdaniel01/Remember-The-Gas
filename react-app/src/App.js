@@ -29,7 +29,6 @@ function App() {
 
 
   useEffect(() => {
-    console.log(location, typeof location)
     if (location === "/login" || location === "/sign-up") {
       setPathOk(false)
     }
@@ -91,6 +90,7 @@ function App() {
           </Route>
         }
         <Route path="/about" exact={true}>
+          {!user && <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} setShowingTaskOptions={setShowingTaskOptions} />}
           <About />
         </Route>
         {/* {user &&

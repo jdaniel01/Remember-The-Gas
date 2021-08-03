@@ -39,7 +39,6 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
         })
     });
 
-    console.log("#############RESPONSE OK. SESSION LOGIN")
     const data = await response.json();
     if (data.errors) {
         return data;
@@ -99,7 +98,6 @@ export const demoLogin = () => async (dispatch) => {
     const response = await fetch('/api/auth/demo')
 
     if (response.ok) {
-        console.log("#############RESPONSE OK. SESSION LOGIN")
         const data = await response.json();
         if (data.errors) {
             return data;

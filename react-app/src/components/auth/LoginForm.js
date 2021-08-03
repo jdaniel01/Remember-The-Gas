@@ -48,13 +48,15 @@ const LoginForm = () => {
     <div className="user-form-page-container">
       <article className="logo-article user-article">
         <NavLink to="/" className="rtg-logo">
-          <img className="rtg-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+          {/* <img className="rtg-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+          <span className="rtg-form-logo" role="img" aria-label="Remember the gas logo">⛽</span>
         </NavLink>
       </article>
       <article className="form-article user-article">
         <div className="user-form-link-container">
           <NavLink to="/" className="rtg-logo">
-            <img className="form-rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+            {/* <img className="form-rtg_logo" src="images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+            <span role="img" className="rtg-form-logo" aria-label="Remember the gas logo">⛽</span>
           </NavLink>
           <NavLink to="/sign-up" className="user-form-link form-link">
             Sign-up here!
