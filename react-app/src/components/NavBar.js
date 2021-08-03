@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { authenticate } from '../store/session';
+import { NavLink, useHistory } from 'react-router-dom';
 import { getLists, setSingleList, dropList, editName } from "../store/list";
 import { getAllTasks } from '../store/task';
 import ListForm from './Forms/ListForm';
@@ -16,7 +15,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
   const order = useSelector(state => state.list.order)
-  const tasks = useSelector(state => state.task.tasks)
+  // const tasks = useSelector(state => state.task.tasks)
   const taskOrders = useSelector(state => state.task.orderBy)
 
   const location = window.location.pathname
@@ -25,9 +24,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [editingList, setEditingList] = useState({})
   const [tasksShowing, setTasksShowing] = useState(false)
   const [listsShowing, setListsShowing] = useState(false)
-  const [contactsShowing, setContactsShowing] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
-  const [showListOptions, setShowListOptions] = useState(false);
+  // const [contactsShowing, setContactsShowing] = useState(false)
+  // const [searchValue, setSearchValue] = useState("")
+  // const [showListOptions, setShowListOptions] = useState(false);
   const [listOptionsShown, setListOptionsShown] = useState();
   const [showForm, setShowForm] = useState(false)
   const [name, setName] = useState("")
@@ -55,7 +54,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
       dispatch(getLists(user.id))
       dispatch(getAllTasks(user.id))
     }
-  }, [dispatch])
+  }, [dispatch, user])
 
   useEffect(() => {
     const errs = [];
@@ -94,10 +93,10 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   }
 
 
-  const shareList = (e) => {
-    //TODO: Create Share with Number(e.target.id) and user.id as owner_id or user_id check model
-    console.log("Sharing is Caring")
-  }
+  // const shareList = (e) => {
+  //   //TODO: Create Share with Number(e.target.id) and user.id as owner_id or user_id check model
+  //   console.log("Sharing is Caring")
+  // }
 
   const updateTasksShowing = () => {
     setTasksShowing(!tasksShowing)
@@ -107,14 +106,14 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     setListsShowing(!listsShowing)
   }
 
-  const updateContactsShowing = () => {
-    setContactsShowing(!contactsShowing)
-  }
+  // const updateContactsShowing = () => {
+  //   setContactsShowing(!contactsShowing)
+  // }
 
-  const updateSearchValue = (e) => {
-    e.preventDefault()
-    setSearchValue(e.target.value)
-  }
+  // const updateSearchValue = (e) => {
+  //   e.preventDefault()
+  //   setSearchValue(e.target.value)
+  // }
 
   const updateSettings = () => {
     setIsDisplayed(false)
@@ -144,7 +143,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
             <div className="nav-links-container" >
               <NavLink to={`/users/${user.id}/tasks`} className="nav-logo" onClick={closeAll}>
                 {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
-                <div className="nav-logo">⛽</div>
+                <div className="nav-logo"><span role="img" aria-label="remember the gas logo.">⛽</span></div>
               </NavLink>
               <div className="tasks-container burger-item">
                 <div className="upcoming-tasks" onClick={updateTasksShowing}>Upcoming Tasks</div>
@@ -226,7 +225,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
               <div className="nav-links-container">
               <NavLink to="/" className="nav-logo" onClick={closeAll}>
                 {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
-                <div className="nav-logo">⛽</div>
+                <div className="nav-logo"><span role="img" aria-label="Remember the gas logo">⛽</span></div>
               </NavLink>
               <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active" onClick={closeAll}>
                   Tour

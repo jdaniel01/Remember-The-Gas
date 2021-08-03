@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -10,7 +10,7 @@ import User from "./components/User";
 import Splash from "./components/Splash";
 import Main from './components/Main';
 import { authenticate } from "./store/session";
-import ListForm from "./components/Forms/ListForm";
+// import ListForm from "./components/Forms/ListForm";
 
 function App() {
 

@@ -31,7 +31,6 @@ export const addList = (id, listName, notes) => async (dispatch) => {
             notes: notes || null,
         })
     });
-    console.log("############RESPONSE OK. Data Returned #######")
     const data = await res.json()
     if (data.errors) {
         return data
@@ -46,7 +45,6 @@ export const addList = (id, listName, notes) => async (dispatch) => {
 
 export const getLists = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`)
-    console.log("##########RESPONSE OK. Data Recieved######")
     const data = await res.json()
     dispatch(setLists(data.lists))
     dispatch(setOrder(data.order))
@@ -55,7 +53,6 @@ export const getLists = (id) => async (dispatch) => {
 
 export const getList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`)
-    console.log("##########RESPONSE OK. Data Recieved######")
     const list = await res.json()
     if (list.errors) {
         return list

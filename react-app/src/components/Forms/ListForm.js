@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Redirect, useLocation, useHistory } from 'react-router-dom';
-import { addList, setSingleList } from "../../store/list"
+import { useHistory } from 'react-router-dom';
+import { addList } from "../../store/list"
 import "./Forms.css";
 
 
@@ -10,7 +10,6 @@ const ListForm = ({ setShowNewListForm, setShowing, setIsDisplayed }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.session.user)
-    const alist = useSelector(state => state.list.list)
 
     const [name, setName] = useState("");
     const [notes, setNotes] = useState("");

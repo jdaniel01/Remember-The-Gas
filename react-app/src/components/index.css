@@ -369,10 +369,7 @@
     font-size: 18pt;
 }
 
-.name-form-header{
-    font-size: 24pt;
-    color: whitesmoke;
-}
+
 
 @media screen and (min-width: 670px) {
     .burger-bar {
