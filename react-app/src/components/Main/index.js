@@ -353,7 +353,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                     setShowingTaskOptions(true)
 
                                 }} key={id}>
-                                    <div className="task-options-icon">Edit Task</div>
+                                    <div className="task-options-icon">Edit</div>
                                 </div>
                                 <div className="task-details-container">
                                     <div className="task-name">{alist.tasks[id].name}</div>
