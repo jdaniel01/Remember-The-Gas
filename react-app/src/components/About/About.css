@@ -1,0 +1,56 @@
+.knowledge-about{
+    background-color: white;
+}
+
+.knowledge-about img{
+    height: 4rem;
+    margin: 1rem;
+}
+
+.developer-skills{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    background-color: white;
+}
+
+.about-me{
+    padding: 2rem;
+    font-size: 14pt;
+    background-color: white;
+}
+
+.social-media-links{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.social-media{
+    margin-left: 2rem;
+}
+
+.footer-header{
+    display: flex;
+    flex-flow: column nowrap;
+    padding-left: 2rem;
+    background-color: white;
+    border-top: 1px solid rgb(75, 29, 119);
+}
+
+.footer-header h2{
+    border-bottom: 2px dotted rgb(75, 29, 119);
+    width: fit-content;
+    box-sizing: border-box;
+    padding-bottom: .5rem;
+    font-size: 25pt;
+}
+
+.footer-header h3{
+    
+}
+

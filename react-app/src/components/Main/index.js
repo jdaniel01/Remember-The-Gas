@@ -70,7 +70,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 }
             }
         }
-    }, [dispatch, showing, alist])
+    }, [dispatch, showing, alist, title, history, listId, user.id])
 
     useEffect(() => {
         if (allTasks && focusTask) {
@@ -81,15 +81,14 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             setDueDate(allTasks[focusTask].due_date)
             //TODO: set task notes and owner. create to_detail() for task/list owner
         }
-    }, [focusTask])
+    }, [focusTask, allTasks])
 
     useEffect(() => {
         changeTaskStatus(focusTask, taskStatus)
-    }, [taskStatus])
+    }, [taskStatus, focusTask])
 
 
     useEffect(() => {
-        console.log(errors, taskInfo)
         const errs = []
         if (editTaskName) {
             if (taskInfo.length < 1) {
@@ -100,10 +99,9 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             }
         }
         setErrors(errs);
-    }, [taskInfo])
+    }, [taskInfo, editTaskInfo, allTasks])
 
     useEffect(() => {
-        console.log(editTaskInfo, editErrors)
         const errs = []
         if (editTaskName) {
             if (editTaskInfo.length < 1) {

@@ -9,8 +9,9 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Splash from "./components/Splash";
 import Main from './components/Main';
+import About from './components/About';
 import { authenticate } from "./store/session";
-// import ListForm from "./components/Forms/ListForm";
+// import Footer from "./components/Footer";
 
 function App() {
 
@@ -89,6 +90,12 @@ function App() {
             <Splash />
           </Route>
         }
+        <Route path="/about" exact={true}>
+          <About />
+        </Route>
+        {/* {user &&
+          <Footer />
+        } */}
       </Switch>
     </BrowserRouter>
   );

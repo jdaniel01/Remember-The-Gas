@@ -1,19 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { NavLink } from 'react-router-dom';
+// import Footer from '../Footer';
 import "./Splash.css"
 
 const Splash = () => {
 
+    const user = useSelector(state => state.session.user)
     const history = useHistory()
+    const [isDisplayed, setIsDisplayed] = useState(false);
+
+    const closeAll = (e) => {
+        setIsDisplayed(!isDisplayed);
+    }
 
     return (
         <>
             <nav className="splash-nav-container">
-                <div className="splash-nav-logo" onClick={() => history.push("/")}>⛽<span className="splash-temp-title">Remember The Gas</span></div>
+                <div className="splash-nav-logo" onClick={closeAll}>⛽<span className="splash-temp-title">Remember The Gas</span></div>
                 <div className="splash-user-container">
                     <button className="splash-login splash-button" onClick={() => history.push("/login")}>Login</button>
                     <button className="splash-signup splash-button" onClick={() => history.push("/sign-up")}> Sign-up</button>
                 </div>
+                {!user && isDisplayed &&
+                    <>
+                        <div className="nav-links-container">
+                            <NavLink to="/" className="nav-logo" onClick={closeAll}>
+                                {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
+                                <div className="nav-logo"><span role="img" aria-label="Remember the gas logo">⛽</span></div>
+                            </NavLink>
+                            <NavLink className="nav-link" to="/about" exact={true} activeClassName="active" onClick={closeAll}>
+                                About
+                            </NavLink>
+                            <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active" onClick={closeAll}>
+                                Sign-up
+                            </NavLink>
+                            <NavLink className="nav-link" to="/login" exact={true} activeClassName="active" onClick={closeAll}>
+                                Login
+                            </NavLink>
+                        </div>
+                    </>
+                }
             </nav>
             <article className="splash-container">
                 <div className="feature-carousel">
@@ -40,6 +68,7 @@ const Splash = () => {
                     </div>
                 </div>
             </article>
+            {/* <Footer /> */}
         </>
     )
 }
