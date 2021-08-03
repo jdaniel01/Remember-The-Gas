@@ -32,16 +32,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
   const [name, setName] = useState("")
   const [errors, setErrors] = useState([])
   const [showNewListForm, setShowNewListForm] = useState(false);
-  const [pathOk, setPathOk] = useState(true);
 
-  useEffect(() => {
-    if (location === "/login" || location === "/sign-up") {
-      setPathOk(false)
-    }
-    else {
-      setPathOk(true)
-    }
-  }, [location])
 
   useEffect(() => {
     setName(editingList.name)
@@ -136,7 +127,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
       <nav className="nav-container">
         <div className="burger-bar" >
           {/* <img className="burger-img" src="/images/hamburger-bar.png" onClick={updateDisplay} /> */}
-          <div className="burger-img" onClick={updateDisplay}>≡</div>
+          <div className="burger-img" onClick={() => {
+            setIsDisplayed(!isDisplayed)
+          }}>≡</div>
           {user && isDisplayed &&
             <>
             <div className="nav-links-container" >
@@ -219,16 +212,16 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
               </div>
             </>
           }
-          {/* {!user && isDisplayed &&
+          {!user && isDisplayed &&
             <>
               <div className="nav-links-container">
               <NavLink to="/" className="nav-logo" onClick={closeAll}>
-                <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
+                {/* <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" /> */}
                 <div className="nav-logo"><span role="img" aria-label="Remember the gas logo">⛽</span></div>
               </NavLink>
-              <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active" onClick={closeAll}>
+              {/* <NavLink className="nav-link" to="/tour" exact={true} activeClassName="active" onClick={closeAll}>
                   Tour
-                </NavLink>
+                </NavLink> */}
               <NavLink className="nav-link" to="/about" exact={true} activeClassName="active" onClick={closeAll}>
                   About
                 </NavLink>
@@ -240,7 +233,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                 </NavLink>
               </div>
             </>
-          } */}
+          }
         </div>
         {/* <div className="search-container">
           <img src="/images/search-icon.png" alt="search icon. a simple light grey icon of a magnifying glass." />

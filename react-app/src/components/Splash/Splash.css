@@ -62,7 +62,7 @@
 }
 
 .splash-nav-logo{
-    font-size: 24pt;
+    font-size: 19pt;
 }
 
 .splash-user-container{
@@ -102,7 +102,8 @@
 }
 
 .nav-links-container{
-    top: 75.5px;
+    top: 67px;
+    box-sizing: border-box;
 
 }
 

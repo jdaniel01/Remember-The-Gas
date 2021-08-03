@@ -430,7 +430,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 67.2px;
+        top: 67px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;
@@ -462,7 +462,7 @@
 
     .nav-links-container{
         position: absolute;
-        top: 67.2px;
+        top: 67px;
         left: -1rem;
         background-color: rgb(237, 214, 255);
         display: flex;
