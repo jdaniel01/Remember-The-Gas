@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import { login, demoLogin } from "../../store/session";
@@ -20,6 +20,17 @@ const LoginForm = () => {
       setErrors(data.errors);
     }
   };
+
+  useEffect(() => {
+    const errs = [];
+    if (!nameOrEmail) {
+      errs.push("Please enter your username or email address.")
+    }
+    if (!password) {
+      errs.push("Please enter your password.")
+    }
+    setErrors(errs)
+  }, [nameOrEmail, password])
 
   const updateNameorEmail = (e) => {
     setNameOrEmail(e.target.value);
