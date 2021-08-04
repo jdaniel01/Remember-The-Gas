@@ -12,39 +12,9 @@ const About = () => {
 
     return (
         <>
-            {/* {user &&
-                <NavBar />
-            }
-            {!user &&
-                <nav className="splash-nav-container">
-                <div className="splash-nav-logo" onClick={() => setIsDisplayed(!isDisplayed)} role="img" aria-label="Remember the gas logo">⛽<span className="splash-temp-title">Remember The Gas</span></div>
-                    <div className="splash-user-container">
-                        <button className="splash-login splash-button" onClick={() => history.push("/login")}>Login</button>
-                        <button className="splash-signup splash-button" onClick={() => history.push("/sign-up")}> Sign-up</button>
-                    </div>
-                    {!user && isDisplayed &&
-                        <>
-                            <div className="nav-links-container">
-                                <NavLink to="/" className="nav-logo" onClick={() => setIsDisplayed(!isDisplayed)}>
-                                    <img className="nav-logo" src="/images/dftg-logo.png" alt="Remember The Gas Logo. The logo is an image of a red jerry can, or gas can, pouring out a green checkmark" />
-                                    <div className="nav-logo"><span role="img" aria-label="Remember the gas logo">⛽</span></div>
-                                </NavLink>
-                                <NavLink className="nav-link" to="/about" exact={true} activeClassName="active" onClick={() => setIsDisplayed(!isDisplayed)}>
-                                    About
-                                </NavLink>
-                                <NavLink className="nav-link" to="/sign-up" exact={true} activeClassName="active" onClick={() => setIsDisplayed(!isDisplayed)}>
-                                    Sign-up
-                                </NavLink>
-                                <NavLink className="nav-link" to="/login" exact={true} activeClassName="active" onClick={() => setIsDisplayed(!isDisplayed)}>
-                                    Login
-                                </NavLink>
-                            </div>
-                        </>
-                    }
-                </nav>
-            } */}
             <div className="rtg-description">
                 <h1>Remember The Gas</h1>
+                <a href="https://github.com/jdaniel01/Remember-The-Gas" className="github-link">View Project Page</a>
                 <p>Remember The Gas is a list making clone of "Remember the Milk". With this application you can create and modify lists and the tasks or items associated with them. You're able to change: priority level, start and due dates, completion and (of course) the name. The intuitive feel of the app make it easy for anyone to use with any screen size.</p>
                 <p>Features to come include adding contacts and sharing your lists and tasks with your contacts as well as a dynamic search feature that will allow you to search for tasks, lists, and contacts all in one search.</p>
             </div>

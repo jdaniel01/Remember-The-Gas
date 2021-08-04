@@ -81,3 +81,23 @@
     font-size: 30pt;
 }
 
+.github-link {
+    text-decoration: none;
+    font-size: 14pt;
+    padding: 5px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    color:whitesmoke;
+    background-color: rgb(120, 75, 161);
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+.github-link:hover {
+    text-decoration: none;
+    font-size: 14pt;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:rgb(75, 29, 119);
+    color: whitesmoke;
+    margin-bottom: 1rem;
+}
