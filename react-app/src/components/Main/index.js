@@ -45,6 +45,8 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskPriority, setEditTaskPriority] = useState(false)
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
+    const [editListName, setEditListName] = useState(false);
+
 
     useEffect(() => {
 
@@ -230,7 +232,9 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+                    {!editListName &&
+                        <div className="header-title" onClick={() => title !== "All Tasks" ? setEditListName(true) : null}>{title}</div>
+                    }
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}

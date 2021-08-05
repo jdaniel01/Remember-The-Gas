@@ -68,7 +68,7 @@
 .splash-user-container{
     display: flex;
     flex-flow: row nowrap;
-    width: 25%;
+    width: fit-content;
     justify-content: flex-end;
     align-items: center;
 }
@@ -85,6 +85,7 @@
     border-radius: 5px;
     font-weight: 600px;
     margin-left: 1rem;
+    width: 4rem;
 }
 
 .splash-button:hover{
@@ -99,15 +100,30 @@
     border-radius: 5px;
     font-weight: 600px;
     margin-left: 1rem;
+    width: 4rem;
 }
 
-.nav-links-container{
-    top: 67px;
-    box-sizing: border-box;
-
-}
 
 .nav-logo{
     display: flex;
     justify-content: center;
 }
+
+.nav-link{
+    text-decoration: none;
+    color: black;
+    padding: .5rem;
+    font-size: 16pt;
+    width: 50%;
+}
+
+.nav-link:hover{
+        text-decoration: none;
+        color: black;
+        padding: .5rem;
+        font-size: 16pt;
+        width: 50%;
+        font-weight: 700;
+        border-bottom: 1px solid whitesmoke;
+    }
+
