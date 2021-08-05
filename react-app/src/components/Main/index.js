@@ -45,8 +45,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskPriority, setEditTaskPriority] = useState(false)
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
-    const [editListName, setEditListName] = useState(false);
-
+    const [editListNotes, setEditListNotes] = useState(false);
 
     useEffect(() => {
 
@@ -155,8 +154,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
     const submitTask = async (e) => {
         e.preventDefault()
-        //TODO: Add task, store, route, link store and link forms
-        // console.log("##########testing##########", allTasks, taskOrders.created)
         const data = await dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
@@ -186,7 +183,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
     const submitTaskDue = (e) => {
         e.preventDefault()
-        const errs = [];
         dispatch(changeTaskDue(allTasks[focusTask].id, dueDate))
         setEditTaskDue(false)
         setDueDate("")
@@ -232,9 +228,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    {!editListName &&
-                        <div className="header-title" onClick={() => title !== "All Tasks" ? setEditListName(true) : null}>{title}</div>
-                    }
+                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
@@ -254,6 +248,15 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </>
                 } */}
+                {alist && alist.notes &&
+                    <div className="list-notes">
+                        <h3>Notes </h3>
+                        <div className="notes-container">
+                            <p>{alist.notes}</p>
+                            <button onClick={() => setEditListNotes(true)}>Edit</button>
+                        </div>
+                    </div>
+                }
                 <div className="list-tasks-column-headers">
                     <div className="task-column-header name-header">Name</div>
                     <div className="task-column-grid">

@@ -24,7 +24,7 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def getLists():
     print("###########REQUESTING LISTS######## / ", current_user.id)
-    lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
+    lists = List.query.filter(List.owner_id == current_user.id).order_by(List.status).order_by(desc(List.id)).all()
     newLists = dict([(j.id, j.to_dict()) for j in lists])
     order = [l.id for l in lists]
     # return {"lists": newLists, "order": order}
