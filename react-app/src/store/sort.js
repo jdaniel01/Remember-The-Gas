@@ -38,7 +38,7 @@ export const sortPriority = (tasks) => {
         }
     }
 
-    return { no: p0, low: p1, mid: p2, high: p3 }
+    return { no: p0, low: p1, med: p2, high: p3 }
 }
 
 
