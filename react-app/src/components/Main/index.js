@@ -20,12 +20,12 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
 
     const [title, setTitle] = useState("All Tasks")
-    // const [icon, setIcon] = useState("◁")
-    // const [showFilters, setShowFilters] = useState(false)
-    const [filter, setFilter] = useState("created")//"created", "due_date", "status"
-    // const [shownType, setShownType] = useState("todo")//"finished"
-    // const [showBulkSelect, setShowBulkSelect] = useState(false);
-    // const [showBulkActions, setShowBulkActions] = useState(false);
+    const [icon, setIcon] = useState("◁")
+    const [showFilters, setShowFilters] = useState(false)
+    const [filter, setFilter] = useState("created")//"created", "priority", "status"
+    const [shownType, setShownType] = useState("todo")//"finished"
+    const [showBulkSelect, setShowBulkSelect] = useState(false);
+    const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
@@ -117,40 +117,40 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }, [editTaskInfo])
 
 
-    // const todoStyle = () => {
-    //     if (shownType === "todo") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const todoStyle = () => {
+        if (shownType === "todo") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const doneStyle = () => {
-    //     if (shownType === "done") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const doneStyle = () => {
+        if (shownType === "done") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const updateIcon = (e) => {
-    //     if (e.target.innerText === "◁") {
-    //         setIcon("—")
-    //     }
-    //     else {
-    //         setIcon("◁")
-    //     }
-    // }
+    const updateIcon = (e) => {
+        if (e.target.innerText === "◁") {
+            setIcon("—")
+        }
+        else {
+            setIcon("◁")
+        }
+    }
 
 
     const submitTask = async (e) => {
@@ -229,26 +229,27 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
                 </div>
-                {/* {icon === "—" &&
+                {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                            {title === "list" && alist && <div className="tasks-total">{0}</div>}
-                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>}
+                            {/* {title === "list" && alist && <div className="tasks-total">{0}</div>} */}
+                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.status.open.length}</div>}
                             <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
-                            <div className="tasks-total">{0}</div>
+                            {/* {title === "list" && alist && <div className="tasks-total">{0}</div>} */}
+                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.status.closed.length}</div>}
                             <div className="tasks-detail">completed</div>
                         </div>
                     </div>
                 </>
-                } */}
+                }
                 {alist && alist.notes &&
                     <div className="list-notes">
                         <h3>Notes </h3>
@@ -266,7 +267,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </div>
                 <div className="list-tasks-container">
-                    {/*<div className="options-container">
+                    <div className="options-container">
                          <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
                         <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
@@ -310,7 +311,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                 </div>
                             }
                         </div>
-                    </div> */}
+                    </div>
                     {showing !== "All Tasks" &&
                         <div className="form-container add-task-form-container">
                         <form className="user-form add-task-form" onSubmit={submitTask} >
