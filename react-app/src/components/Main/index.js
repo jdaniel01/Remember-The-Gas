@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
-import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
+import { getAllTasks, changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
 // import { sortCompleted } from "./sort";
 
 import "./Main.css";
@@ -21,12 +21,12 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
 
     const [title, setTitle] = useState("All Tasks")
-    // const [icon, setIcon] = useState("◁")
-    // const [showFilters, setShowFilters] = useState(false)
+    const [icon, setIcon] = useState("◁")
+    const [showFilters, setShowFilters] = useState(false)
     const [filter, setFilter] = useState("created")//"created", "due_date", "status"
-    // const [shownType, setShownType] = useState("todo")//"finished"
-    // const [showBulkSelect, setShowBulkSelect] = useState(false);
-    // const [showBulkActions, setShowBulkActions] = useState(false);
+    const [shownType, setShownType] = useState("todo")//"finished"
+    const [showBulkSelect, setShowBulkSelect] = useState(false);
+    const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
@@ -34,8 +34,8 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     // const [showingTaskOptions, setShowingTaskOptions] = useState(false);
     const [editTaskName, setEditTaskName] = useState(false);
     const [editTaskDue, setEditTaskDue] = useState(false)
-    // const [editTaskList, setEditTaskList] = useState(false);
-    // const [editStartDate, setEditStartDate] = useState(false);
+    const [editTaskList, setEditTaskList] = useState(false);
+    const [editStartDate, setEditStartDate] = useState(false);
     const [taskStatus, setTaskStatus] = useState("open");
     const [taskPriority, setTaskPriority] = useState(0);
     const [dueDate, setDueDate] = useState("")
@@ -81,7 +81,10 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             setDueDate(allTasks[focusTask].due_date)
             //TODO: set task notes and owner. create to_detail() for task/list owner
         }
-    }, [focusTask, allTasks])
+        if (!taskOrders) {
+            dispatch(getAllTasks())
+        }
+    }, [focusTask, allTasks, taskOrders])
 
     useEffect(() => {
         changeTaskStatus(focusTask, taskStatus)
@@ -115,40 +118,40 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }, [editTaskInfo])
 
 
-    // const todoStyle = () => {
-    //     if (shownType === "todo") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const todoStyle = () => {
+        if (shownType === "todo") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const doneStyle = () => {
-    //     if (shownType === "done") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const doneStyle = () => {
+        if (shownType === "done") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const updateIcon = (e) => {
-    //     if (e.target.innerText === "◁") {
-    //         setIcon("—")
-    //     }
-    //     else {
-    //         setIcon("◁")
-    //     }
-    // }
+    const updateIcon = (e) => {
+        if (e.target.innerText === "◁") {
+            setIcon("—")
+        }
+        else {
+            setIcon("◁")
+        }
+    }
 
 
     const submitTask = async (e) => {
@@ -230,26 +233,27 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
-                    {/* <div className="title-options-container">
+                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+                    <div className="title-options-container">
                         <button className="share-button">🤝+</button>
-                    </div> */}
+                    </div>
                 </div>
-                {/* {icon === "—" &&
+                {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
                             {title === "list" && alist && <div className="tasks-total">{0}</div>}
-                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>}
+                            {title === "All Tasks" && taskOrders && <div className="tasks-total">{taskOrders.status.open.length}</div>}
                             <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
-                            <div className="tasks-total">{0}</div>
+                            {title === "list" && alist && <div className="tasks-total">{0}</div>}
+                            {title === "All Tasks" && taskOrders && <div className="tasks-total">{taskOrders.status.closed.length}</div>}
                             <div className="tasks-detail">completed</div>
                         </div>
                     </div>
                 </>
-                } */}
+                }
                 <div className="list-tasks-column-headers">
                     <div className="task-column-header name-header">Name</div>
                     <div className="task-column-grid">
@@ -258,29 +262,40 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </div>
                 <div className="list-tasks-container">
-                    {/*<div className="options-container">
+                    <div className="options-container">
                          <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
                         <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
-                                    <div className="checker-container">
+                                <div className="checker-container">
+                                    <div className="checker">{filter === "created" ? "✔" : null}</div>
                                         <div className="checker">{filter === "name" ? "✔" : null}</div>
                                         <div className="checker">{filter === "due" ? "✔" : null}</div>
-                                        <div className="checker">{filter === "priority" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "asc" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "desc" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "none" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "low" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "med" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "high" ? "✔" : null}</div>
                                     </div>
                                     <div className="task-filters">
                                     <div className="filter" onClick={() => setFilter("created")}>Creation Date</div>
                                         <div className="filter" onClick={() => setFilter("name")}>Task Name</div>
                                         <div className="filter" onClick={() => setFilter("due")}>Due Date</div>
-                                        <div className="filter" onClick={() => setFilter("priority")}>Priority</div>
+                                    <div className="filter" onClick={() => setFilter("asc")}>Priority (▿→▵)</div>
+                                    <div className="filter" onClick={() => setFilter("desc")}>Priority (▵→▿)</div>
+                                    <div className="filter" onClick={() => setFilter("none")}>No Priority</div>
+                                    <div className="filter" onClick={() => setFilter("low")}>Low Priority</div>
+                                    <div className="filter" onClick={() => setFilter("med")}>Medium Priority</div>
+                                    <div className="filter" onClick={() => setFilter("high")}>High Priority</div>
                                     </div>
                                 </div>
                             }
                         </div>
                     </div>
-                    <div className="bulk-actions-container">
+                    {/* <div className="bulk-actions-container">
                         <div className="bulk-button-container">
                             <button className="bulk-button" onClick={() => setShowBulkSelect(!showBulkSelect)}>▢▾</button>
                             {showBulkSelect &&
@@ -312,33 +327,63 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
-                        // showing === "All Tasks" && user.orderBy.map(taskId =>
+                        {showing === "All Tasks" && shownType === "todo" && taskOrders && taskOrders.status.open.map(task =>
+                            // showing === "All Tasks" && user.orderBy.map(taskId =>
                             // <>
                             //     {
-                            //         allTasks[taskId] &&
-                            <div className="task-container" key={taskId}>
-                                {allTasks[taskId] &&
+                            //         task &&
+                            <div className="task-container" key={task.id}>
+                                {task &&
                                     <>
-                                <div className="task-options-container" id={taskId} onClick={() => {
-                                    setFocusTask(taskId)
-                                    setShowingTaskOptions(true)
-                                    setErrors([])
+                                        <div className="task-options-container" id={task.id} onClick={() => {
+                                            setFocusTask(task.id)
+                                            setShowingTaskOptions(true)
+                                            setErrors([])
 
-                                }} key={taskId}>
+                                        }} key={task.id}>
+                                            <div className="task-options-icon" >Edit</div>
+                                        </div>
+                                        <div className="task-details-container">
+                                            <div className="task-name">{task.name}</div>
+                                            <div className="task-deets-wrapper">
+                                                {task.due_date &&
+                                                    <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                                }
+                                                {task.priority <= 3 && task.priority >= 0 &&
+                                                    <div className="priority-level">{task.priority}</div>
+                                                }
+                                            </div>
+                                            {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
+                                        </div>
+                                    </>
+                                }
+                            </div>
+                            //     }
+                            // </>
+                        )}
+                        {showing === "All Tasks" && shownType === "done" && taskOrders && taskOrders.status.closed.map(task =>
+                            <div className="task-container" key={task.id}>
+                                {task &&
+                                    <>
+                                    <div className="task-options-container" id={task.id} onClick={() => {
+                                        setFocusTask(task.id)
+                                        setShowingTaskOptions(true)
+                                        setErrors([])
+
+                                    }} key={task.id}>
                                         <div className="task-options-icon" >Edit</div>
-                                </div>
-                                <div className="task-details-container">
-                                    <div className="task-name">{allTasks[taskId].name}</div>
-                                    <div className="task-deets-wrapper">
-                                        {allTasks[taskId].due_date &&
-                                            <div className="task-due">{allTasks[taskId].due_date.split(" ").splice(0, 4).join(' ')}</div>
-                                        }
-                                        {allTasks[taskId].priority <= 3 && allTasks[taskId].priority >= 0 &&
-                                            <div className="priority-level">{allTasks[taskId].priority}</div>
-                                        }
                                     </div>
-                                    {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
+                                    <div className="task-details-container">
+                                        <div className="task-name">{task.name}</div>
+                                        <div className="task-deets-wrapper">
+                                            {task.due_date &&
+                                                <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                            }
+                                            {task.priority <= 3 && task.priority >= 0 &&
+                                                <div className="priority-level">{task.priority}</div>
+                                            }
+                                        </div>
+                                        {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
                                     </div>
                                     </>
                                 }

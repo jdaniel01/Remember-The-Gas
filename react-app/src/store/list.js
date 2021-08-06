@@ -1,4 +1,5 @@
 import { setAllTasks, setTasksOrder } from "./task"
+import { sortOpen, sortPriority } from "../components/Main/sort"
 
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
@@ -39,7 +40,9 @@ export const addList = (id, listName, notes) => async (dispatch) => {
     dispatch(setList(data.list))
     dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setTasksOrder(data.tasksOrder))
+    const status = sortOpen(data.tasks)
+    const priority = sortPriority(data.tasks)
+    dispatch(setTasksOrder({ status, priority }))
     return data
 }
 
@@ -82,7 +85,10 @@ export const dropList = (id) => async (dispatch) => {
     dispatch(setList(data.list))
     dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setTasksOrder(data.tasksOrder))
+    const status = sortOpen(data.tasks)
+    const priority = sortPriority(data.tasks)
+    dispatch(setTasksOrder({ status, priority }))
     return data
 }
 
@@ -117,7 +123,10 @@ export const addTask = (id, name) => async (dispatch) => {
     dispatch(setList(data.list))
     dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setTasksOrder(data.tasksOrder))
+    const status = sortOpen(data.tasks)
+    const priority = sortPriority(data.tasks)
+    dispatch(setTasksOrder({ status, priority }))
     return data
 }
 
@@ -137,7 +146,10 @@ export const changeListStart = (id, date) => async (dispatch) => {
     dispatch(setList(data.list))
     dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setTasksOrder(data.tasksOrder))
+    const status = sortOpen(data.tasks)
+    const priority = sortPriority(data.tasks)
+    dispatch(setTasksOrder({ status, priority }))
     return data
 }
 

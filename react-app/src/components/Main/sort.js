@@ -1,20 +1,42 @@
 
+export const sortOpen = (tasks) => {
+    const open = [];
+    const closed = [];
 
-export const sortCompleted = (tasks) => {
-    const listArray = [];
     for (let id in tasks) {
-        listArray.push(tasks[id])
+        if (tasks[id].status === "open") {
+            open.push(tasks[id])
+        }
+        else {
+            closed.push(tasks[id])
+        }
     }
 
-    return listArray;
+    return { open, closed }
 }
 
 
-window.addEventListener("DOMContentLoaded", event => {
-    const burgerBar = document.querySelector('nav-links-container')
+export const sortPriority = (tasks) => {
+    const p0 = [];
+    const p1 = [];
+    const p2 = [];
+    const p3 = [];
 
-    burgerBar.addEventListener("click", e => {
-        e.preventDefault()
-        console.log("You clicked me")
-    })
-})
+    for (let id in tasks) {
+        if (tasks[id].priority === 0) {
+            p0.push(tasks[id].id)
+        }
+        else if (tasks[id].priority === 1) {
+            p1.push(tasks[id].id)
+        }
+        else if (tasks[id].priority === 2) {
+            p2.push(tasks[id].id)
+        }
+        else if (tasks[id].priority === 3) {
+            p3.push(tasks[id].id)
+        }
+    }
+
+    return { asc: [...p0, ...p1, ...p2, ...p3], desc: [...p3, ...p2, ...p1, ...p0], no: p0, low: p1, med: p2, high: p3 }
+}
+
