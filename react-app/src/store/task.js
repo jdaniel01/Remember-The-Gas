@@ -1,4 +1,5 @@
 import { setSingleList, setAllLists, setListOrder } from "./list"
+import { sortOpen, sortPriority } from "./sort"
 
 const SET_TASKS = "task/SET_TASKS"
 const SET_ORDER = "task/SET_ORDER"

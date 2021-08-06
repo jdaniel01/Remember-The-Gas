@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
 import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
-// import { sortCompleted } from "./sort";
 
 import "./Main.css";
 
@@ -47,6 +46,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editErrors, setEditErrors] = useState([]);
     const [editListNotes, setEditListNotes] = useState(false);
 
+
     useEffect(() => {
 
         if (showing === "list") {
@@ -55,6 +55,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             }
             if (alist.name && title !== alist.name) {
                 setTitle(alist.name)
+
             }
         }
         if (showing === "All Tasks") {
