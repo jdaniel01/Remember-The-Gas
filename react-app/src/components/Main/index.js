@@ -45,6 +45,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskPriority, setEditTaskPriority] = useState(false)
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
+    const [viewedTasks, setViewedTasks] = useState([]);
 
     useEffect(() => {
 
@@ -133,6 +134,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
     const doneStyle = () => {
         if (shownType === "done") {
+
             return {
                 borderBottom: "1px solid whitesmoke",
                 borderTop: "1px dotted lightgrey",
@@ -263,7 +265,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 </div>
                 <div className="list-tasks-container">
                     <div className="options-container">
-                         <div className="print-button task-option">🖨</div>
+                        {/* <div className="print-button task-option">🖨</div> */}
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
                         <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃

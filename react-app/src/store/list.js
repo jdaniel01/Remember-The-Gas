@@ -1,5 +1,5 @@
 import { setAllTasks, setTasksOrder } from "./task"
-import { sortOpen, sortPriority } from "../components/Main/sort"
+import { sortOpen, sortPriority, sortCreated } from "../components/Main/sort"
 
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
@@ -82,7 +82,11 @@ export const dropList = (id) => async (dispatch) => {
     })
     const data = await res.json();
     dispatch(setLists(data.lists))
-    dispatch(setList(data.list))
+    // dispatch(setList(data.list))
+    const listStatus = sortOpen(data.list.tasks)
+    const listPriority = sortPriority(data.list.tasks)
+    const listCreated = sortCreated(data.list.tasks)
+    dispatch(setList({ ...data.list, orderBy: { status: listStatus, priority: listPriority, created: listCreated } }))
     dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
     // dispatch(setTasksOrder(data.tasksOrder))
@@ -102,7 +106,10 @@ export const editName = (id, name) => async (dispatch) => {
     })
     const data = await res.json()
     dispatch(setLists(data.lists))
-    dispatch(setList(data.list))
+    // dispatch(setList(data.list))
+    const listStatus = sortOpen(data.list.tasks)
+    const listPriority = sortPriority(data.list.tasks)
+    dispatch(setList({ ...data.list, status: listStatus, priority: listPriority }))
     dispatch(setOrder(data.order))
     return data
 }
@@ -120,7 +127,10 @@ export const addTask = (id, name) => async (dispatch) => {
         return data
     }
     dispatch(setLists(data.lists))
-    dispatch(setList(data.list))
+    // dispatch(setList(data.list))
+    const listStatus = sortOpen(data.list.tasks)
+    const listPriority = sortPriority(data.list.tasks)
+    dispatch(setList({ ...data.list, status: listStatus, priority: listPriority }))
     dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
     // dispatch(setTasksOrder(data.tasksOrder))
@@ -143,7 +153,9 @@ export const changeListStart = (id, date) => async (dispatch) => {
         return data
     }
     dispatch(setLists(data.lists))
-    dispatch(setList(data.list))
+    const listStatus = sortOpen(data.list.tasks)
+    const listPriority = sortPriority(data.list.tasks)
+    dispatch(setList({ ...data.list, status: listStatus, priority: listPriority }))
     dispatch(setAllTasks(data.tasks))
     dispatch(setOrder(data.order))
     // dispatch(setTasksOrder(data.tasksOrder))

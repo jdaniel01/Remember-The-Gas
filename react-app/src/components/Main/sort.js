@@ -2,13 +2,24 @@
 export const sortOpen = (tasks) => {
     const open = [];
     const closed = [];
-
-    for (let id in tasks) {
-        if (tasks[id].status === "open") {
-            open.push(tasks[id])
+    if (typeof tasks === "object") {
+        for (let id in tasks) {
+            if (tasks[id].status === "open") {
+                open.push(tasks[id])
+            }
+            else {
+                closed.push(tasks[id])
+            }
         }
-        else {
-            closed.push(tasks[id])
+    }
+    else if (tasks.length) {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].status === "open") {
+                open.push(tasks[i])
+            }
+            else {
+                closed.push(tasks[i])
+            }
         }
     }
 
@@ -21,22 +32,57 @@ export const sortPriority = (tasks) => {
     const p1 = [];
     const p2 = [];
     const p3 = [];
-
-    for (let id in tasks) {
-        if (tasks[id].priority === 0) {
-            p0.push(tasks[id].id)
+    if (typeof tasks === "object") {
+        for (let id in tasks) {
+            if (tasks[id].priority === 0) {
+                p0.push(tasks[id])
+            }
+            else if (tasks[id].priority === 1) {
+                p1.push(tasks[id])
+            }
+            else if (tasks[id].priority === 2) {
+                p2.push(tasks[id])
+            }
+            else if (tasks[id].priority === 3) {
+                p3.push(tasks[id])
+            }
         }
-        else if (tasks[id].priority === 1) {
-            p1.push(tasks[id].id)
-        }
-        else if (tasks[id].priority === 2) {
-            p2.push(tasks[id].id)
-        }
-        else if (tasks[id].priority === 3) {
-            p3.push(tasks[id].id)
+    }
+    else if (tasks.length) {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].priority === 0) {
+                p0.push(tasks[i])
+            }
+            else if (tasks[i].priority === 1) {
+                p1.push(tasks[i])
+            }
+            else if (tasks[i].priority === 2) {
+                p2.push(tasks[i])
+            }
+            else if (tasks[i].priority === 3) {
+                p3.push(tasks[i])
+            }
         }
     }
 
-    return { asc: [...p0, ...p1, ...p2, ...p3], desc: [...p3, ...p2, ...p1, ...p0], no: p0, low: p1, med: p2, high: p3 }
+    return { asc: [...p0, ...p1, ...p2, ...p3], desc: [...p0, ...p1, ...p2, ...p3].reverse(), no: p0, low: p1, med: p2, high: p3 }
+}
+
+export const sortCreated = (tasks) => {
+    if (tasks.length <= 1) {
+        return tasks
+    }
+
+    let pivot = tasks.pop();
+    let left = tasks.filter(task => task.id < pivot.id)
+    let right = tasks.filter(task => task.id > pivot.id)
+
+    let leftSorted = sortCreated(left);
+    let rightSorted = sortCreated(right);
+
+    const asc = [...leftSorted, pivot, ...rightSorted];
+    const desc = asc.reverse();
+
+    return { asc, desc }
 }
 
