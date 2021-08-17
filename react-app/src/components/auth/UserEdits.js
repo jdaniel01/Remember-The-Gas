@@ -35,6 +35,7 @@ export const AccountForm = () => {
             const data = await dispatch(editUserInfo(user.id, username, email, photo))
             if (data.errors) {
                 setErrors(data.errors);
+
             } else {
                 setErrors([])
             }
@@ -120,21 +121,6 @@ export const PasswordForm = () => {
         setCurrentPassword(e.target.value);
     };
 
-    const onEdit = async (e) => {
-        e.preventDefault()
-        if (user.id === Number(userId)) {
-            const data = dispatch(editPassword(Number(userId), currentPassword, password, repeatPassword))
-            if (data.id) {
-                setPassword("")
-                setRepeatPassword("")
-                setCurrentPassword("")
-                setErrors([])
-            } else {
-                setErrors(data.errors);
-            }
-        }
-    }
-
     useEffect(() => {
         const newErrors = [];
         if (!password) {
@@ -151,6 +137,23 @@ export const PasswordForm = () => {
         }
         setErrors(newErrors)
     }, [password, currentPassword, repeatPassword])
+
+
+    const onEdit = async (e) => {
+        e.preventDefault()
+        if (user.id === Number(userId)) {
+            const data = dispatch(editPassword(Number(userId), currentPassword, password, repeatPassword))
+            if (data.id) {
+                setPassword("")
+                setRepeatPassword("")
+                setCurrentPassword("")
+                setErrors([])
+            } else {
+                setErrors(data.errors);
+            }
+        }
+    }
+
 
     return (
         <div className="form-container">
