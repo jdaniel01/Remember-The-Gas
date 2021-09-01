@@ -1,5 +1,5 @@
 import { setAllTasks, setTasksOrder } from "./task"
-import { sortOpen, sortPriority, sortCreated } from "../components/Main/sort"
+import { sortOpen, sortPriority } from "../components/Main/sort"
 
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
@@ -85,8 +85,7 @@ export const dropList = (id) => async (dispatch) => {
     // dispatch(setList(data.list))
     const listStatus = sortOpen(data.list.tasks)
     const listPriority = sortPriority(data.list.tasks)
-    const listCreated = sortCreated(data.list.tasks)
-    dispatch(setList({ ...data.list, orderBy: { status: listStatus, priority: listPriority, created: listCreated } }))
+    dispatch(setList({ ...data.list, orderBy: { status: listStatus, priority: listPriority } }))
     dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
     // dispatch(setTasksOrder(data.tasksOrder))

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
 import { getAllTasks, changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
-// import { sortCompleted } from "./sort";
+import { sortCreated, sortDue } from "./sort";
 
 import "./Main.css";
 
@@ -46,6 +46,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
     const [viewedTasks, setViewedTasks] = useState([]);
+    const [filteredTasks, setFilteredTasks] = useState(taskOrders.status.open)
 
     useEffect(() => {
 
@@ -155,6 +156,27 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         }
     }
 
+    useEffect(() => {
+        if (taskOrders) {
+            console.log(taskOrders)
+            if (shownType === "todo") {
+                if (filter === "created") {
+                    setFilteredTasks(sortCreated(taskOrders.status.open))
+                }
+                if (filter === "due") {
+                    setFilteredTasks(sortDue(taskOrders.status.open))
+                }
+            }
+            else if (shownType === "finished") {
+                if (filter === "created") {
+                    setFilteredTasks(sortCreated(taskOrders.status.closed))
+                }
+                if (filter === "due") {
+                    setFilteredTasks(sortDue(taskOrders.status.closed))
+                }
+            }
+        }
+    }, [filter, shownType, taskOrders])
 
     const submitTask = async (e) => {
         e.preventDefault()
@@ -329,7 +351,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && shownType === "todo" && taskOrders && taskOrders.status.open.map(task =>
+                        {showing === "All Tasks" && shownType === "todo" && taskOrders && filteredTasks.map(task =>
                             // showing === "All Tasks" && user.orderBy.map(taskId =>
                             // <>
                             //     {

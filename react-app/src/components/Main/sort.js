@@ -69,6 +69,7 @@ export const sortPriority = (tasks) => {
 }
 
 export const sortCreated = (tasks) => {
+    console.log(tasks)
     if (tasks.length <= 1) {
         return tasks
     }
@@ -79,10 +80,25 @@ export const sortCreated = (tasks) => {
 
     let leftSorted = sortCreated(left);
     let rightSorted = sortCreated(right);
+    console.log(leftSorted, pivot, rightSorted)
+    return leftSorted + pivot + rightSorted;
 
-    const asc = [...leftSorted, pivot, ...rightSorted];
-    const desc = asc.reverse();
+}
 
-    return { asc, desc }
+export const sortDue = (tasks) => {
+    if (tasks.length <= 1) {
+        return tasks
+    }
+
+    let pivot = tasks.pop();
+    let left = tasks.filter(task => task.due_date < pivot.due_date)
+    let right = tasks.filter(task => task.due_date >= pivot.due_date)
+
+    let leftSorted = sortDue(left);
+    let rightSorted = sortDue(right);
+
+    return [...leftSorted, pivot, ...rightSorted];
+
+
 }
 
