@@ -30,7 +30,7 @@ def getLists():
     # return {"lists": newLists, "order": order}
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     taskCreatedOrder = [t.id for t in tasks]
-    newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+    newTasks = [task.to_dict() for task in tasks]
     print("#########Lists retrieved#######", newLists)
     return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
 
@@ -56,7 +56,8 @@ def dropList(id):
     newLists = dict([(j.id, j.to_dict()) for j in lists])
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     taskCreatedOrder = [t.id for t in tasks]
-    newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+    # newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+    newTasks = [task.to_dict() for task in tasks]
     print("#########List Deleted, lists retrieved#######", newLists)
     return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
 
@@ -76,7 +77,9 @@ def editName(id):
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         taskCreatedOrder = [t.id for t in tasks]
-        newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        # newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        newTasks = [task.to_dict() for task in tasks]
+
         print("#########List Name Validated#######", newLists)
         return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     print("#########List Name Failed to Validated#####")
@@ -99,7 +102,9 @@ def editStart(id):
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         taskCreatedOrder = [t.id for t in tasks]
-        newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        # newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        newTasks = [task.to_dict() for task in tasks]
+
         print("#########List start Validated#######", newLists)
         return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     print("#########List start Failed to Validated#####")
@@ -125,7 +130,9 @@ def addList(id):
         newLists = dict([(j.id, j.to_dict()) for j in lists])
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         taskCreatedOrder = [t.id for t in tasks]
-        newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        # newTasks = dict([(task.id, task.to_dict()) for task in tasks])
+        newTasks = [task.to_dict() for task in tasks]
+
         print("#########Task Validated#######", newLists)
         return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     print("#########List Name Failed to Validated#####")

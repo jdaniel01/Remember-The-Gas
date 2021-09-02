@@ -78,7 +78,8 @@ class List(db.Model):
       "due_date": self.due_date,
       "status": self.status,
       "priority": self.priority,
-      "tasks": dict([(task.id, task.to_dict()) for task in self.tasks]),
+      # "tasks": dict([(task.id, task.to_dict()) for task in self.tasks]),
+      "tasks": [task.to_dict() for task in self.tasks],
       "orderBy": [task.id for task in reversed(self.tasks)]
     }
 

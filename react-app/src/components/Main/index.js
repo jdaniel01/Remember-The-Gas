@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
-import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
-import { sortStatus } from "./sort";
+import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority, getAllTasks } from '../../store/task';
+import { sortTasks } from "./sort";
 
 import "./Main.css";
 
@@ -21,11 +21,11 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
 
     const [title, setTitle] = useState("All Tasks")
-    const [icon, setIcon] = useState("◁")
-    // const [showFilters, setShowFilters] = useState(false)
+    // const [icon, setIcon] = useState("◁")
+    const [showFilters, setShowFilters] = useState(false)
     const [filteredTasks, setFilteredTasks] = useState([])
     const [filter, setFilter] = useState("created")//"created", "due_date", "status"
-    const [shownType, setShownType] = useState("todo")//"done"
+    const [shownType, setShownType] = useState("open")//"closed"
     // const [showBulkSelect, setShowBulkSelect] = useState(false);
     // const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
@@ -73,7 +73,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
                 }
             }
-            setFilteredTasks(sortStatus(allTasks, shownType))
+            setFilteredTasks(sortTasks(allTasks, shownType, filter))
         }
     }, [dispatch, showing, alist, title, history, listId, user.id, shownType])
 
@@ -122,7 +122,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
 
     const todoStyle = () => {
-        if (shownType === "todo") {
+        if (shownType === "open") {
             return {
                 borderBottom: "1px solid whitesmoke",
                 borderTop: "1px dotted lightgrey",
@@ -135,7 +135,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }
 
     const doneStyle = () => {
-        if (shownType === "done") {
+        if (shownType === "closed") {
             return {
                 borderBottom: "1px solid whitesmoke",
                 borderTop: "1px dotted lightgrey",
@@ -147,14 +147,24 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         }
     }
 
-    const updateIcon = (e) => {
-        if (e.target.innerText === "◁") {
-            setIcon("—")
+    // const updateIcon = (e) => {
+    //     if (e.target.innerText === "◁") {
+    //         setIcon("—")
+    //     }
+    //     else {
+    //         setIcon("◁")
+    //     }
+    // }
+
+    useEffect(() => {
+        if (!allTasks) {
+            dispatch(getAllTasks(user.id))
         }
-        else {
-            setIcon("◁")
+        if (!filteredTasks) {
+            setFilteredTasks(sortTasks(allTasks, shownType, filter))
         }
-    }
+
+    }, [dispatch, allTasks, filter, shownType])
 
 
     const submitTask = async (e) => {
@@ -236,17 +246,17 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div>
+                    <div className="header-title">{title}</div>   {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
                 </div>
-                {icon === "—" &&
+                {/* {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
                             {title === "list" && alist && <div className="tasks-total">{0}</div>}
-                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>}
+                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{filteredTasks.length}</div>}
                             <div className="tasks-detail">tasks</div>
                         </div>
                         <div className="task-detail-container">
@@ -255,7 +265,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         </div>
                     </div>
                 </>
-                }
+                } */}
                 <div className="list-tasks-column-headers">
                     <div className="task-column-header name-header">Name</div>
                     <div className="task-column-grid">
@@ -265,26 +275,27 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 </div>
                 <div className="list-tasks-container">
                     <div className="options-container">
-                        <div className="print-button task-option">🖨</div>
-                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
-                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
-                        {/* <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
+                        {/* <div className="print-button task-option">🖨</div> */}
+                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("open")}>Todo</div>
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("closed")}>Done</div>
+                        <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
                                     <div className="checker-container">
+                                    <div className="checker">{filter === "created" ? "✔" : null}</div>
                                         <div className="checker">{filter === "name" ? "✔" : null}</div>
-                                        <div className="checker">{filter === "due" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "due_date" ? "✔" : null}</div>
                                         <div className="checker">{filter === "priority" ? "✔" : null}</div>
                                     </div>
                                     <div className="task-filters">
-                                    <div className="filter" onClick={() => setFilter("created")}>Creation Date</div>
+                                    <div className="filter" onClick={() => setFilter("created")}>Created</div>
                                         <div className="filter" onClick={() => setFilter("name")}>Task Name</div>
-                                        <div className="filter" onClick={() => setFilter("due")}>Due Date</div>
+                                    <div className="filter" onClick={() => setFilter("due_date")}>Due Date</div>
                                         <div className="filter" onClick={() => setFilter("priority")}>Priority</div>
                                     </div>
                                 </div>
                             }
-                        </div> */}
+                        </div>
                     </div>
                     {/* <div className="bulk-actions-container">
                         <div className="bulk-button-container">
@@ -318,30 +329,30 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && filteredTasks && filteredTasks.map(taskId =>
+                        {showing === "All Tasks" && filteredTasks && filteredTasks.map(task =>
                         // showing === "All Tasks" && user.orderBy.map(taskId =>
                             // <>
                             //     {
                             //         allTasks[taskId] &&
-                            <div className="task-container" key={taskId}>
-                                {allTasks[taskId] &&
+                            <div className="task-container" key={task.id}>
+                                {task &&
                                     <>
-                                <div className="task-options-container" id={taskId} onClick={() => {
-                                    setFocusTask(taskId)
+                                    <div className="task-options-container" id={task.id} onClick={() => {
+                                        setFocusTask(task.id)
                                     setShowingTaskOptions(true)
                                     setErrors([])
 
-                                }} key={taskId}>
+                                    }}>
                                         <div className="task-options-icon" >Edit</div>
                                 </div>
                                 <div className="task-details-container">
-                                    <div className="task-name">{allTasks[taskId].name}</div>
+                                        <div className="task-name">{task.name}</div>
                                     <div className="task-deets-wrapper">
-                                        {allTasks[taskId].due_date &&
-                                            <div className="task-due">{allTasks[taskId].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                            {task.due_date &&
+                                                <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
                                         }
-                                        {allTasks[taskId].priority <= 3 && allTasks[taskId].priority >= 0 &&
-                                            <div className="priority-level">{allTasks[taskId].priority}</div>
+                                            {task.priority <= 3 && task.priority >= 0 &&
+                                                <div className="priority-level">{task.priority}</div>
                                         }
                                     </div>
                                     {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
@@ -352,23 +363,23 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                             //     }
                             // </>
                         )}
-                        {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
-                            <div className="task-container" key={id}>
-                                <div className="task-options-container" id={id} onClick={() => {
-                                    setFocusTask(id)
+                        {showing === "list" && alist.tasks && filteredTasks && filteredTasks.map(task =>
+                            <div className="task-container" key={task.id}>
+                                <div className="task-options-container" id={task.id} onClick={() => {
+                                    setFocusTask(task.id)
                                     setShowingTaskOptions(true)
 
-                                }} key={id}>
+                                }}>
                                     <div className="task-options-icon">Edit</div>
                                 </div>
                                 <div className="task-details-container">
-                                    <div className="task-name">{alist.tasks[id].name}</div>
+                                    <div className="task-name">{task.name}</div>
                                     <div className="task-deets-wrapper">
-                                        {alist && alist.tasks[id].due_date &&
-                                            <div className="task-due">{alist.tasks[id].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                        {alist && task.due_date &&
+                                            <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
                                         }
-                                        {alist && alist.tasks[id].priority <= 3 && alist.tasks[id].priority >= 0 &&
-                                            <div className="priority-level">{alist.tasks[id].priority}</div>
+                                        {task.priority <= 3 && task.priority >= 0 &&
+                                            <div className="priority-level">{task.priority}</div>
                                         }
                                     </div>
                                 </div>

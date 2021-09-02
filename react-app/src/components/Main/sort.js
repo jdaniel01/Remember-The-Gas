@@ -1,12 +1,25 @@
 
-
-export const sortStatus = (tasks) => {
-    const listArray = [];
-    for (let id in tasks) {
-        listArray.push(tasks[id])
+// shownType === "open", "closed"
+//filter === "created", "due_date", "list_id", "owner_id", "priority", "name"
+export const sortTasks = (tasks, shownType, filter) => {
+    const sortedTasks = [];
+    if (typeof tasks === "object") {
+        for (let key in tasks) {
+            if (tasks[key].status === shownType) {
+                sortedTasks.push(tasks[key])
+            }
+        }
+    }
+    else if (typeof tasks === 'array') {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].status === shownType) {
+                sortedTasks.push(tasks[i])
+            }
+        }
     }
 
-    return listArray;
+
+    return sortedTasks;
 }
 
 
