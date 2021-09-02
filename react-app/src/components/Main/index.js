@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
 import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
-// import { sortCompleted } from "./sort";
+import { sortStatus } from "./sort";
 
 import "./Main.css";
 
@@ -21,10 +21,11 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
 
     const [title, setTitle] = useState("All Tasks")
-    // const [icon, setIcon] = useState("◁")
+    const [icon, setIcon] = useState("◁")
     // const [showFilters, setShowFilters] = useState(false)
+    const [filteredTasks, setFilteredTasks] = useState([])
     const [filter, setFilter] = useState("created")//"created", "due_date", "status"
-    // const [shownType, setShownType] = useState("todo")//"finished"
+    const [shownType, setShownType] = useState("todo")//"done"
     // const [showBulkSelect, setShowBulkSelect] = useState(false);
     // const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
@@ -45,6 +46,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskPriority, setEditTaskPriority] = useState(false)
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
+    const [taskNotes, setTaskNotes] = useState("")
 
     useEffect(() => {
 
@@ -63,14 +65,17 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         dispatch(getList(Number(listId)))
                     }
                     setTitle(alist.name)
+                    setShowing('list')
                 }
                 else {
                     setTitle("All Tasks")
                     history.push(`/users/${user.id}/tasks`)
+
                 }
             }
+            setFilteredTasks(sortStatus(allTasks, shownType))
         }
-    }, [dispatch, showing, alist, title, history, listId, user.id])
+    }, [dispatch, showing, alist, title, history, listId, user.id, shownType])
 
     useEffect(() => {
         if (allTasks && focusTask) {
@@ -79,6 +84,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             setTaskStatus(allTasks[focusTask].status)
             setStartDate(allTasks[focusTask].start_date)
             setDueDate(allTasks[focusTask].due_date)
+            setTaskNotes(allTasks[focusTask].notes)
             //TODO: set task notes and owner. create to_detail() for task/list owner
         }
     }, [focusTask, allTasks])
@@ -115,40 +121,40 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }, [editTaskInfo])
 
 
-    // const todoStyle = () => {
-    //     if (shownType === "todo") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const todoStyle = () => {
+        if (shownType === "todo") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const doneStyle = () => {
-    //     if (shownType === "done") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const doneStyle = () => {
+        if (shownType === "done") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const updateIcon = (e) => {
-    //     if (e.target.innerText === "◁") {
-    //         setIcon("—")
-    //     }
-    //     else {
-    //         setIcon("◁")
-    //     }
-    // }
+    const updateIcon = (e) => {
+        if (e.target.innerText === "◁") {
+            setIcon("—")
+        }
+        else {
+            setIcon("◁")
+        }
+    }
 
 
     const submitTask = async (e) => {
@@ -230,12 +236,12 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div>
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
                 </div>
-                {/* {icon === "—" &&
+                {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
@@ -249,7 +255,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         </div>
                     </div>
                 </>
-                } */}
+                }
                 <div className="list-tasks-column-headers">
                     <div className="task-column-header name-header">Name</div>
                     <div className="task-column-grid">
@@ -258,11 +264,11 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </div>
                 <div className="list-tasks-container">
-                    {/*<div className="options-container">
-                         <div className="print-button task-option">🖨</div>
+                    <div className="options-container">
+                        <div className="print-button task-option">🖨</div>
                         <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
                         <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
-                        <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
+                        {/* <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
                                     <div className="checker-container">
@@ -278,9 +284,9 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                     </div>
                                 </div>
                             }
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="bulk-actions-container">
+                    {/* <div className="bulk-actions-container">
                         <div className="bulk-button-container">
                             <button className="bulk-button" onClick={() => setShowBulkSelect(!showBulkSelect)}>▢▾</button>
                             {showBulkSelect &&
@@ -312,7 +318,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
+                        {showing === "All Tasks" && filteredTasks && filteredTasks.map(taskId =>
                         // showing === "All Tasks" && user.orderBy.map(taskId =>
                             // <>
                             //     {

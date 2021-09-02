@@ -1,6 +1,6 @@
 
 
-export const sortCompleted = (tasks) => {
+export const sortStatus = (tasks) => {
     const listArray = [];
     for (let id in tasks) {
         listArray.push(tasks[id])
@@ -10,11 +10,11 @@ export const sortCompleted = (tasks) => {
 }
 
 
-window.addEventListener("DOMContentLoaded", event => {
-    const burgerBar = document.querySelector('nav-links-container')
+// window.addEventListener("DOMContentLoaded", event => {
+//     const burgerBar = document.querySelector('nav-links-container')
 
-    burgerBar.addEventListener("click", e => {
-        e.preventDefault()
-        console.log("You clicked me")
-    })
-})
+//     burgerBar.addEventListener("click", e => {
+//         e.preventDefault()
+//         console.log("You clicked me")
+//     })
+// })
