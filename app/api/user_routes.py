@@ -92,13 +92,15 @@ def addList(id):
         db.session.add(newList)
         db.session.commit()
         lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
-        order = [l.id for l in lists]
+        # order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-        taskCreatedOrder = [t.id for t in tasks]
+        # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########List Added#######", newLists)
-        return {"lists": newLists, "list": newLists[order[0]], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        # return {"lists": newLists, "list": newLists[order[0]], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        return {'lists': newLists, 'tasks': newTasks}
+
     print("######LIST FORM NOT VALIDATED#######")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
@@ -107,13 +109,15 @@ def addList(id):
 def getLists(id):
     print("##########GET LISTS#########", id)
     lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
-    order = [l.id for l in lists]
+    # order = [l.id for l in lists]
     newLists = dict([(j.id, j.to_dict()) for j in lists])
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-    taskCreatedOrder = [t.id for t in tasks]
+    # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
     print("#########Lists Retrieved#######", newLists)
-    return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    # return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    return {'lists': newLists, 'tasks': newTasks}
+
 
 
 @user_routes.route('/<int:id>/tasks')
@@ -121,7 +125,8 @@ def getLists(id):
 def getTasks(id):
     print("##########GET TASKS#########", id)
     tasks = Task.query.filter(Task.owner_id == id).order_by(desc(Task.id)).all()
-    taskCreatedOrder = [t.id for t in tasks]
+    # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(t.id, t.to_dict()) for t in tasks])
     print("#######got tasks######", {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}})
-    return {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    # return {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        return {'tasks': newTasks}

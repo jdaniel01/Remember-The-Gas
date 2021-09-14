@@ -26,14 +26,14 @@ def getLists():
     print("###########REQUESTING LISTS######## / ", current_user.id)
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
     newLists = dict([(j.id, j.to_dict()) for j in lists])
-    order = [l.id for l in lists]
+    # order = [l.id for l in lists]
     # return {"lists": newLists, "order": order}
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-    taskCreatedOrder = [t.id for t in tasks]
+    # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
-    print("#########Lists retrieved#######", newLists)
-    return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-
+    print("#########Lists retrieved#######")
+    # return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    return {'lists': newLists, 'tasks': newTasks}
 
 @list_routes.route("/<int:id>")
 @login_required
@@ -52,13 +52,15 @@ def dropList(id):
     db.session.commit()
 
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-    order = [l.id for l in lists]
+    # order = [l.id for l in lists]
     newLists = dict([(j.id, j.to_dict()) for j in lists])
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-    taskCreatedOrder = [t.id for t in tasks]
+    # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
-    print("#########List Deleted, lists retrieved#######", newLists)
-    return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    print("#########List Deleted, lists retrieved#######")
+    # return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+    return {'lists': newLists, 'tasks': newTasks}
+
 
 @list_routes.route("/<int:id>/name", methods=["PUT"])
 @login_required
@@ -71,14 +73,16 @@ def editName(id):
         alist.name = form.data["name"]
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-        order = [l.id for l in lists]
+        # order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-        taskCreatedOrder = [t.id for t in tasks]
+        # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
-        print("#########List Name Validated#######", newLists)
-        return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        print("#########List Name Validated#######")
+        # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        return {'lists': newLists, 'tasks': newTasks}
+
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
@@ -94,14 +98,16 @@ def editStart(id):
         alist.start = form.data["start"]
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-        order = [l.id for l in lists]
+        # order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-        taskCreatedOrder = [t.id for t in tasks]
+        # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########List start Validated#######", newLists)
-        return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        return {'lists': newLists, 'tasks': newTasks}
+
     print("#########List start Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
 
@@ -121,12 +127,14 @@ def addList(id):
         db.session.add(task)
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-        order = [l.id for l in lists]
+        # order = [l.id for l in lists]
         newLists = dict([(j.id, j.to_dict()) for j in lists])
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
-        taskCreatedOrder = [t.id for t in tasks]
+        # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
-        return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
+        return {'lists': newLists, 'tasks': newTasks}
+
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
