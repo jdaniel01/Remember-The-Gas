@@ -1,8 +1,8 @@
-import { setAllTasks, setTasksOrder } from "./task"
+import { setAllTasks } from "./task" // removed , setTasksOrder
 
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = "list/SET_LIST"
-const SET_ORDER = 'list/SET_ORDER'
+// const SET_ORDER = 'list/SET_ORDER'
 
 const setLists = (lists) => ({
     type: SET_LISTS,
@@ -14,10 +14,10 @@ const setList = (list) => ({
     payload: list
 })
 
-const setOrder = (order) => ({
-    type: SET_ORDER,
-    payload: order
-})
+// const setOrder = (order) => ({
+//     type: SET_ORDER,
+//     payload: order
+// })
 
 export const addList = (id, listName, notes) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`, {
@@ -37,9 +37,9 @@ export const addList = (id, listName, notes) => async (dispatch) => {
     }
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
-    dispatch(setOrder(data.order))
+    // dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setTasksOrder(data.tasksOrder))
     return data
 }
 
@@ -47,7 +47,7 @@ export const getLists = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`)
     const data = await res.json()
     dispatch(setLists(data.lists))
-    dispatch(setOrder(data.order))
+    // dispatch(setOrder(data.order))
     return data
 }
 
@@ -69,9 +69,9 @@ export const setAllLists = (lists) => async (dispatch) => {
     dispatch(setLists(lists))
 }
 
-export const setListOrder = (order) => async (dispatch) => {
-    dispatch(setOrder(order))
-}
+// export const setListOrder = (order) => async (dispatch) => {
+//     dispatch(setOrder(order))
+// }
 
 export const dropList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`, {
@@ -80,9 +80,9 @@ export const dropList = (id) => async (dispatch) => {
     const data = await res.json();
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
-    dispatch(setOrder(data.order))
+    // dispatch(setOrder(data.order))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setTasksOrder(data.tasksOrder))
     return data
 }
 
@@ -97,7 +97,7 @@ export const editName = (id, name) => async (dispatch) => {
     const data = await res.json()
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
-    dispatch(setOrder(data.order))
+    // dispatch(setOrder(data.order))
     return data
 }
 
@@ -116,8 +116,8 @@ export const addTask = (id, name) => async (dispatch) => {
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setOrder(data.order))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setOrder(data.order))
+    // dispatch(setTasksOrder(data.tasksOrder))
     return data
 }
 
@@ -136,8 +136,8 @@ export const changeListStart = (id, date) => async (dispatch) => {
     dispatch(setLists(data.lists))
     dispatch(setList(data.list))
     dispatch(setAllTasks(data.tasks))
-    dispatch(setOrder(data.order))
-    dispatch(setTasksOrder(data.tasksOrder))
+    // dispatch(setOrder(data.order))
+    // dispatch(setTasksOrder(data.tasksOrder))
     return data
 }
 
@@ -149,8 +149,8 @@ export default function listReducer(state = initialState, action) {
             return { ...state, lists: action.payload }
         case SET_LIST:
             return { ...state, list: action.payload }
-        case SET_ORDER:
-            return { ...state, order: action.payload }
+        // case SET_ORDER:
+        //     return { ...state, order: action.payload }
         default:
             return state;
     }

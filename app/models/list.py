@@ -72,19 +72,19 @@ class List(db.Model):
     return {
       "id": self.id,
       "name": self.name,
-      "owner_id": self.owner_id,
+      "owner": self.owner.to_detail(),
       "notes": self.notes,
       "start_date": self.start_date,
       "due_date": self.due_date,
       "status": self.status,
       "priority": self.priority,
       "tasks": dict([(task.id, task.to_dict()) for task in self.tasks]),
-      "orderBy": [task.id for task in reversed(self.tasks)]
     }
 
   def to_detail(self):
     return {
-      "owner_id": self.owner_id,
+      "owner": self.owner.to_detail(),
       "id": self.id,
-      "name": self.name
+      "name": self.name,
+      "notes": self.notes
     }

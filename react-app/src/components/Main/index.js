@@ -16,8 +16,8 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const user = useSelector(state => state.session.user)
     // const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
-    const allTasks = useSelector(state => state.task.tasks)
-    const taskOrders = useSelector(state => state.task.orderBy)
+    const allTasks = useSelector(state => state.task)
+    // const taskOrders = useSelector(state => state.task.orderBy)
 
 
     const [title, setTitle] = useState("All Tasks")

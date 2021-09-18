@@ -88,11 +88,11 @@ class Task(db.Model):
     return {
       "id": self.id,
       "name": self.name,
-      "owner_id": self.owner_id,
+      "owner": self.owner.to_detail(),
       "notes": self.notes,
       "start_date": self.start_date,
       "due_date": self.due_date,
       "status": self.status,
       "priority": self.priority,
-      "list_id": self.list_id
+      "list": self.fromList.to_detail()
     }
