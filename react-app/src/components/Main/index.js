@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
 import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
-// import { sortCompleted } from "./sort";
+import { sortStatus, sortCreated, sortPriority, sortDue, sortStart, sortName } from "./sort";
 
 import "./Main.css";
 
@@ -18,13 +18,16 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task)
     // const taskOrders = useSelector(state => state.task.orderBy)
-
-
+    const [openTasks, setOpenTasks] = useState([]);
+    const [closedTasks, setClosedTasks] = useState([]);
+    const [currTasks, setCurrTasks] = useState([]);
+    // const [allStatuses, setAllStatuses] = useState({});
+    // const [listStatuses, setListStatuses] = useState({});
     const [title, setTitle] = useState("All Tasks")
-    // const [icon, setIcon] = useState("◁")
-    // const [showFilters, setShowFilters] = useState(false)
-    const [filter, setFilter] = useState("created")//"created", "due_date", "status"
-    // const [shownType, setShownType] = useState("todo")//"finished"
+    const [icon, setIcon] = useState("◁")
+    const [showFilters, setShowFilters] = useState(false)
+    const [filter, setFilter] = useState("created")//"created", "start_date", "due_date", "priority", "name"
+    const [shownType, setShownType] = useState("open")//"closed"
     // const [showBulkSelect, setShowBulkSelect] = useState(false);
     // const [showBulkActions, setShowBulkActions] = useState(false);
     const [taskInfo, setTaskInfo] = useState("");
@@ -46,14 +49,17 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
 
-    useEffect(() => {
 
+    useEffect(() => {
         if (showing === "list") {
             if (!alist) {
                 dispatch(getList(Number(listId)))
             }
             if (alist.name && title !== alist.name) {
+                let sortedList = sortStatus(alist.tasks);
                 setTitle(alist.name)
+                setOpenTasks(sortedList.open);
+                setClosedTasks(sortedList.closed);
             }
         }
         if (showing === "All Tasks") {
@@ -63,14 +69,22 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         dispatch(getList(Number(listId)))
                     }
                     setTitle(alist.name)
+                    let sortedList = sortStatus(alist.tasks);
+                    setTitle(alist.name)
+                    setOpenTasks(sortedList.open);
+                    setClosedTasks(sortedList.closed);
                 }
                 else {
                     setTitle("All Tasks")
-                    history.push(`/users/${user.id}/tasks`)
+                    // history.push(`/users/${user.id}/tasks`)
+                    let sortedTasks = sortStatus(allTasks);
+                    setTitle(alist.name)
+                    setOpenTasks(sortedTasks.open);
+                    setClosedTasks(sortedTasks.closed);
                 }
             }
         }
-    }, [dispatch, showing, alist, title, history, listId, user.id])
+    }, [dispatch, showing, alist, title, listId])
 
     useEffect(() => {
         if (allTasks && focusTask) {
@@ -114,41 +128,77 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         setEditErrors(errs);
     }, [editTaskInfo])
 
+    useEffect(() => {
+        if (shownType === "open") {
+            if (filter === "created") {
+                setCurrTasks(sortCreated(openTasks))
+            }
+            else if (filter === "priority") {
+                setCurrTasks(sortPriority(openTasks))
+            }
+            else if (filter === "start_date") {
+                setCurrTasks(sortStart(openTasks))
+            }
+            else if (filter === "due_date") {
+                setCurrTasks(sortDue(openTasks))
+            }
+            else if (filter === "name") {
+                setCurrTasks(sortName(openTasks))
+            }
+        }
+        else {
+            if (filter === "created") {
+                setCurrTasks(sortCreated(closedTasks))
+            }
+            else if (filter === "priority") {
+                setCurrTasks(sortPriority(closedTasks))
+            }
+            else if (filter === "start_date") {
+                setCurrTasks(sortStart(closedTasks))
+            }
+            else if (filter === "due_date") {
+                setCurrTasks(sortDue(closedTasks))
+            }
+            else if (filter === "name") {
+                setCurrTasks(sortName(closedTasks))
+            }
+        }
+    }, [dispatch, filter, shownType])
 
-    // const todoStyle = () => {
-    //     if (shownType === "todo") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const todoStyle = () => {
+        if (shownType === "open") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const doneStyle = () => {
-    //     if (shownType === "done") {
-    //         return {
-    //             borderBottom: "1px solid whitesmoke",
-    //             borderTop: "1px dotted lightgrey",
-    //             borderLeft: "1px dotted lightgrey",
-    //             borderRight: "1px dotted lightgrey"
-    //         }
-    //     } else {
-    //         return {}
-    //     }
-    // }
+    const doneStyle = () => {
+        if (shownType === "closed") {
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
 
-    // const updateIcon = (e) => {
-    //     if (e.target.innerText === "◁") {
-    //         setIcon("—")
-    //     }
-    //     else {
-    //         setIcon("◁")
-    //     }
-    // }
+    const updateIcon = (e) => {
+        if (e.target.innerText === "◁") {
+            setIcon("—")
+        }
+        else {
+            setIcon("◁")
+        }
+    }
 
 
     const submitTask = async (e) => {
@@ -230,26 +280,28 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         <>
             <div className="main-container">
                 <div className="title-container">
-                    <div className="header-title">{title}</div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div> {/*  */}
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
                 </div>
-                {/* {icon === "—" &&
+                {icon === "—" &&
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                            {title === "list" && alist && <div className="tasks-total">{0}</div>}
-                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>}
-                            <div className="tasks-detail">tasks</div>
+                            {/* {title === "list" && alist && <div className="tasks-total">{0}</div>}
+                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>} */}
+                            <div className="tasks-total">{openTasks}</div>
+                            <div className="tasks-detail">Todo</div>
                         </div>
                         <div className="task-detail-container">
-                            <div className="tasks-total">{0}</div>
-                            <div className="tasks-detail">completed</div>
+                            {/* <div className="tasks-total">{0}</div> */}
+                            <div className="tasks-total">{closedTasks}</div>
+                            <div className="tasks-detail">Done</div>
                         </div>
                     </div>
                 </>
-                } */}
+                }
                 <div className="list-tasks-column-headers">
                     <div className="task-column-header name-header">Name</div>
                     <div className="task-column-grid">
@@ -258,29 +310,32 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </div>
                 <div className="list-tasks-container">
-                    {/*<div className="options-container">
-                         <div className="print-button task-option">🖨</div>
-                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("todo")}>Unfinished</div>
-                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("done")}>Finished</div>
+                    <div className="options-container">
+                        {/* <div className="print-button task-option">🖨</div> */}
+                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("open")}>To-do</div>
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("closed")}>Done</div>
                         <div className="filter-button task-option" onClick={() => setShowFilters(!showFilters)}>🗃
                             {showFilters &&
                                 <div className="tasks-filter-container">
                                     <div className="checker-container">
-                                        <div className="checker">{filter === "name" ? "✔" : null}</div>
-                                        <div className="checker">{filter === "due" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "created" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "due_date" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "start_date" ? "✔" : null}</div>
                                         <div className="checker">{filter === "priority" ? "✔" : null}</div>
+                                    <div className="checker">{filter === "name" ? "✔" : null}</div>
                                     </div>
                                     <div className="task-filters">
                                     <div className="filter" onClick={() => setFilter("created")}>Creation Date</div>
-                                        <div className="filter" onClick={() => setFilter("name")}>Task Name</div>
-                                        <div className="filter" onClick={() => setFilter("due")}>Due Date</div>
+                                    <div className="filter" onClick={() => setFilter("due_date")}>Due Date</div>
+                                    <div className="filter" onClick={() => setFilter("start_date")}>Start Date</div>
                                         <div className="filter" onClick={() => setFilter("priority")}>Priority</div>
+                                    <div className="filter" onClick={() => setFilter("name")}>Name</div>
                                     </div>
                                 </div>
                             }
                         </div>
                     </div>
-                    <div className="bulk-actions-container">
+                    {/* <div className="bulk-actions-container">
                         <div className="bulk-button-container">
                             <button className="bulk-button" onClick={() => setShowBulkSelect(!showBulkSelect)}>▢▾</button>
                             {showBulkSelect &&
@@ -312,57 +367,52 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
+                        {showing === "All Tasks" && allTasks && currTasks && currTasks.map(task =>
                         // showing === "All Tasks" && user.orderBy.map(taskId =>
                             // <>
                             //     {
                             //         allTasks[taskId] &&
-                            <div className="task-container" key={taskId}>
-                                {allTasks[taskId] &&
-                                    <>
-                                <div className="task-options-container" id={taskId} onClick={() => {
-                                    setFocusTask(taskId)
+                            <div className="task-container" key={task.id}>
+                                <div className="task-options-container" id={task.id} onClick={() => {
+                                    setFocusTask(task.id)
                                     setShowingTaskOptions(true)
                                     setErrors([])
 
-                                }} key={taskId}>
-                                        <div className="task-options-icon" >Edit</div>
+                                }} key={task.id}>
+                                    <div className="task-options-icon" >Edit</div>
                                 </div>
                                 <div className="task-details-container">
-                                    <div className="task-name">{allTasks[taskId].name}</div>
+                                    <div className="task-name">{task.name}</div>
                                     <div className="task-deets-wrapper">
-                                        {allTasks[taskId].due_date &&
-                                            <div className="task-due">{allTasks[taskId].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                        {task.due_date &&
+                                            <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
                                         }
-                                        {allTasks[taskId].priority <= 3 && allTasks[taskId].priority >= 0 &&
-                                            <div className="priority-level">{allTasks[taskId].priority}</div>
+                                        {task.priority <= 3 && task.priority >= 0 &&
+                                            <div className="priority-level">{task.priority}</div>
                                         }
                                     </div>
-                                    {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
-                                    </div>
-                                    </>
-                                }
+                                </div>
                             </div>
                             //     }
                             // </>
                         )}
-                        {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
-                            <div className="task-container" key={id}>
-                                <div className="task-options-container" id={id} onClick={() => {
-                                    setFocusTask(id)
+                        {showing === "list" && alist.tasks && currTasks && currTasks.map(task =>
+                            <div className="task-container" key={task.id}>
+                                <div className="task-options-container" id={task.id} onClick={() => {
+                                    setFocusTask(task.id)
                                     setShowingTaskOptions(true)
 
-                                }} key={id}>
+                                }} key={task.id}>
                                     <div className="task-options-icon">Edit</div>
                                 </div>
                                 <div className="task-details-container">
-                                    <div className="task-name">{alist.tasks[id].name}</div>
+                                    <div className="task-name">{task.name}</div>
                                     <div className="task-deets-wrapper">
-                                        {alist && alist.tasks[id].due_date &&
-                                            <div className="task-due">{alist.tasks[id].due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                        {task.due_date &&
+                                            <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
                                         }
-                                        {alist && alist.tasks[id].priority <= 3 && alist.tasks[id].priority >= 0 &&
-                                            <div className="priority-level">{alist.tasks[id].priority}</div>
+                                        {task.priority <= 3 && task.priority >= 0 &&
+                                            <div className="priority-level">{task.priority}</div>
                                         }
                                     </div>
                                 </div>

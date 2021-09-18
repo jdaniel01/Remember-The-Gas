@@ -100,7 +100,7 @@ export const sortStart = (taskArr) => {
     let right = [];
 
     for (let i = 1; i < taskArr.length; i++) {
-        if (taskArr[i].due_date <= pivot.due_date) {
+        if (taskArr[i].start_date <= pivot.start_date) {
             left.push(taskArr[i])
         }
         else {
@@ -111,23 +111,41 @@ export const sortStart = (taskArr) => {
     let sortedLeft = sortStart(left);
     let sortedRight = sortStart(right);
 
-    return [...sortedLeft, ...sortedRight];
-
-
+    return [...sortedLeft, pivot, ...sortedRight];
 }
 
 export const sortName = (taskArr) => {
+    if (taskArr.length <= 1) {
+        return taskArr;
+    }
 
+    const pivot = taskArr[0];
+    let left = [];
+    let right = [];
+
+    for (let i = 1; i < taskArr.length; i++) {
+        if (taskArr[i].name <= pivot.name) {
+            left.push(taskArr[i])
+        }
+        else {
+            right.push(taskArr[i])
+        }
+    }
+
+    let sortedLeft = sortName(left);
+    let sortedRight = sortName(right);
+
+    return [...sortedLeft, pivot, ...sortedRight]
 }
 
 
 
 
-window.addEventListener("DOMContentLoaded", event => {
-    const burgerBar = document.querySelector('nav-links-container')
+// window.addEventListener("DOMContentLoaded", event => {
+//     const burgerBar = document.querySelector('nav-links-container')
 
-    burgerBar.addEventListener("click", e => {
-        e.preventDefault()
-        console.log("You clicked me")
-    })
-})
+//     burgerBar.addEventListener("click", e => {
+//         e.preventDefault()
+//         console.log("You clicked me")
+//     })
+// })

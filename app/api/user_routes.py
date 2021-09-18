@@ -127,6 +127,6 @@ def getTasks(id):
     tasks = Task.query.filter(Task.owner_id == id).order_by(desc(Task.id)).all()
     # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(t.id, t.to_dict()) for t in tasks])
-    print("#######got tasks######", {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}})
+    # print("#######got tasks######", {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}})
     # return {"tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-        return {'tasks': newTasks}
+    return newTasks
