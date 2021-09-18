@@ -141,7 +141,7 @@ export const changeListStart = (id, date) => async (dispatch) => {
     return data
 }
 
-const initialState = { list: {}, lists: {}, order: [] }
+const initialState = { list: {}, lists: {} }
 
 export default function listReducer(state = initialState, action) {
     switch (action.type) {
