@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { getLists, setSingleList, dropList, editName } from "../store/list";
 import { getAllTasks } from '../store/task';
+import { sortStatus } from "./Main/sort";
 import ListForm from './Forms/ListForm';
 import LogoutButton from './auth/LogoutButton';
 import "./index.css"
@@ -14,11 +15,11 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
 
   const user = useSelector(state => state.session.user)
   const lists = useSelector(state => state.list.lists)
-  const order = useSelector(state => state.list.order)
-  // const tasks = useSelector(state => state.task.tasks)
-  const taskOrders = useSelector(state => state.task.orderBy)
+  // const order = useSelector(state => state.list.order)
+  const tasks = useSelector(state => state.task)
+  // const taskOrders = useSelector(state => state.task.orderBy)
 
-  const location = window.location.pathname
+  // const location = window.location.pathname
   const history = useHistory()
 
   const [editingList, setEditingList] = useState({})
@@ -43,8 +44,11 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
     if (user) {
       dispatch(getLists(user.id))
       dispatch(getAllTasks(user.id))
+
     }
   }, [dispatch, user])
+
+
 
   useEffect(() => {
     const errs = [];
@@ -145,7 +149,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                     <NavLink to={`/users/${user.id}/tasks`} className="tasks" onClick={() => {
                       setShowing("All Tasks")
                       closeAll()
-                    }}>All Tasks<span>{taskOrders.created.length}</span></NavLink>
+                    }}>All Tasks <span>{sortStatus(tasks).open.length}</span></NavLink>
                     {/* <div className="tasks">Recieved<span>{0}</span></div>
                       <div className="tasks">Today<span>{0}</span></div>
                       <div className="tasks">Tomorrow<span>{0}</span></div>
@@ -162,29 +166,29 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                   {/* <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink> */}
                   <div className="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
                 </div>
-                {listsShowing && lists && order && order.map((id, index) =>
-                  <div className="lists-list" key={index}>
-                    {lists[id] &&
-                      <div className="list-wrapper" key={id}>
-                        <NavLink to={`/lists/${id}`} className="list" key={id} id={id} onClick={() => {
-                          dispatch(setSingleList(lists[id]))
-                        setShowing("list")
-                        setShowingTaskOptions(false)
+                {listsShowing && lists && lists.map((list, index) =>
+                  <div className="lists-list" key={list.id}>
+                    {list &&
+                      <div className="list-wrapper" key={list.id}>
+                        <NavLink to={`/lists/${list.id}`} className="list" key={list.id} id={list.id} onClick={() => {
+                          dispatch(setSingleList(list))
+                          setShowing("list")
+                          setShowingTaskOptions(false)
                           closeAll()
-                        }} >{lists[id].name}</NavLink>
+                      }} >{list.name}</NavLink>
                         <div className="list-options-wrapper" >
-                          <div className="list-options-button" id={id} onClick={updateListOptions}>+</div>
-                          {listOptionsShown === id &&
+                        <div className="list-options-button" id={list.id} onClick={updateListOptions}>+</div>
+                        {listOptionsShown === list.id &&
                             <div className="list-edit-options" >
-                              <button className="list-option" id={id} onClick={() => {
-                            setEditingList(lists[id])
+                          <button className="list-option" id={list.id} onClick={() => {
+                            setEditingList(list)
                             setName(editingList.name)
                                 setShowForm(true)
                               }}>Edit List</button>
                           {/* <button className="list-option" id={id} onClick={shareList}>Share List</button> */}
-                          <button className="list-option" id={id} onClick={() => {
+                          <button className="list-option" id={list.id} onClick={() => {
                             setShowing("All Tasks")
-                            dispatch(dropList(id))
+                            dispatch(dropList(list.id))
                             setShowingTaskOptions(false)
                             history.push(`/users/${user.id}/tasks`)
                           }

@@ -34,7 +34,8 @@ def changeName(id):
         print("##########newName######", task.name)
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
 
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
@@ -62,7 +63,8 @@ def changeDue(id):
         print("##########new start date######", task.due_date)
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -89,7 +91,8 @@ def changeStart(id):
         print("##########new start date######", task.start_date)
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -116,7 +119,8 @@ def changeStatus(id):
         print("##########new status######", task.status)
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -143,7 +147,8 @@ def changePriority(id):
         print("##########new priority######", task.priority)
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -169,7 +174,8 @@ def dropTask(id):
     print("########Task DELETED########")
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
     # order = [l.id for l in lists]
-    newLists = dict([(j.id, j.to_dict()) for j in lists])
+    # newLists = dict([(j.id, j.to_dict()) for j in lists])
+    newLists = [j.to_dict() for j in lists]
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])

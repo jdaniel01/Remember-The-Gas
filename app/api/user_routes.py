@@ -93,7 +93,8 @@ def addList(id):
         db.session.commit()
         lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -110,11 +111,12 @@ def getLists(id):
     print("##########GET LISTS#########", id)
     lists = List.query.filter(List.owner_id == id).order_by(desc(List.id)).all()
     # order = [l.id for l in lists]
-    newLists = dict([(j.id, j.to_dict()) for j in lists])
+    # newLists = dict([(j.id, j.to_dict()) for j in lists])
+    newLists = [j.to_dict() for j in lists]
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
-    print("#########Lists Retrieved#######", newLists)
+    print("#########Lists Retrieved User Route#######")
     # return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     return {'lists': newLists, 'tasks': newTasks}
 

@@ -25,13 +25,14 @@ def validation_errors_to_error_messages(validation_errors):
 def getLists():
     print("###########REQUESTING LISTS######## / ", current_user.id)
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
-    newLists = dict([(j.id, j.to_dict()) for j in lists])
+    # newLists = dict([(j.id, j.to_dict()) for j in lists])
+    newLists = [j.to_dict() for j in lists]
     # order = [l.id for l in lists]
     # return {"lists": newLists, "order": order}
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
-    print("#########Lists retrieved#######")
+    print("#########Lists retrieved List Route#######")
     # return {"lists": newLists, "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
     return {'lists': newLists, 'tasks': newTasks}
 
@@ -53,7 +54,8 @@ def dropList(id):
 
     lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
     # order = [l.id for l in lists]
-    newLists = dict([(j.id, j.to_dict()) for j in lists])
+    # newLists = dict([(j.id, j.to_dict()) for j in lists])
+    newLists = [j.to_dict() for j in lists]
     tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
     # taskCreatedOrder = [t.id for t in tasks]
     newTasks = dict([(task.id, task.to_dict()) for task in tasks])
@@ -74,7 +76,8 @@ def editName(id):
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
@@ -99,7 +102,8 @@ def editStart(id):
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
        
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
@@ -128,7 +132,8 @@ def addList(id):
         db.session.commit()
         lists = List.query.filter(List.owner_id == current_user.id).order_by(desc(List.id)).all()
         # order = [l.id for l in lists]
-        newLists = dict([(j.id, j.to_dict()) for j in lists])
+        # newLists = dict([(j.id, j.to_dict()) for j in lists])
+        newLists = [j.to_dict() for j in lists]
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
