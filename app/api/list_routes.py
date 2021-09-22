@@ -84,7 +84,7 @@ def editName(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########List Name Validated#######")
         # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-        return {'lists': newLists, 'tasks': newTasks}
+        return {'lists': newLists, 'list': alist, 'tasks': newTasks}
 
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
@@ -110,7 +110,7 @@ def editStart(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########List start Validated#######", newLists)
         # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-        return {'lists': newLists, 'tasks': newTasks}
+        return {'lists': newLists, 'list': alist, 'tasks': newTasks}
 
     print("#########List start Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
@@ -139,7 +139,7 @@ def addList(id):
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
         # return {"lists": newLists, "list": newLists[id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}
-        return {'lists': newLists, 'tasks': newTasks}
+        return {'lists': newLists, 'list': alist, 'tasks': newTasks}
 
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}

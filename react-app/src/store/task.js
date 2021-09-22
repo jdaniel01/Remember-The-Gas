@@ -29,7 +29,7 @@ export const getAllTasks = (id) => async (dispatch) => {
     if (data.errors) {
         return data
     }
-    dispatch(setTasks(data.tasks))
+    dispatch(setTasks(data))
     // dispatch(setOrder(data.tasksOrder))
     return data
 }
@@ -156,9 +156,7 @@ const initialState = {} // changed from   {tasks: {}, orderBy: { created: [] }}
 export default function taskReducer(state = initialState, action) {
     switch (action.type) {
         case SET_TASKS:
-            return { ...action.payload }
-        // case SET_ORDER:
-        //     return { ...state, orderBy: action.payload }
+            return action.payload;
         default:
             return state;
     }

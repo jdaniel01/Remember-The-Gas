@@ -42,9 +42,9 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
 
   useEffect(() => {
     if (user) {
+      console.log("#################USER in UseEffect", user)
       dispatch(getLists(user.id))
       dispatch(getAllTasks(user.id))
-
     }
   }, [dispatch, user])
 
@@ -166,7 +166,7 @@ const NavBar = ({ showSettings, setShowSettings, setShowing, isDisplayed, setIsD
                   {/* <NavLink to={`/users/${user.id}/lists`} className="add-list-icon">+</NavLink> */}
                   <div className="add-list-icon" onClick={() => setShowNewListForm(true)}>+</div>
                 </div>
-                {listsShowing && lists && lists.map((list, index) =>
+                {listsShowing && lists && lists.map(list =>
                   <div className="lists-list" key={list.id}>
                     {list &&
                       <div className="list-wrapper" key={list.id}>

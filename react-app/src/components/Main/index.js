@@ -10,10 +10,10 @@ import "./Main.css";
 const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }) => {
 
     const dispatch = useDispatch()
-    const history = useHistory()
+    // const history = useHistory()
     const { listId } = useParams()
 
-    const user = useSelector(state => state.session.user)
+    // const user = useSelector(state => state.session.user)
     // const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task)
@@ -70,6 +70,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     }
                     setTitle(alist.name)
                     let sortedList = sortStatus(alist.tasks);
+
                     setTitle(alist.name)
                     setOpenTasks(sortedList.open);
                     setClosedTasks(sortedList.closed);
@@ -78,9 +79,10 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     setTitle("All Tasks")
                     // history.push(`/users/${user.id}/tasks`)
                     let sortedTasks = sortStatus(allTasks);
-                    setTitle(alist.name)
+                    console.log("EEEEEEEEEEEEEEEIII", sortedTasks)
                     setOpenTasks(sortedTasks.open);
                     setClosedTasks(sortedTasks.closed);
+
                 }
             }
         }
@@ -132,6 +134,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         if (shownType === "open") {
             if (filter === "created") {
                 setCurrTasks(sortCreated(openTasks))
+                console.log("EEEEEEEEEEEEEEEEEEEE", openTasks);
             }
             else if (filter === "priority") {
                 setCurrTasks(sortPriority(openTasks))
