@@ -181,7 +181,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 setCurrTasks(sortName(closedTasks))
             }
         }
-    }, [dispatch, filter, shownType, allTasks, alist])
+    }, [dispatch, filter, shownType, allTasks, alist, openTasks, closedTasks])
 
     const todoStyle = () => {
         if (shownType === "open") {
@@ -317,13 +317,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                 </>
                 }
-                <div className="list-tasks-column-headers">
-                    <div className="task-column-header name-header">Name</div>
-                    <div className="task-column-grid">
-                        <div className="task-column-header due-header">Due</div>
-                        <div className="task-column-header priority-header">Priority</div>
-                    </div>
-                </div>
                 <div className="list-tasks-container">
                     <div className="options-container">
                         {/* <div className="print-button task-option">🖨</div> */}
@@ -348,6 +341,13 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                     </div>
                                 </div>
                             }
+                        </div>
+                    </div>
+                    <div className="list-tasks-column-headers">
+                        <div className="task-column-header name-header">Name</div>
+                        <div className="task-column-grid">
+                            <div className="task-column-header due-header">Due</div>
+                            <div className="task-column-header priority-header">Priority</div>
                         </div>
                     </div>
                     {/* <div className="bulk-actions-container">
