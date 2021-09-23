@@ -10,19 +10,14 @@ import "./Main.css";
 const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }) => {
 
     const dispatch = useDispatch()
-    // const history = useHistory()
     const { listId } = useParams()
 
     const user = useSelector(state => state.session.user)
-    // const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task)
-    // const taskOrders = useSelector(state => state.task.orderBy)
     const [openTasks, setOpenTasks] = useState([]);
     const [closedTasks, setClosedTasks] = useState([]);
     const [currTasks, setCurrTasks] = useState([]);
-    // const [allStatuses, setAllStatuses] = useState({});
-    // const [listStatuses, setListStatuses] = useState({});
     const [title, setTitle] = useState("All Tasks")
     const [icon, setIcon] = useState("◁")
     const [showFilters, setShowFilters] = useState(false)
@@ -92,9 +87,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 }
                 else {
                     setTitle("All Tasks")
-                    // history.push(`/users/${user.id}/tasks`)
                     let sortedTasks = sortStatus(allTasks);
-                    console.log("EEEEEEEEEEEEEEEIII", sortedTasks)
                     setOpenTasks(sortedTasks.open);
                     setClosedTasks(sortedTasks.closed);
 
@@ -102,9 +95,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             }
             else {
                 setTitle("All Tasks")
-                // history.push(`/users/${user.id}/tasks`)
                 let sortedTasks = sortStatus(allTasks);
-                console.log("EEEEEEEEEEEEEEHHHH", sortedTasks)
                 setOpenTasks(sortedTasks.open);
                 setClosedTasks(sortedTasks.closed);
 
@@ -316,13 +307,10 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
-                            {/* {title === "list" && alist && <div className="tasks-total">{0}</div>}
-                            {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>} */}
                             <div className="tasks-total">{openTasks.length}</div>
                             <div className="tasks-detail">Todo</div>
                         </div>
                         <div className="task-detail-container">
-                            {/* <div className="tasks-total">{0}</div> */}
                             <div className="tasks-total">{closedTasks.length}</div>
                             <div className="tasks-detail">Done</div>
                         </div>
@@ -395,10 +383,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     }
                     <div className="user-tasks-container">
                         {showing === "All Tasks" && allTasks && currTasks && currTasks.map(task =>
-                        // showing === "All Tasks" && user.orderBy.map(taskId =>
-                            // <>
-                            //     {
-                            //         allTasks[taskId] &&
                             <div className="task-container" key={task.id}>
                                 <div className="task-options-container" id={task.id} onClick={() => {
                                     setFocusTask(task.id)
@@ -420,8 +404,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                     </div>
                                 </div>
                             </div>
-                            //     }
-                            // </>
                         )}
                         {showing === "list" && alist.tasks && currTasks && currTasks.map(task =>
                             <div className="task-container" key={task.id}>
@@ -447,7 +429,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         )}
                     </div>
                     <div className="empty-lines-container">
-                        {/* {lines()} */}
                         <>
                             <div className="empty-line"></div>
                             <div className="empty-line"></div>
