@@ -58,8 +58,8 @@ class User(db.Model, UserMixin):
       "username": self.username,
       "email": self.email,
       "photo": self.photo,
-      # "lists": [l.to_dict() for l in reversed(self.lists)],
-      # "tasks": dict([(task.id, task.to_dict()) for task in self.tasks])
+      "lists": [l.to_dict() for l in reversed(self.lists)],
+      "tasks": dict([(task.id, task.to_dict()) for task in self.tasks])
     }
   
   def to_detail(self):

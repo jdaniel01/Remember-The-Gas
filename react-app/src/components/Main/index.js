@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
-import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
+import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority, getAllTasks } from '../../store/task';
 import { sortStatus, sortCreated, sortPriority, sortDue, sortStart, sortName } from "./sort";
 
 import "./Main.css";
@@ -13,7 +13,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     // const history = useHistory()
     const { listId } = useParams()
 
-    // const user = useSelector(state => state.session.user)
+    const user = useSelector(state => state.session.user)
     // const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task)
@@ -49,6 +49,12 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
 
+    useEffect(() => {
+        if (!allTasks) {
+            dispatch(getAllTasks(user.id))
+        }
+        console.log("TAAAAAAAAASKS", allTasks)
+    }, [dispatch])
 
     useEffect(() => {
         if (showing === "list") {
@@ -84,6 +90,15 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     setClosedTasks(sortedTasks.closed);
 
                 }
+            }
+            else {
+                setTitle("All Tasks")
+                // history.push(`/users/${user.id}/tasks`)
+                let sortedTasks = sortStatus(allTasks);
+                console.log("EEEEEEEEEEEEEEHHHH", sortedTasks)
+                setOpenTasks(sortedTasks.open);
+                setClosedTasks(sortedTasks.closed);
+
             }
         }
     }, [dispatch, showing, alist, title, listId])

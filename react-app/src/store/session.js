@@ -1,3 +1,6 @@
+import { setAllTasks } from "./task";
+import { setAllLists } from "./list";
+
 // constants
 const SET_USER = "session/SET_USER"
 const REMOVE_USER = "session/REMOVE_USER"
@@ -25,6 +28,8 @@ export const authenticate = () => async (dispatch) => {
         return;
     }
     dispatch(setUser(data))
+    dispatch(setAllLists(data.lists))
+    dispatch(setAllTasks(data.tasks))
 }
 
 export const login = (nameOrEmail, password) => async (dispatch) => {
@@ -44,6 +49,7 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
         return data;
     }
     dispatch(setUser(data))
+    dispatch()
     return data //change ({} to data) why are we returning nothing?
 }
 
