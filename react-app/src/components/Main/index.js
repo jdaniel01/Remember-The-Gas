@@ -52,8 +52,17 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     useEffect(() => {
         if (!allTasks) {
             dispatch(getAllTasks(user.id))
+            console.log("TAAAAAAAAASKS", allTasks)
+            let statuses = sortStatus(allTasks)
+            setOpenTasks(statuses.open)
+            setClosedTasks(statuses.closed)
         }
-        console.log("TAAAAAAAAASKS", allTasks)
+        else {
+            let statuses = sortStatus(allTasks)
+            setOpenTasks(statuses.open)
+            setClosedTasks(statuses.closed)
+        }
+
     }, [dispatch])
 
     useEffect(() => {
@@ -181,7 +190,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                 setCurrTasks(sortName(closedTasks))
             }
         }
-    }, [dispatch, filter, shownType])
+    }, [dispatch, filter, shownType, allTasks, alist])
 
     const todoStyle = () => {
         if (shownType === "open") {
@@ -309,12 +318,12 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         <div className="task-detail-container">
                             {/* {title === "list" && alist && <div className="tasks-total">{0}</div>}
                             {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.created.length}</div>} */}
-                            <div className="tasks-total">{openTasks}</div>
+                            <div className="tasks-total">{openTasks.length}</div>
                             <div className="tasks-detail">Todo</div>
                         </div>
                         <div className="task-detail-container">
                             {/* <div className="tasks-total">{0}</div> */}
-                            <div className="tasks-total">{closedTasks}</div>
+                            <div className="tasks-total">{closedTasks.length}</div>
                             <div className="tasks-detail">Done</div>
                         </div>
                     </div>
