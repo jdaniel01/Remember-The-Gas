@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority, getAllTasks } from '../../store/task';
 
 
-const TaskOptions = ({ focusTask, setFocusTask, setShowingTaskOptions }) => {
+const TaskOptions = ({ focusTask, setFocusTask, setShowingTaskOptions, taskInfo, setTaskInfo, alist, allTasks }) => {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.session.user)
-    const alist = useSelector(state => state.list.list)
-    const allTasks = useSelector(state => state.task)
 
-    const [taskInfo, setTaskInfo] = useState("");
+    // const [taskInfo, setTaskInfo] = useState("");
     const [errors, setErrors] = useState([]);
     const [taskStatus, setTaskStatus] = useState("open");
     const [taskPriority, setTaskPriority] = useState(0);

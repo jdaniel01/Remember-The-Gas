@@ -16,6 +16,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const user = useSelector(state => state.session.user)
     const alist = useSelector(state => state.list.list)
     const allTasks = useSelector(state => state.task)
+
     const [openTasks, setOpenTasks] = useState([]);
     const [closedTasks, setClosedTasks] = useState([]);
     const [currTasks, setCurrTasks] = useState([]);
@@ -30,20 +31,8 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
     const [focusTask, setFocusTask] = useState(0);
-    // const [showingTaskOptions, setShowingTaskOptions] = useState(false);
-    const [editTaskName, setEditTaskName] = useState(false);
-    // const [editTaskDue, setEditTaskDue] = useState(false)
-    // const [editTaskList, setEditTaskList] = useState(false);
-    // const [editStartDate, setEditStartDate] = useState(false);
-    // const [taskStatus, setTaskStatus] = useState("open");
-    // const [taskPriority, setTaskPriority] = useState(0);
-    // const [dueDate, setDueDate] = useState("")
-    // const [editTaskStart, setEditTaskStart] = useState(false);
-    // const [startDate, setStartDate] = useState("")
-    // const [editTaskStatus, setEditTaskStatus] = useState(false)
-    // const [editTaskPriority, setEditTaskPriority] = useState(false)
-    // const [editTaskInfo, setEditTaskInfo] = useState("")
-    // const [editErrors, setEditErrors] = useState([]);
+    const [taskName, setTaskName] = useState(false);
+
 
     useEffect(() => {
         if (!allTasks) {
@@ -104,47 +93,6 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         }
     }, [dispatch, showing, alist, title, listId])
 
-    // useEffect(() => {
-    //     if (allTasks && focusTask) {
-    //         setEditTaskInfo(allTasks[focusTask].name)
-    //         setTaskPriority(allTasks[focusTask].priority)
-    //         setTaskStatus(allTasks[focusTask].status)
-    //         setStartDate(allTasks[focusTask].start_date)
-    //         setDueDate(allTasks[focusTask].due_date)
-    //         //TODO: set task notes and owner. create to_detail() for task/list owner
-    //     }
-    // }, [focusTask, allTasks])
-
-    // useEffect(() => {
-    //     changeTaskStatus(focusTask, taskStatus)
-    // }, [taskStatus, focusTask])
-
-
-    // useEffect(() => {
-    //     const errs = []
-    //     if (editTaskName) {
-    //         if (taskInfo.length < 1) {
-    //             errs.push("Your task must have a name.")
-    //         }
-    //         if (taskInfo === allTasks[focusTask].name) {
-    //             errs.push("No changes were made.")
-    //         }
-    //     }
-    //     setErrors(errs);
-    // }, [taskInfo, taskInfo, allTasks, focusTask])
-
-    // useEffect(() => {
-    //     const errs = []
-    //     if (editTaskName) {
-    //         if (editTaskInfo.length < 1) {
-    //             errs.push("Your task must have a name.")
-    //         }
-    //         if (editTaskInfo === allTasks[focusTask].name) {
-    //             errs.push("No changes were made.")
-    //         }
-    //     }
-    //     setEditErrors(errs);
-    // }, [editTaskInfo])
 
     useEffect(() => {
         if (shownType === "open") {
@@ -302,11 +250,11 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }
 
 
-    const submitTask = async (e) => {
+    const submitTask = (e) => {
         e.preventDefault()
         //TODO: Add task, store, route, link store and link forms
-        // console.log("##########testing##########", allTasks, taskOrders.created)
-        const data = await dispatch(addTask(alist.id, taskInfo))
+        console.log("##########testing##########", allTasks)
+        const data = dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
         }
@@ -421,7 +369,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         </>
                     </div>
                 </div>
-                {showingTaskOptions && focusTask ? <TaskOptions focusTask setFocustTask setShowingTaskOptions /> : null}
+                {showingTaskOptions && focusTask ? <TaskOptions focusTask setFocustTask setShowingTaskOptions taskInfo setTaskInfo alist allTasks /> : null}
             </div>
         </>
     )
