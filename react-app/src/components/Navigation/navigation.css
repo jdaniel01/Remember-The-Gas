@@ -1,0 +1,59 @@
+.navigation_bar{
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    height: 114px;
+    width: 100%;
+    background-color: #0054A4;
+    box-shadow: 0px 1px 2px 1px black;
+}
+
+.logo-wrapper {
+    height: 114px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.logo-med{
+    height: 84px;
+}
+
+.spacer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 114px;
+}
+
+.menu-bar{
+    display: flex;
+    justify-content: flex-end;
+    width: 400px;
+    align-items: center;
+}
+
+.menu-button{
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    color: #E5E5E5;
+    font-family: "Nokora";
+    font-weight: bold;
+    font-style: none;
+    font-size: 18pt;
+    text-decoration: none;
+}
+.menu-button:hover{
+    color: white;
+}
+
+.menu-button-border {
+    border: 1px solid #E5E5E5;
+    padding: 5px;
+    border-radius: 3px;
+    height: 38px;
+}
+.menu-button-border:hover {
+    border:1px solid white;
+}

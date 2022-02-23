@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navigation/Navbar";
+import UserNav from "./components/Navigation/UserNav";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
-import Splash from "./components/Splash";
+import Splash from "./components/Splash/Splash";
 import Main from './components/Main';
 import About from './components/About';
 import { authenticate } from "./store/session";
@@ -53,9 +54,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user &&
-        <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} setShowingTaskOptions={setShowingTaskOptions} />
-      }
+      {user ? <UserNav /> : <NavBar />}
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />
@@ -90,12 +89,10 @@ function App() {
           </Route>
         }
         <Route path="/about" exact={true}>
-          {!user && <NavBar showSettings={showSettings} setShowSettings={setShowSettings} setShowing={setShowing} isDisplayed={isDisplayed} setIsDisplayed={setIsDisplayed} setShowingTaskOptions={setShowingTaskOptions} />}
+          {!user && <NavBar />}
           <About />
         </Route>
-        {/* {user &&
-          <Footer />
-        } */}
+        {/* <Footer /> */}
       </Switch>
     </BrowserRouter>
   );

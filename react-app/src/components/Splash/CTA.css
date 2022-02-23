@@ -1,0 +1,32 @@
+
+.splash-cta{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 214px;
+    width: 100%;
+    background-color: #0054A4;
+    color: white;
+    font: "Nokora";
+    font-weight: bold;
+    font-size: 26pt;
+}
+
+.cta-button{
+    text-decoration:none;
+    color: white;
+    font-size: 14pt;
+    background-color: #E20D19;
+    width: 198px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    margin-top: 20px;
+}
+.cta-button:hover{
+    color: #E5E5E5;
+    background-color:#A31127;
+}
