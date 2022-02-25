@@ -13,8 +13,9 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    height: 425px;
+    height: fit-content;
     width: fit-content;
+    position: relative;
 }
 
 .slides-container{
@@ -22,25 +23,32 @@
     flex-flow: column nowrap;
     width: fit-content;
     align-items: center;
-    justify-content: center;
-    height: 425px;
+    justify-content: flex-start;
+    height: fit-content;
     overflow-y:hidden;
 }
 
 
-.slide-heading{
-    font-family: "Nokora";
-    font-size: 40px;
-    font-weight: bold;
-    color: white;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .slide-image{
     height: 425px;
     width: fit-content;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.slide-heading{
+    font-family: "Nokora";
+    font-size: 22pt;
+    font-weight: bold;
+    color: white;
+}
+
+.slide-text{
+    font-family: "Nokora";
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
 }
 
 .paginator-container{
@@ -51,8 +59,8 @@
 }
 
 .paginator{
-    height: 12px;
-    width: 12px;
-    border: 3px solid white;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
+    border: 2px solid white;
 }
