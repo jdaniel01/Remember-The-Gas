@@ -7,6 +7,10 @@ import "./Carousel.css";
 const Carousel = () => {
     const [currSlide, setCurrSlide] = useState(0);
 
+    const paginate = (idx) => {
+        setCurrSlide(idx);
+    }
+
     return (
         <div className="carousel-container">
             <div className="slides-container">
@@ -14,7 +18,7 @@ const Carousel = () => {
                     <Slide slide={slide} idx={idx} curr={currSlide} />
                 )}
             </div>
-            <Paginator activeIdx={currSlide} />
+            <Paginator activeIdx={currSlide} paginate={paginate} />
         </div>
     )
 }
