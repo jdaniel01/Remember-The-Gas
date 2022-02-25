@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+import SocialLink from './SocialLink';
+import { socialNetworks } from './socialData';
 import "./Footer.css";
 
 const Footer = () => {
@@ -19,6 +21,12 @@ const Footer = () => {
                     <div className="list-heading">Connect</div>
                     <NavLink className="list-item" to="/about#developer">Developer</NavLink>
                     <a className="list-item" href="https://github.com/jdaniel01/Remember-The-Gas">Project</a>
+                </div>
+            </div>
+            <div className="floor-container">
+                <div id="copywright">©️ Remember The Gas 2022</div>
+                <div className="link-container">
+                    {socialNetworks.map(network => <SocialLink network={network} />)}
                 </div>
             </div>
 
