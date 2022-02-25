@@ -1,4 +1,4 @@
-import React, { useSelector, UseState } from "react";
+import React from "react";
 import RtgLogo from "./Logo";
 import Menu from "./Menu";
 import "./navigation.css";

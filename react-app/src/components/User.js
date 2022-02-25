@@ -7,10 +7,7 @@ function User() {
 
   const [user, setUser] = useState({});
 
-  // const [showAccount, setShowAccount] = useState(true);
-  // const [showEmailPreferences, setShowEmailPreferences] = useState(false);
-  // const [showNotifications, setShowNotifications] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
+
   const [header, setHeader] = useState("User Details");
   const [showSettings, setShowSettings] = useState(false)
 
@@ -41,12 +38,6 @@ function User() {
     else if (header === "Password") {
       return <PasswordForm setShowSettings={setShowSettings} />
     }
-    // else if (header === "Email Preferences") {
-    //   return <EmailForm />
-    // }
-    // else if (header === "Notifications") {
-    //   return <NotificationForm />
-    // }
     else if (header === "Delete Account") {
       return <DeleteForm />
     }
