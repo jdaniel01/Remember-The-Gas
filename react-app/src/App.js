@@ -89,7 +89,6 @@ function App() {
           </Route>
         }
         <Route path="/about" exact={true}>
-          {!user && <NavBar />}
           <About />
         </Route>
         {/* <Footer /> */}

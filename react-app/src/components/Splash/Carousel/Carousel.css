@@ -1,0 +1,58 @@
+
+.carousel-container{
+    height: 550px;
+    width: 100%;
+    background: #0054a4;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-container{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    height: 425px;
+    width: fit-content;
+}
+
+.slides-container{
+    display: flex;
+    flex-flow: column nowrap;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    height: 425px;
+    overflow-y:hidden;
+}
+
+
+.slide-heading{
+    font-family: "Nokora";
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slide-image{
+    height: 425px;
+    width: fit-content;
+}
+
+.paginator-container{
+    display: flex;
+    height: fit-content;
+    width: 72px;
+    justify-content: space-evenly;
+}
+
+.paginator{
+    height: 12px;
+    width: 12px;
+    border: 3px solid white;
+    border-radius: 50%;
+}
