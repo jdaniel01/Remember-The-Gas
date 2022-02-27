@@ -39,3 +39,33 @@
 .list-item:hover{
     color: #0054A4;
 }
+
+#copywright{
+    display: flex;
+    align-items: center;
+}
+
+.floor-container {
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+}
+
+.link-container{
+    display: flex;
+    width: 300px;
+    justify-content: space-evenly;
+}
+
+.social-link{
+    border: none;
+    background-color: white;
+    width: fit-content;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.social-link img {
+    height: 40px;
+}

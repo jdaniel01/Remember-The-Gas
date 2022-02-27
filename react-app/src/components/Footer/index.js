@@ -26,7 +26,7 @@ const Footer = () => {
             <div className="floor-container">
                 <div id="copywright">©️ Remember The Gas 2022</div>
                 <div className="link-container">
-                    {socialNetworks.map(network => <SocialLink network={network} />)}
+                    {socialNetworks.map((network, id) => <SocialLink network={network} key={id} />)}
                 </div>
             </div>
 
