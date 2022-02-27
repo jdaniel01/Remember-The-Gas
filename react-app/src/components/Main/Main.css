@@ -349,6 +349,14 @@ body{
     color: whitesmoke;
 }
 
+.list-notes{
+    padding-left: 2rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(75, 29, 119);
+    border-top: 1px solid rgb(75, 29, 119);
+
+}
+
 .empty-lines-container{
     width: 100%;
     height: 100%;

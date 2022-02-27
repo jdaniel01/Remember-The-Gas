@@ -7,7 +7,7 @@ const UserNav = () => {
 
     return (
         <div className="user-menu-bar">
-
+            User Nav Here.
         </div>
     )
 }

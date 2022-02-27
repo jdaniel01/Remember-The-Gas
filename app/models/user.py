@@ -11,8 +11,8 @@ class User(db.Model, UserMixin):
   hashed_password = db.Column(db.String(255), nullable = False)
   photo = db.Column(db.Text)
 
-  lists = db.relationship("List", back_populates="owner")
-  tasks = db.relationship("Task", back_populates="owner")
+  lists = db.relationship("List", cascade="all,delete", back_populates="owner")
+  tasks = db.relationship("Task", cascade="all,delete", back_populates="owner")
 
   @property
   def password(self):
