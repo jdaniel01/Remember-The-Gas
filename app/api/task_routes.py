@@ -37,13 +37,8 @@ def changeName(id):
         # newLists = dict([(j.id, j.to_dict()) for j in lists])
         newLists = [j.to_dict() for j in lists]
 
-<<<<<<< HEAD
-        tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.status)).order_by(desc(Task.id)).all()
-        taskCreatedOrder = [t.id for t in tasks]
-=======
         tasks = Task.query.filter(Task.owner_id == current_user.id).order_by(desc(Task.id)).all()
         # taskCreatedOrder = [t.id for t in tasks]
->>>>>>> primeSort
         newTasks = dict([(task.id, task.to_dict()) for task in tasks])
         print("#########Task Validated#######", newLists)
         # return {"lists": newLists, "list": newLists[task.list_id], "order": order, "tasks": newTasks, "tasksOrder": {"created": taskCreatedOrder}}

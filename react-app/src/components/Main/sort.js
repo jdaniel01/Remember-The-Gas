@@ -53,7 +53,6 @@ export const sortPriority = (taskArr) => {
         else {
             tasks.high.push(taskArr[i])
         }
-<<<<<<< HEAD
     }
 
     return [...sortCreated(tasks.high), ...sortCreated(tasks.med), ...sortCreated(tasks.low), ...sortCreated(tasks.none)]
@@ -140,97 +139,6 @@ export const sortName = (taskArr) => {
 }
 
 
-
-window.addEventListener("DOMContentLoaded", event => {
-    const burgerBar = document.querySelector('nav-links-container')
-=======
-    }
-
-    return [...sortCreated(tasks.high), ...sortCreated(tasks.med), ...sortCreated(tasks.low), ...sortCreated(tasks.none)]
-}
-
-
-export const sortDue = (taskArr, step = 0) => {
-    const currStep = step;
-    if (taskArr.length <= 1) {
-        return taskArr
-    }
-    const pivot = taskArr[0];
-    let left = [];
-    let right = [];
-    let none = [];
-
-    for (let i = 1; i < taskArr.length; i++) {
-        if (taskArr[i].due_date <= pivot.due_date) {
-            left.push(taskArr[i])
-        }
-        else if (taskArr[i].due_date > pivot.due_date) {
-            right.push(taskArr[i])
-        }
-        else {
-            none.push(taskArr[i])
-        }
-    }
-
-    let sortedLeft = sortDue(left, currStep + 1);
-    let sortedRight = sortDue(right, currStep + 1);
-    if (currStep > 0) {
-        return [...sortedLeft, ...sortedRight];
-    }
-    else {
-        return [...sortedLeft, ...sortedRight, ...none]
-    }
-}
-
-export const sortStart = (taskArr) => {
-    if (taskArr.length <= 1) {
-        return taskArr
-    }
-    const pivot = taskArr[0];
-    let left = [];
-    let right = [];
-
-    for (let i = 1; i < taskArr.length; i++) {
-        if (taskArr[i].start_date <= pivot.start_date) {
-            left.push(taskArr[i])
-        }
-        else {
-            right.push(taskArr[i])
-        }
-    }
-
-    let sortedLeft = sortStart(left);
-    let sortedRight = sortStart(right);
-
-    return [...sortedLeft, pivot, ...sortedRight];
-}
-
-export const sortName = (taskArr) => {
-    if (taskArr.length <= 1) {
-        return taskArr;
-    }
-
-    const pivot = taskArr[0];
-    let left = [];
-    let right = [];
-
-    for (let i = 1; i < taskArr.length; i++) {
-        if (taskArr[i].name <= pivot.name) {
-            left.push(taskArr[i])
-        }
-        else {
-            right.push(taskArr[i])
-        }
-    }
-
-    let sortedLeft = sortName(left);
-    let sortedRight = sortName(right);
-
-    return [...sortedLeft, pivot, ...sortedRight]
-}
-
-
->>>>>>> primeSort
 
 
 // window.addEventListener("DOMContentLoaded", event => {

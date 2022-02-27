@@ -6,7 +6,7 @@ import Footer from "../Footer";
 const Splash = () => {
 
     return (
-        <div className="splash-container">
+        <div className="splash-container" style={{ width: "100%" }}>
             <CTA />
             <Carousel />
             <Footer />
