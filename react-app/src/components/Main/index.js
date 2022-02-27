@@ -2,34 +2,47 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getList, addTask } from '../../store/list';
+<<<<<<< HEAD
 import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority } from '../../store/task';
+=======
+import { changeTaskName, deleteTask, changeTaskDue, changeTaskStart, changeTaskStatus, changeTaskPriority, getAllTasks } from '../../store/task';
+import { sortStatus, sortCreated, sortPriority, sortDue, sortStart, sortName } from "./sort";
+import TaskOptions from './taskOptions';
+>>>>>>> primeSort
 
 import "./Main.css";
 
 const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }) => {
 
     const dispatch = useDispatch()
-    const history = useHistory()
     const { listId } = useParams()
 
     const user = useSelector(state => state.session.user)
-    // const lists = useSelector(state => state.list.lists)
     const alist = useSelector(state => state.list.list)
-    const allTasks = useSelector(state => state.task.tasks)
-    const taskOrders = useSelector(state => state.task.orderBy)
+    const allTasks = useSelector(state => state.task)
 
-
+    const [openTasks, setOpenTasks] = useState([]);
+    const [closedTasks, setClosedTasks] = useState([]);
+    const [currTasks, setCurrTasks] = useState([]);
     const [title, setTitle] = useState("All Tasks")
     const [icon, setIcon] = useState("◁")
     const [showFilters, setShowFilters] = useState(false)
+<<<<<<< HEAD
     const [filter, setFilter] = useState("created")//"created", "priority", "status"
     const [shownType, setShownType] = useState("todo")//"finished"
     const [showBulkSelect, setShowBulkSelect] = useState(false);
     const [showBulkActions, setShowBulkActions] = useState(false);
+=======
+    const [filter, setFilter] = useState("created")//"created", "start_date", "due_date", "priority", "name"
+    const [shownType, setShownType] = useState("open")//"closed"
+    // const [showBulkSelect, setShowBulkSelect] = useState(false);
+    // const [showBulkActions, setShowBulkActions] = useState(false);
+>>>>>>> primeSort
     const [taskInfo, setTaskInfo] = useState("");
     const [errors, setErrors] = useState([])
     const [showTaskButton, setShowTaskButton] = useState(false)
     const [focusTask, setFocusTask] = useState(0);
+<<<<<<< HEAD
     // const [showingTaskOptions, setShowingTaskOptions] = useState(false);
     const [editTaskName, setEditTaskName] = useState(false);
     const [editTaskDue, setEditTaskDue] = useState(false)
@@ -45,17 +58,41 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     const [editTaskInfo, setEditTaskInfo] = useState("")
     const [editErrors, setEditErrors] = useState([]);
     const [editListNotes, setEditListNotes] = useState(false);
+=======
+    const [taskName, setTaskName] = useState(false);
+>>>>>>> primeSort
 
 
     useEffect(() => {
+        if (!allTasks) {
+            dispatch(getAllTasks(user.id))
+            console.log("TAAAAAAAAASKS", allTasks)
+            let statuses = sortStatus(allTasks)
+            setOpenTasks(statuses.open)
+            setClosedTasks(statuses.closed)
+        }
+        else {
+            let statuses = sortStatus(allTasks)
+            setOpenTasks(statuses.open)
+            setClosedTasks(statuses.closed)
+        }
 
+    }, [dispatch])
+
+    useEffect(() => {
         if (showing === "list") {
             if (!alist) {
                 dispatch(getList(Number(listId)))
             }
             if (alist.name && title !== alist.name) {
+                let sortedList = sortStatus(alist.tasks);
                 setTitle(alist.name)
+<<<<<<< HEAD
 
+=======
+                setOpenTasks(sortedList.open);
+                setClosedTasks(sortedList.closed);
+>>>>>>> primeSort
             }
         }
         if (showing === "All Tasks") {
@@ -65,58 +102,91 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         dispatch(getList(Number(listId)))
                     }
                     setTitle(alist.name)
+                    let sortedList = sortStatus(alist.tasks);
+
+                    setTitle(alist.name)
+                    setOpenTasks(sortedList.open);
+                    setClosedTasks(sortedList.closed);
                 }
                 else {
                     setTitle("All Tasks")
-                    history.push(`/users/${user.id}/tasks`)
+                    let sortedTasks = sortStatus(allTasks);
+                    setOpenTasks(sortedTasks.open);
+                    setClosedTasks(sortedTasks.closed);
+
                 }
             }
-        }
-    }, [dispatch, showing, alist, title, history, listId, user.id])
+            else {
+                setTitle("All Tasks")
+                let sortedTasks = sortStatus(allTasks);
+                setOpenTasks(sortedTasks.open);
+                setClosedTasks(sortedTasks.closed);
 
-    useEffect(() => {
-        if (allTasks && focusTask) {
-            setEditTaskInfo(allTasks[focusTask].name)
-            setTaskPriority(allTasks[focusTask].priority)
-            setTaskStatus(allTasks[focusTask].status)
-            setStartDate(allTasks[focusTask].start_date)
-            setDueDate(allTasks[focusTask].due_date)
-            //TODO: set task notes and owner. create to_detail() for task/list owner
+            }
         }
-    }, [focusTask, allTasks])
-
-    useEffect(() => {
-        changeTaskStatus(focusTask, taskStatus)
-    }, [taskStatus, focusTask])
+    }, [dispatch, showing, alist, title, listId])
 
 
     useEffect(() => {
-        const errs = []
-        if (editTaskName) {
-            if (taskInfo.length < 1) {
-                errs.push("Your task must have a name.")
+        if (shownType === "open") {
+            if (filter === "created") {
+                setCurrTasks(sortCreated(openTasks))
+                console.log("EEEEEEEEEEEEEEEEEEEE", openTasks);
             }
-            if (taskInfo === allTasks[focusTask].name) {
-                errs.push("No changes were made.")
+            else if (filter === "priority") {
+                setCurrTasks(sortPriority(openTasks))
             }
-        }
-        setErrors(errs);
-    }, [taskInfo, editTaskInfo, allTasks, focusTask, editTaskName])
-
-    useEffect(() => {
-        const errs = []
-        if (editTaskName) {
-            if (editTaskInfo.length < 1) {
-                errs.push("Your task must have a name.")
+            else if (filter === "start_date") {
+                setCurrTasks(sortStart(openTasks))
             }
-            if (editTaskInfo === allTasks[focusTask].name) {
-                errs.push("No changes were made.")
+            else if (filter === "due_date") {
+                setCurrTasks(sortDue(openTasks))
+            }
+            else if (filter === "name") {
+                setCurrTasks(sortName(openTasks))
             }
         }
-        setEditErrors(errs);
-    }, [editTaskInfo])
+        else {
+            if (filter === "created") {
+                setCurrTasks(sortCreated(closedTasks))
+            }
+            else if (filter === "priority") {
+                setCurrTasks(sortPriority(closedTasks))
+            }
+            else if (filter === "start_date") {
+                setCurrTasks(sortStart(closedTasks))
+            }
+            else if (filter === "due_date") {
+                setCurrTasks(sortDue(closedTasks))
+            }
+            else if (filter === "name") {
+                setCurrTasks(sortName(closedTasks))
+            }
+        }
+    }, [dispatch, filter, shownType, allTasks, alist, openTasks, closedTasks])
 
+    const Filters = () => {
+        return (
+            <div className="tasks-filter-container">
+                <div className="checker-container">
+                    <div className="checker">{filter === "created" ? "✔" : null}</div>
+                    <div className="checker">{filter === "due_date" ? "✔" : null}</div>
+                    <div className="checker">{filter === "start_date" ? "✔" : null}</div>
+                    <div className="checker">{filter === "priority" ? "✔" : null}</div>
+                    <div className="checker">{filter === "name" ? "✔" : null}</div>
+                </div>
+                <div className="task-filters">
+                    <div className="filter" onClick={() => setFilter("created")}>Creation Date</div>
+                    <div className="filter" onClick={() => setFilter("due_date")}>Due Date</div>
+                    <div className="filter" onClick={() => setFilter("start_date")}>Start Date</div>
+                    <div className="filter" onClick={() => setFilter("priority")}>Priority</div>
+                    <div className="filter" onClick={() => setFilter("name")}>Name</div>
+                </div>
+            </div >
+        )
+    }
 
+<<<<<<< HEAD
     const todoStyle = () => {
         if (shownType === "todo") {
             return {
@@ -132,6 +202,96 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
 
     const doneStyle = () => {
         if (shownType === "done") {
+=======
+    const List = () => {
+        return (
+            <>
+                {currTasks.map(task =>
+                    <div className="task-container" key={task.id}>
+                        <div className="task-options-container" id={task.id} onClick={() => {
+                            setFocusTask(task.id)
+                            setShowingTaskOptions(true)
+
+                        }} key={task.id}>
+                            <div className="task-options-icon">Edit</div>
+                        </div>
+                        <div className="task-details-container">
+                            <div className="task-name">{task.name}</div>
+                            <div className="task-deets-wrapper">
+                                {task.due_date &&
+                                    <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                }
+                                {task.priority <= 3 && task.priority >= 0 &&
+                                    <div className="priority-level">{task.priority}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </>
+        )
+    }
+
+    const AllTasks = () => {
+        return (
+            <>
+                {
+                    currTasks.map(task =>
+                        <div className="task-container" key={task.id}>
+                            <div className="task-options-container" id={task.id} onClick={() => {
+                                setFocusTask(task.id)
+                                setShowingTaskOptions(true)
+                                setErrors([])
+
+                            }} key={task.id}>
+                                <div className="task-options-icon" >Edit</div>
+                            </div>
+                            <div className="task-details-container">
+                                <div className="task-name">{task.name}</div>
+                                <div className="task-deets-wrapper">
+                                    {task.due_date &&
+                                        <div className="task-due">{task.due_date.split(" ").splice(0, 4).join(' ')}</div>
+                                    }
+                                    {task.priority <= 3 && task.priority >= 0 &&
+                                        <div className="priority-level">{task.priority}</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            </>
+        )
+    }
+
+    const todoStyle = () => {
+        if (shownType === "open") {
+>>>>>>> primeSort
+            return {
+                borderBottom: "1px solid whitesmoke",
+                borderTop: "1px dotted lightgrey",
+                borderLeft: "1px dotted lightgrey",
+                borderRight: "1px dotted lightgrey"
+            }
+        } else {
+            return {}
+        }
+    }
+<<<<<<< HEAD
+
+    const updateIcon = (e) => {
+        if (e.target.innerText === "◁") {
+            setIcon("—")
+        }
+        else {
+            setIcon("◁")
+        }
+    }
+=======
+>>>>>>> primeSort
+
+    const doneStyle = () => {
+        if (shownType === "closed") {
             return {
                 borderBottom: "1px solid whitesmoke",
                 borderTop: "1px dotted lightgrey",
@@ -143,9 +303,17 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
         }
     }
 
+<<<<<<< HEAD
+    const submitTask = async (e) => {
+        e.preventDefault()
+        const data = await dispatch(addTask(alist.id, taskInfo))
+        if (data.errors) {
+            setErrors(data.errors)
+=======
     const updateIcon = (e) => {
         if (e.target.innerText === "◁") {
             setIcon("—")
+>>>>>>> primeSort
         }
         else {
             setIcon("◁")
@@ -153,9 +321,11 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
     }
 
 
-    const submitTask = async (e) => {
+    const submitTask = (e) => {
         e.preventDefault()
-        const data = await dispatch(addTask(alist.id, taskInfo))
+        //TODO: Add task, store, route, link store and link forms
+        console.log("##########testing##########", allTasks)
+        const data = dispatch(addTask(alist.id, taskInfo))
         if (data.errors) {
             setErrors(data.errors)
         }
@@ -165,20 +335,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             setErrors([])
         }
 
-    }
-
-    const submitTaskName = async (e) => {
-        e.preventDefault()
-
-        const data = await dispatch(changeTaskName(focusTask, editTaskInfo))
-        if (data.errors) {
-            setErrors(data.errors)
-        }
-        else {
-            setEditTaskName(false)
-            setErrors([])
-        }
-
+<<<<<<< HEAD
 
     }
 
@@ -221,15 +378,19 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
             setEditTaskName(false)
             setShowingTaskOptions(false);
         }
+=======
+>>>>>>> primeSort
     }
-
-
 
     return (
         <>
             <div className="main-container">
                 <div className="title-container">
+<<<<<<< HEAD
                     <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div> {/* <span className="quick-task-icon" onClick={updateIcon}>{icon}</span> */}
+=======
+                    <div className="header-title">{title} <span className="quick-task-icon" onClick={updateIcon}>{icon}</span></div> {/*  */}
+>>>>>>> primeSort
                     {/* <div className="title-options-container">
                         <button className="share-button">🤝+</button>
                     </div> */}
@@ -238,6 +399,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     <>
                     <div className="tasks-status-container">
                         <div className="task-detail-container">
+<<<<<<< HEAD
                             {/* {title === "list" && alist && <div className="tasks-total">{0}</div>} */}
                             {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.status.open.length}</div>}
                             <div className="tasks-detail">tasks</div>
@@ -246,10 +408,19 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                             {/* {title === "list" && alist && <div className="tasks-total">{0}</div>} */}
                             {title === "All Tasks" && taskOrders.created && <div className="tasks-total">{taskOrders.status.closed.length}</div>}
                             <div className="tasks-detail">completed</div>
+=======
+                            <div className="tasks-total">{openTasks.length}</div>
+                            <div className="tasks-detail">Todo</div>
+                        </div>
+                        <div className="task-detail-container">
+                            <div className="tasks-total">{closedTasks.length}</div>
+                            <div className="tasks-detail">Done</div>
+>>>>>>> primeSort
                         </div>
                     </div>
                 </>
                 }
+<<<<<<< HEAD
                 {alist && alist.notes &&
                     <div className="list-notes">
                         <h3>Notes </h3>
@@ -287,9 +458,25 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                     </div>
                                 </div>
                             }
+=======
+                <div className="list-tasks-container">
+                    <div className="options-container">
+                        {/* <div className="print-button task-option">🖨</div> */}
+                        <div className="unfinished-tab task-option" style={todoStyle()} onClick={() => setShownType("open")}>To-do</div>
+                        <div className="finished-tab task-option" style={doneStyle()} onClick={() => setShownType("closed")}>Done</div>
+                        <div className="filter-button task-option" onMouseEnter={() => setShowFilters(true)} onMouseLeave={() => setShowFilters(false)}>🗃
+                            {showFilters ? <Filters /> : null}
+>>>>>>> primeSort
                         </div>
                     </div>
-                    <div className="bulk-actions-container">
+                    <div className="list-tasks-column-headers">
+                        <div className="task-column-header name-header">Name</div>
+                        <div className="task-column-grid">
+                            <div className="task-column-header due-header">Due</div>
+                            <div className="task-column-header priority-header">Priority</div>
+                        </div>
+                    </div>
+                    {/* <div className="bulk-actions-container">
                         <div className="bulk-button-container">
                             <button className="bulk-button" onClick={() => setShowBulkSelect(!showBulkSelect)}>▢▾</button>
                             {showBulkSelect &&
@@ -311,8 +498,13 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                                 </div>
                             }
                         </div>
+<<<<<<< HEAD
                     </div>
                     {showing !== "All Tasks" &&
+=======
+                    </div> */}
+                    {showing === "list" &&
+>>>>>>> primeSort
                         <div className="form-container add-task-form-container">
                         <form className="user-form add-task-form" onSubmit={submitTask} >
                             <input type="text" className="form-input task-input" name="name" placeholder="Add a task..." value={taskInfo} onChange={(e) => setTaskInfo(e.target.value)} onFocus={() => setShowTaskButton(true)} onBlur={() => (taskInfo.length < 1) ? setShowTaskButton(false) : null} />
@@ -321,65 +513,9 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                     </div>
                     }
                     <div className="user-tasks-container">
-                        {showing === "All Tasks" && allTasks && taskOrders && taskOrders[filter].map(taskId =>
-                        // showing === "All Tasks" && user.orderBy.map(taskId =>
-                            // <>
-                            //     {
-                            //         allTasks[taskId] &&
-                            <div className="task-container" key={taskId}>
-                                {allTasks[taskId] &&
-                                    <>
-                                <div className="task-options-container" id={taskId} onClick={() => {
-                                    setFocusTask(taskId)
-                                    setShowingTaskOptions(true)
-                                    setErrors([])
-
-                                }} key={taskId}>
-                                        <div className="task-options-icon" >Edit</div>
-                                </div>
-                                <div className="task-details-container">
-                                    <div className="task-name">{allTasks[taskId].name}</div>
-                                    <div className="task-deets-wrapper">
-                                        {allTasks[taskId].due_date &&
-                                            <div className="task-due">{allTasks[taskId].due_date.split(" ").splice(0, 4).join(' ')}</div>
-                                        }
-                                        {allTasks[taskId].priority <= 3 && allTasks[taskId].priority >= 0 &&
-                                            <div className="priority-level">{allTasks[taskId].priority}</div>
-                                        }
-                                    </div>
-                                    {/* <div className="task-name">{user.tasks[taskId].name}</div> */}
-                                    </div>
-                                    </>
-                                }
-                            </div>
-                            //     }
-                            // </>
-                        )}
-                        {showing === "list" && alist.tasks && alist.orderBy && alist.orderBy.map(id =>
-                            <div className="task-container" key={id}>
-                                <div className="task-options-container" id={id} onClick={() => {
-                                    setFocusTask(id)
-                                    setShowingTaskOptions(true)
-
-                                }} key={id}>
-                                    <div className="task-options-icon">Edit</div>
-                                </div>
-                                <div className="task-details-container">
-                                    <div className="task-name">{alist.tasks[id].name}</div>
-                                    <div className="task-deets-wrapper">
-                                        {alist && alist.tasks[id].due_date &&
-                                            <div className="task-due">{alist.tasks[id].due_date.split(" ").splice(0, 4).join(' ')}</div>
-                                        }
-                                        {alist && alist.tasks[id].priority <= 3 && alist.tasks[id].priority >= 0 &&
-                                            <div className="priority-level">{alist.tasks[id].priority}</div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                        {showing === "list" ? <List /> : <AllTasks />}
                     </div>
                     <div className="empty-lines-container">
-                        {/* {lines()} */}
                         <>
                             <div className="empty-line"></div>
                             <div className="empty-line"></div>
@@ -409,138 +545,7 @@ const Main = ({ showing, setShowing, showingTaskOptions, setShowingTaskOptions }
                         </>
                     </div>
                 </div>
-                {showingTaskOptions && focusTask &&
-                    <div className="task-options-wrapper">
-                        <div className="exit-container">
-                            <div className="return" onClick={() => {
-                                setShowingTaskOptions(false)
-                                setEditTaskName(false)
-                                setFocusTask(0)
-                            }}>Back to list ↩</div>
-                            <div className="exit-button" onClick={() => {
-                                setShowingTaskOptions(false)
-                                setEditTaskName(false)
-                                setFocusTask(0)
-                            }}>×</div>
-                    </div>
-                    <p className="task-article-instructions">Click on a field to edit.</p>
-                        <div className="task-name-container">
-                            <div className="task-name-style"></div>
-                            <div className="task-name" hidden={editTaskName} onClick={() => {
-                                setEditTaskName(true)
-                            setEditTaskInfo(allTasks[focusTask].name)
-                            }}>{allTasks && focusTask && allTasks[focusTask].name}</div>
-                        {!editTaskName &&
-                                <button className="delete-button edit-form-button" onClick={deleteATask}>Erase Task</button>
-                            }
-                        {editTaskName &&
-                            <div className="form-wrapper">
-                                {editErrors && editErrors.map((error) => (
-                                    <div key={error}>{error}</div>
-                                ))}
-                            <form className="task-name-form edit-name-form name-form" onSubmit={submitTaskName}>
-                                <input className="edit-name-input edit-input" type="text" name="name" value={editTaskInfo} onChange={(e) => setEditTaskInfo(e.target.value)} />
-                                <button className="edit-form-button" type="submit" hidden={editTaskInfo === allTasks[focusTask].name} disabled={editErrors.length}>Update</button>
-                                <button className="cancel cancel-button edit-form-button" onClick={() => {
-                                    setEditTaskName(false)
-                                    setEditTaskInfo("")
-                                }}>Cancel</button>
-                            </form>
-                        </div>
-                        }
-                    </div>
-                    <article className="task-article-wrapper">
-                        <div className="task-attribute-container">
-                            {allTasks[focusTask].start_date ?
-                                <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">{allTasks[focusTask].start_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon" onClick={() => setEditTaskStart(true)}>✍</span></div> :
-                                <div className="task-attribute" name="start_date" hidden={editTaskStart}>Start Date: <span onClick={() => setEditTaskStart(true)} className="attribute-data">Add a Task</span><span className="edit-icon" onClick={() => setEditTaskStart(true)}>✍</span></div>
-                            }
-                            {editTaskStart &&
-                                <form className="edit-form edit-start-form" onSubmit={submitTaskStart}>
-                                    <input type="date"
-                                        className="date-input"
-                                        name="start_date"
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                        value={startDate} />
-                                <button className="edit-form-button" type="submit" hidden={dueDate === allTasks[focusTask].start_date}>Update</button>
-                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskStart(false)}>Cancel</button>
-                                </form>
-                            }
-                        </div>
-                        <div className="task-attribute-container">
-                            {allTasks[focusTask].due_date ?
-                                <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">{allTasks[focusTask].due_date.split(" ").splice(0, 4).join(" ")}</span><span className="edit-icon" onClick={() => setEditTaskDue(true)}>✍</span></div> :
-                                <div className="task-attribute" name="due_date" hidden={editTaskDue}>Due Date: <span onClick={() => setEditTaskDue(true)} className="attribute-data">Add a due date</span><span className="edit-icon" onClick={() => setEditTaskDue(true)}>✍</span></div>
-                            }
-                            {editTaskDue &&
-                                <form className="edit-form edit-due-form" onSubmit={submitTaskDue}>
-                                    <input type="date"
-                                        className="date-input"
-                                        name="due_date"
-                                        onChange={(e) => setDueDate(e.target.value)}
-                                        value={dueDate} />
-                                <button className="edit-form-button" type="submit" hidden={dueDate === allTasks[focusTask].due_date}>Update</button>
-                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskDue(false)}>Cancel</button>
-                                </form>
-                            }
-                        </div>
-                        <div className="task-attribute-container">
-                            <div className="task-attribute" hidden={editTaskStatus}>Status: <span className="attribute-data" onClick={() => setEditTaskStatus(true)}>{allTasks[focusTask].status}</span><span className="edit-icon" onClick={() => setEditTaskStatus(true)}>✍</span></div>
-                            {editTaskStatus &&
-                                <form onSubmit={submitTaskStatus} className="task-status-form">
-                                    <div className="status-input-container input-container">
-                                        <input type="radio" name="status" id="open" className="status-radio" value="open" onClick={(e) => {
-                                            setTaskStatus(e.target.value)
-                                        }} />
-                                        <label htmlFor="open">Open</label>
-                                    </div>
-                                    <div className="status-input-container input-container">
-                                        <input type="radio" name="status" id="closed" className="status-radio" value="closed" onClick={(e) => {
-                                            setTaskStatus(e.target.value)
-                                        }} />
-                                        <label htmlFor="closed">Closed</label>
-                                    </div>
-                                    <button className="edit-form-button" type="submit" hidden={taskStatus === allTasks[focusTask].status}>Update</button>
-                                    <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskStatus(false)}>Cancel</button>
-                                </form>
-                            }
-                        </div>
-                        <div className="task-attribute-container">
-                            <div className="task-attribute" hidden={editTaskPriority}>Priority: <span className="attribute-data" onClick={() => setEditTaskPriority(true)}>{allTasks[focusTask].priority}</span><span className="edit-icon">✍</span></div>
-                            {editTaskPriority &&
-                                <form onSubmit={submitTaskPriority}>
-                                    <div className="priority-input-container input-container">
-                                        <input type="radio" name="priority" id="priority0" className="priority-radio" value={0} onClick={(e) => {
-                                            setTaskPriority(e.target.value)
-                                        }} />
-                                        <label htmlFor="priority0">No Priority</label>
-                                    </div>
-                                    <div className="priority-input-container input-container">
-                                        <input type="radio" name="priority" id="priority1" className="priority-radio" value={1} onClick={(e) => {
-                                            setTaskPriority(e.target.value)
-                                        }} />
-                                        <label htmlFor="priority1">Low Priority</label>
-                                    </div>
-                                <div className="priority-input-container input-container">
-                                    <input type="radio" name="priority" id="priority2" className="priority-radio" value={2} onClick={(e) => {
-                                        setTaskPriority(e.target.value)
-                                    }} />
-                                    <label htmlFor="priority2">Moderate Priority</label>
-                                </div>
-                                <div className="priority-input-container input-container">
-                                    <input type="radio" name="priority" id="priority3" className="priority-radio" value={3} onClick={(e) => {
-                                        setTaskPriority(e.target.value)
-                                    }} />
-                                    <label htmlFor="priority3">High Priority</label>
-                                </div>
-                                <button className="edit-form-button" type="submit" hidden={taskPriority === allTasks[focusTask].priority}>Update</button>
-                                <button className="cancel cancel-button edit-form-button" onClick={() => setEditTaskPriority(false)}>Cancel</button>
-                                </form>
-                            }
-                        </div>
-                    </article>
-                </div>
-                }
+                {showingTaskOptions && focusTask ? <TaskOptions focusTask setFocustTask setShowingTaskOptions taskInfo setTaskInfo alist allTasks /> : null}
             </div>
         </>
     )

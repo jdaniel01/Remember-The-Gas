@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import { setSingleList, setAllLists, setListOrder } from "./list"
 import { sortOpen, sortPriority } from "./sort"
 
+=======
+import { setSingleList, setAllLists } from "./list" //removed , setListOrder
+>>>>>>> primeSort
 
 const SET_TASKS = "task/SET_TASKS"
-const SET_ORDER = "task/SET_ORDER"
+// const SET_ORDER = "task/SET_ORDER"
 
 const setTasks = (tasks) => ({
     type: SET_TASKS,
@@ -11,19 +15,19 @@ const setTasks = (tasks) => ({
 })
 
 
-const setOrder = (orders) => ({
-    type: SET_ORDER,
-    payload: orders
-})
+// const setOrder = (orders) => ({
+//     type: SET_ORDER,
+//     payload: orders
+// })
 
 
 export const setAllTasks = (tasks) => async (dispatch) => {
     dispatch(setTasks(tasks))
 }
 
-export const setTasksOrder = (order) => async (dispatch) => {
-    dispatch(setOrder(order))
-}
+// export const setTasksOrder = (order) => async (dispatch) => {
+//     dispatch(setOrder(order))
+// }
 
 export const getAllTasks = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/tasks`)
@@ -31,11 +35,16 @@ export const getAllTasks = (id) => async (dispatch) => {
     if (data.errors) {
         return data
     }
+<<<<<<< HEAD
     dispatch(setTasks(data.tasks))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
 
+=======
+    dispatch(setTasks(data))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -54,11 +63,16 @@ export const changeTaskName = (id, name) => async (dispatch) => {
     dispatch(setAllLists(data.lists))
     dispatch(setSingleList(data.list))
     dispatch(setTasks(data.tasks))
+<<<<<<< HEAD
     dispatch(setListOrder(data.order))
     // dispatch(setOrder(data.tasksOrder))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+    // dispatch(setListOrder(data.order))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -77,11 +91,16 @@ export const changeTaskDue = (id, date) => async (dispatch) => {
     dispatch(setAllLists(data.lists))
     dispatch(setSingleList(data.list))
     dispatch(setTasks(data.tasks))
+<<<<<<< HEAD
     dispatch(setListOrder(data.order))
     // dispatch(setOrder(data.tasksOrder))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+    // dispatch(setListOrder(data.order))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -100,11 +119,16 @@ export const changeTaskStart = (id, date) => async (dispatch) => {
     dispatch(setAllLists(data.lists))
     dispatch(setSingleList(data.list))
     dispatch(setTasks(data.tasks))
+<<<<<<< HEAD
     dispatch(setListOrder(data.order))
     // dispatch(setOrder(data.tasksOrder))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+    // dispatch(setListOrder(data.order))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -124,11 +148,16 @@ export const changeTaskStatus = (id, status) => async (dispatch) => {
     dispatch(setAllLists(data.lists))
     dispatch(setSingleList(data.list))
     dispatch(setTasks(data.tasks))
+<<<<<<< HEAD
     dispatch(setListOrder(data.order))
     // dispatch(setOrder(data.tasksOrder))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+    // dispatch(setListOrder(data.order))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -148,11 +177,16 @@ export const changeTaskPriority = (id, priority) => async (dispatch) => {
     dispatch(setAllLists(data.lists))
     dispatch(setSingleList(data.list))
     dispatch(setTasks(data.tasks))
+<<<<<<< HEAD
     dispatch(setListOrder(data.order))
     // dispatch(setOrder(data.tasksOrder))
     const status = sortOpen(data.tasks)
     const priority = sortPriority(data.tasks)
     dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+    // dispatch(setListOrder(data.order))
+    // dispatch(setOrder(data.tasksOrder))
+>>>>>>> primeSort
     return data
 }
 
@@ -163,25 +197,26 @@ export const deleteTask = (id) => async (dispatch) => {
         const data = await res.json()
         dispatch(setAllLists(data.lists))
         dispatch(setSingleList(data.list))
-        dispatch(setListOrder(data.order))
+        // dispatch(setListOrder(data.order))
         dispatch(setTasks(data.tasks))
         // dispatch(setOrder(data.tasksOrder))
+<<<<<<< HEAD
         const status = sortOpen(data.tasks)
         const priority = sortPriority(data.tasks)
         dispatch(setOrder({ created: data.tasksOrder.created, status: { open: status.open, closed: status.closed }, priority: { none: priority.no, low: priority.low, med: priority.med, high: priority.high } }))
+=======
+>>>>>>> primeSort
         return data
     }
 }
 
 
-const initialState = { tasks: {}, orderBy: { created: [] } }
+const initialState = {} // changed from   {tasks: {}, orderBy: { created: [] }} 
 
 export default function taskReducer(state = initialState, action) {
     switch (action.type) {
         case SET_TASKS:
-            return { ...state, tasks: action.payload }
-        case SET_ORDER:
-            return { ...state, orderBy: action.payload }
+            return action.payload;
         default:
             return state;
     }
