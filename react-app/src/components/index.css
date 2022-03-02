@@ -180,11 +180,11 @@
     align-items: center;
 }
 
-.search-container{
+/* .search-container{
     display: flex;
     align-items: center;
     width: 200px;
-}
+} */
 
 .search-input{
     font-size: 18pt;

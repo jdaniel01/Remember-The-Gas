@@ -57,3 +57,42 @@
 .menu-button-border:hover {
     border:1px solid white;
 }
+
+
+.user-menu-bar{
+    display: flex;
+    width: 100%;
+    background-color:#0054a4;
+    min-height: 40px;
+    height: 40px;
+    align-items: center;
+}
+
+.search-container{
+    height: 30px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    /* background-color: #198FCB; */
+    border-radius: 3px;
+}
+
+#search-icon {
+    height: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.search-input{
+    border: none;
+    background-color:#198FCB;
+    height: 20px;
+    color: white;
+}
+.search-input:focus{
+    border: none;
+    background-color: white;
+    height: 20px;
+    outline: none;
+    color: #515151;
+}
