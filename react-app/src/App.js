@@ -75,14 +75,14 @@ function App() {
           <Main showing={showing} setShowing={setShowing} />
         </ProtectedRoute> */}
         <ProtectedRoute path="/lists/:listId" exact={true}>
-          <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
+          {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/tasks" exact={true}>
-          <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
+          {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
         </ProtectedRoute>
         {user ?
           <ProtectedRoute path="/" exact={true} >
-            <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
+            {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
           </ProtectedRoute>
           : <Route path="/" exact={true}>
             <Splash />
