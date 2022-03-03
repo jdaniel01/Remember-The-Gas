@@ -143,3 +143,12 @@ def addList(id):
 
     print("#########List Name Failed to Validated#####")
     return {"errors": validation_errors_to_error_messages(form.errors)}
+
+@list_routes.route("/search")
+@login_required
+def searchLists():
+    print("User Searching Lists")
+    includes = request.body
+    notIncludes = request.body
+    print(includes)
+    return {message:"Completed"}

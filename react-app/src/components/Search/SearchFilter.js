@@ -18,10 +18,12 @@ const Filter = () => {
                 <input name="haveInput" className="have-input input" type="text" value={have} onChange={(e) => dispatch(changeHaveInput(e.target.value))} />
                 <label htmlFor='haveInput'>Does not include</label>
                 <input name="notHaveInput" className="not-have-input input" type="text" value={notHave} onChange={(e) => dispatch(changeNotHaveInput(e.target.value))} />
-                <div className="radio-option">
-                    <input name="checkNotes" className="check-notes-input radio" type="radio" checked={checked} onChange={(e) => dispatch(changeChecked(!checked))} />
-                    <label htmlFor='checkNotes'>check notes</label>
+                <div className="radio-option radio">
+                    <input name="checkNotes" className="check-notes-input radio" type="checkbox" checked={checked} onChange={(e) => dispatch(changeChecked(!checked))} />
+                    <label htmlFor='checkNotes'>Search notes</label>
                 </div>
+                <div className="line-break"></div>
+                <button className="search-button button" onClick={() => console.log(have, notHave, checked)}><img id="search-icon" src="/images/search-icon.png" alt="Search icon. A grey vector image of a magnifying glass." /></button>
             </div>
         </div>
     )

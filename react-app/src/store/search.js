@@ -23,6 +23,7 @@ const setChecked = (bool) => ({
     payload: bool
 });
 
+
 export const changeHaveInput = (have) => async (dispatch) => {
     dispatch(setHaveInput(have));
 };
@@ -38,6 +39,7 @@ export const setShowOption = (option) => async (dispatch) => {
 export const changeChecked = (bool) => async (dispatch) => {
     dispatch(setChecked(bool));
 };
+
 
 const initialState = { have: "", notHave: "", showOptions: false, checked: false }
 
