@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeHaveInput, changeNotHaveInput, changeChecked, setShowOption } from '../../store/search';
+import { changeHaveInput, changeNotHaveInput, changeChecked, setShowOption, searchLists } from '../../store/search';
 
 const Filter = () => {
 
@@ -13,8 +13,8 @@ const Filter = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(searchResults);
-    }, [searchResults]);
+        console.log("These are the SearchResults in React: ", searchResults);
+    }, [dispatch, searchResults]);
 
     return (
         <div className="filter-container">
@@ -29,7 +29,7 @@ const Filter = () => {
                     <label htmlFor='checkNotes'>Search notes</label>
                 </div>
                 <div className="line-break"></div>
-                <button className="search-button button" onClick={() => console.log(have, notHave, checked)}><img id="search-icon" src="/images/search-icon.png" alt="Search icon. A grey vector image of a magnifying glass." /></button>
+                <button className="search-button button" onClick={() => dispatch(searchLists(have, notHave, checked))}><img id="search-icon" src="/images/search-icon.png" alt="Search icon. A grey vector image of a magnifying glass." /></button>
             </div>
         </div>
     )

@@ -47,17 +47,18 @@ export const changeChecked = (bool) => async (dispatch) => {
 };
 
 export const searchLists = (have, notHave, searchNotes) => async (dispatch) => {
-    const response = await fetch("/api/search", {
-        method: "GET",
+    const response = await fetch("/api/search/", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
-        body: {
+        body: JSON.stringify({
             have,
             notHave,
             searchNotes
-        }
+        })
     });
+    console.log("Response", response);
     if (response.ok) {
         const results = await response.json();
         dispatch(setResults(results));
