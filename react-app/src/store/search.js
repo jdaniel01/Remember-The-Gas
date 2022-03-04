@@ -2,6 +2,7 @@ const SET_HAVE_INPUT = "search/SET_HAVE_INPUT";
 const SET_NOT_HAVE_INPUT = "search/SET_NOT_HAVE_INPUT";
 const SET_OPTIONS = "search/SET_OPTIONS";
 const SET_CHECKED = "search/SET_CHECKED";
+const SET_SEARCH_RESULTS = "search/SET_SEARCH_RESULTS";
 
 const setHaveInput = (haveInput) => ({
     type: SET_HAVE_INPUT,
@@ -23,6 +24,11 @@ const setChecked = (bool) => ({
     payload: bool
 });
 
+const setResults = (results) => ({
+    type: SET_SEARCH_RESULTS,
+    payload: results
+});
+
 
 export const changeHaveInput = (have) => async (dispatch) => {
     dispatch(setHaveInput(have));
@@ -40,8 +46,26 @@ export const changeChecked = (bool) => async (dispatch) => {
     dispatch(setChecked(bool));
 };
 
+export const searchLists = (have, notHave, searchNotes) => async (dispatch) => {
+    const response = await fetch("/api/search", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: {
+            have,
+            notHave,
+            searchNotes
+        }
+    });
+    if (response.ok) {
+        const results = await response.json();
+        dispatch(setResults(results));
+    }
+}
 
-const initialState = { have: "", notHave: "", showOptions: false, checked: false }
+
+const initialState = { have: "", notHave: "", showOptions: false, checked: false, results: [] }
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
@@ -56,6 +80,9 @@ export default function searchReducer(state = initialState, action) {
             return state;
         case SET_CHECKED:
             state = { ...state, checked: action.payload };
+            return state;
+        case SET_SEARCH_RESULTS:
+            state = { ...state, results: action.payload };
             return state;
         default:
             return state;

@@ -8,7 +8,13 @@ const Filter = () => {
     const notHave = useSelector(state => state.search.notHave);
     const showOptions = useSelector(state => state.search.showOptions);
     const checked = useSelector(state => state.search.checked);
+    const searchResults = useSelector(state => state.search.results);
+
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(searchResults);
+    }, [searchResults]);
 
     return (
         <div className="filter-container">
