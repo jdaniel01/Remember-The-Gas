@@ -32,13 +32,13 @@ def getResults():
 
     # lists = List.query(filter(((List.owner_id == current_user.id) and )))
 
-    # lists = List.query.filter((List.owner_id == current_user.id) and (List.name.ilike(have)) and not (List.name.ilike(notHave)) and (List.query.filter(List.notes.ilike(have)) and not List.notes.ilike(notHave))).all() if searchNotes else List.query.filter((List.owner_id == current_user.id) and (List.name.ilike(have) and not List.name.ilike(notHave))).order_by(desc(List.id)).all()
+    lists = List.query.filter(List.owner_id == current_user.id and List.name.ilike(have) and not List.name.ilike(notHave)).order_by(desc(List.id)).all()
     # taskResults = Task.query.filter((Task.owner_id == current_user.id) and (Task.name.ilike(have) and not Task.name.ilike(notHave)) and (Task.notes.ilike(have) and not Task.notes.ilike(notHave))).order_by(desc(Task.id)).all() if searchNotes else Task.query.filter((Task.owner_id == current_user.id) and (Task.name.ilike(have) and not Task.name.ilike(notHave))).order_by(desc(Task.id)).all()
-    lists = select(List).where(List.name.ilike(have) and not List.name.ilike(notHave) and List.notes.ilike(have) and not List.notes.ilike(notHave))
-    # listResults = [l.to_dict() for l in lists]
-    listResults = session.execute(lists)
+    # lists = select(List).where(List.name.ilike(have) and not List.name.ilike(notHave) and List.notes.ilike(have) and not List.notes.ilike(notHave))
+    listResults = [l.to_dict() for l in lists]
+    # listResults = session.execute(lists)
 
-    print(type(lists), listResults)
-    # return {'lists': listResults}
+    print(lists, listResults)
+    return {'lists': listResults}
     return {'lists': ["No Data"]}
     
