@@ -11,6 +11,7 @@ import User from "./components/User";
 import Splash from "./components/Splash/Splash";
 import Main from './components/Main';
 import About from './components/About';
+import AuthPage from "./components/auth/AuthPage";
 import { authenticate } from "./store/session";
 // import Footer from "./components/Footer";
 
@@ -57,10 +58,12 @@ function App() {
       {user ? <UserNav /> : <NavBar />}
       <Switch>
         <Route path="/login" exact={true}>
-          <LoginForm />
+          {/* <LoginForm /> */}
+          <AuthPage/>
         </Route>
         <Route path="/sign-up" exact={true}>
-          <SignUpForm />
+          {/* <SignUpForm /> */}
+          <AuthPage/>
         </Route>
         <ProtectedRoute path="/users" exact={true}>
           <UsersList/>

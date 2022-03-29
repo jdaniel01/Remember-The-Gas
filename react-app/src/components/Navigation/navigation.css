@@ -13,10 +13,27 @@
     width: fit-content;
     display: flex;
     align-items: center;
+    margin-left: 100px;
 }
 
+.logo{
+    display: flex;
+    width: 177px;
+    text-decoration: none;
+}
 .logo-med{
     height: 84px;
+    display: flex;
+    align-self: flex-end;
+    padding-right: 5px;
+}
+.logo-text{
+    display: flex;
+    align-self: flex-end;
+    width: 30px;
+    font-size: 18pt;
+    font-weight: 500;
+    color: #E5E5E5; 
 }
 
 .spacer{

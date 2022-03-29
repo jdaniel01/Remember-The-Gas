@@ -1,0 +1,26 @@
+.auth-container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.left-auth-container{
+    display: flex;
+    background-color: #0054A4;
+    width: 50%;
+    height: 100%;
+}
+
+
+.right-auth-container{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    background-color: #E5E5E5;
+}
+
+.auth-button {
+    background-color: #E5E5E5;
+    width: 400px;
+    height: 48px;
+}
