@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 
-export const TextInput = () => {
-
-    const [textValue, setTextValue] = useState("");
-
+const Text = ({ val, onChange }) => {
+    const dispatch = useDispatch();
     return (
-        <input className="text-input" value=
+        <input type="text" className="text-input" value={val} onChange={(e) => onChange(e.target.value)}/>
     )
 }
+
+export default Text;
+// export const Password = ({ val, onChange }) => {
+//     const dispatch = useDispatch();
+//     return (
+//         <input type="password" className="text-input password-input" value={val} onChange={(e) => onChange(e.target.value)} />
+//     )
+// };
+
+// export const Email = ({ val, onChange }) => {
+//     const dispatch = useDispatch();
+//     return (
+//         <input type="email" className="text-input email-input" value={val} onChange={(e) => onChange(e.target.value)} />
+//     )
+// };

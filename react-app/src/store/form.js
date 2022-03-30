@@ -59,7 +59,7 @@ export const updateCred = (cred) => async (dispatch) => {
     
 }
 
-const defaultState = { login: { nameOrEmail: "", password: "" }, signup: { username: "", email: "", password: "", confirmPassword: "" } };
+const defaultState = { login: { usernameOrEmail: "", password: "" }, signup: { username: "", email: "", password: "", confirmPassword: "" } };
 
 export default function formReducer(state = defaultState, action) {
     switch (action.type) {
@@ -76,7 +76,7 @@ export default function formReducer(state = defaultState, action) {
             state = { ...state, signup: { ...state.signup, confirmPassword: action.payload } };
             return state;
         case SET_LOGIN:
-            state = { ...state, login: { ...state.login, nameOrEmail: action.payload } }
+            state = { ...state, login: { ...state.login, usernameOrEmail: action.payload } }
             return state;
         case SET_CRED:
             state = { ...state, login: { ...state.login, password: action.payload } }
