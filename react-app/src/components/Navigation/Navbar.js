@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import { setNavStatus } from "../../store/nav";
 import RtgLogo from "./Logo";
 import Menu from "./Menu";
 import "./navigation.css";

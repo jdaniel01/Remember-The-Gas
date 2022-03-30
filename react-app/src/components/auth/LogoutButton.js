@@ -4,8 +4,8 @@ import { logout } from "../../store/session";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
-  const onLogout = async (e) => {
-    await dispatch(logout());
+  const onLogout = (e) => {
+    dispatch(logout()); //removed async/await keywords.
   };
 
   return <button className="user-form-button logout" onClick={onLogout}>Logout</button>;

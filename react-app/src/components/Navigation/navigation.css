@@ -113,3 +113,42 @@
     outline: none;
     color: #515151;
 }
+
+.alignment{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 410px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-left: 30px;
+}
+
+.auth-menu-bar{
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+}
+
+.sub-menu-button{
+    display: flex;
+    text-decoration: none;
+    border: none;
+    background-color: rgba(25, 143, 203,.2);
+    margin-top: 15px;
+    margin-right: 10px;
+    height: 25px;
+    padding: 10px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    font-family: "Sniglet";
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #515151;
+}
+.sub-menu-button:hover {
+    background-color: rgba(15, 125, 180, 0.3)
+}

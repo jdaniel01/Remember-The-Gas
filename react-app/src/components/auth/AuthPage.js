@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RtgLogo from '../Navigation/Logo';
+import Menu from '../Navigation/Menu';
+import AuthForm from './AuthForm';
 import "./AuthPage.css";
 
 const AuthPage = () => {
@@ -11,7 +13,10 @@ const AuthPage = () => {
                 <RtgLogo />
             </div>
             <div className="right-auth-container">
-                Right
+                <div className="alignment">
+                    <Menu />
+                    <AuthForm/>
+                </div>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
-import { login, demoLogin } from "../../store/session";
+import { login } from "../../store/session";
 import "./user-forms.css"
 
 const LoginForm = () => {
@@ -39,16 +39,6 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const loginDemoUser = async (e) => {
-    e.preventDefault();
-    const data = await dispatch(demoLogin());
-    if (data.errors) {
-      setErrors(data.errors);
-    }
-    else {
-      setErrors([])
-    }
-  }
 
   if (user) {
     return <Redirect to={`/users/${user.id}/tasks`} />;
@@ -99,7 +89,7 @@ const LoginForm = () => {
             />
           </div>
           <button className="form-button user-form-button" type="submit">Login</button>
-          <button className="demo-login-button user-form-button" onClick={loginDemoUser}>Demo Login</button>
+          
         </form>
       </article>
     </div>
