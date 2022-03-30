@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setNavStatus } from "../../store/nav";
 import RtgLogo from "./Logo";
 import Menu from "./Menu";
 import "./navigation.css";
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
 
 
     return (

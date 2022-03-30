@@ -4,12 +4,14 @@ import session from "./session"
 import listReducer from "./list";
 import taskReducer from './task';
 import searchReducer from "./search";
+import navReducer from "./nav";
 
 const rootReducer = combineReducers({
     session,
     list: listReducer,
     task: taskReducer,
     search: searchReducer,
+    nav: navReducer
 });
 
 

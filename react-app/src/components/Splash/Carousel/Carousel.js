@@ -15,7 +15,7 @@ const Carousel = () => {
         <div className="carousel-container">
             <div className="slides-container">
                 {carouselData.map((slide, idx) =>
-                    <Slide slide={slide} idx={idx} curr={currSlide} />
+                    <Slide slide={slide} idx={idx} curr={currSlide} key={idx}/>
                 )}
             </div>
             <Paginator activeIdx={currSlide} paginate={paginate} />

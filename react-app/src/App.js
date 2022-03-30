@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "./components/auth/LoginForm";
-import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/Navigation/Navbar";
 import UserNav from "./components/Navigation/UserNav";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Splash from "./components/Splash/Splash";
-import Main from './components/Main';
 import About from './components/About';
 import AuthPage from "./components/auth/AuthPage";
 import { authenticate } from "./store/session";
@@ -20,24 +17,8 @@ function App() {
   const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
-  let location = window.location.pathname
-
   const user = useSelector(state => state.session.user)
-  const [showSettings, setShowSettings] = useState(false)
-  const [showing, setShowing] = useState("All Tasks")
-  const [isDisplayed, setIsDisplayed] = useState(false)
-  const [pathOk, setPathOk] = useState(true)
-  const [showingTaskOptions, setShowingTaskOptions] = useState(false);
 
-
-  useEffect(() => {
-    if (location === "/login" || location === "/sign-up") {
-      setPathOk(false)
-    }
-    else {
-      setPathOk(true)
-    }
-  }, [location])
 
   useEffect(() => {
     (async() => {
@@ -46,23 +27,18 @@ function App() {
     })();
   }, []);
 
-
   if (!loaded) {
     return null;
   }
 
-
-
   return (
     <BrowserRouter>
-      {user ? <UserNav /> : <NavBar />}
+      {user ? <ProtectedRoute><UserNav /></ProtectedRoute> : <NavBar />}
       <Switch>
         <Route path="/login" exact={true}>
-          {/* <LoginForm /> */}
           <AuthPage/>
         </Route>
         <Route path="/sign-up" exact={true}>
-          {/* <SignUpForm /> */}
           <AuthPage/>
         </Route>
         <ProtectedRoute path="/users" exact={true}>
