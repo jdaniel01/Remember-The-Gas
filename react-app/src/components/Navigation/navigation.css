@@ -114,14 +114,7 @@
     color: #515151;
 }
 
-.alignment{
-    display: flex;
-    flex-flow: column nowrap;
-    width: 410px;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-left: 30px;
-}
+
 
 .auth-menu-bar{
     display: flex;
