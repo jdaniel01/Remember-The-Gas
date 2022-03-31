@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUp, login } from '../../store/session';
 // import { Text, Email, Password } from "./FormInput className="auth-input"s";
 // import Text from './FormInput className="auth-input"s';
 import { updateUsername, updateEmail, updatePassword, updateConfirm, updateLogin, updateCred } from '../../store/form';
-import { useDispatch, useSelector } from 'react-redux';
 
 const AuthForm = () => {
 
@@ -22,17 +23,30 @@ const AuthForm = () => {
     const [email, setEmail] = useState(emal);
     const [password, setPassword] = useState(pass);
     const [confirmPassword, setConfirm] = useState(confirm);
-    const [login, setLogin] = useState(uOrE);
+    const [usernameOrEmail, setLogin] = useState(uOrE);
     const [credential, setCredential] = useState(cred);
 
     const [errors, setErrors] = useState([]);
 
-    const onSignup = () => {
-
+    const onSignup = async (e) => {
+        e.preventDefault()
+        if (!errors.length) {
+            const data = await dispatch(signUp(username, email, password));
+            if (data.errors) {
+                setErrors(data.errors);
+            }
+        }
+        else {
+            setErrors("There Was an issue with your request. Please refresh and try again.")
+        }
     }
 
-    const onLogin = () => {
-
+    const onLogin = async (e) => {
+        e.preventDefault()
+        const data = await dispatch(login(usernameOrEmail, credential));
+        if (data.errors) {
+            setErrors(data.errors);
+        }
     }
 
     function loadErrors () {
@@ -98,21 +112,25 @@ const AuthForm = () => {
         setCredential(e.target.value);
     }
 
+    const isDisabled = () => {
+        return errors.length ? true : false;
+    }
+
     //if pathname !== '/login' then default is '/sign-up' since this only gets rendered at either fo those two pathnames.
     return location.pathname === "/login"?(
-        <div className="auth-form">
+        <form className="auth-form" onSubmit={onLogin}>
             <div className="auth-text-container">
                 <div className="med">You came back?!</div>
                 <div className="small"> What am I saying!</div>
                 <div className="large">Welcome back!</div>
             </div>
-            <input className="auth-input" type="text" placeholder="Username or Email" value={login} onChange={changeLogin}/>
-            <input className="auth-input" type="password" placeholder="Password" value={credential}  onChange={changeCred}/>
+            <input className="auth-input" name="nameOrEmail" type="text" placeholder="Username or Email" value={usernameOrEmail} onChange={changeLogin}/>
+            <input className="auth-input" name="password" type="password" placeholder="Password" value={credential}  onChange={changeCred}/>
             <NavLink className="forgot-password" to='/forgot-password'>Forgot Password?</NavLink>
-            <button className="auth-button" onClick={onLogin}>Login</button>
-        </div>
+            <button type="submit" disabled={!usernameOrEmail || !credential}className="auth-button" onClick={onLogin}>Login</button>
+        </form>
     ):(
-        <div className="auth-form">
+        <form className="auth-form" onSubmit={onSignup}>
             <div className="auth-text-container">
                 <div className="large">Sign-up at your own risk!</div>
                 <div className="medium">(We're kidding, it's completely safe)</div>
@@ -122,13 +140,13 @@ const AuthForm = () => {
                 </div>
             </div>
         
-            <input className="auth-input" type="text" placeholder="Username" value={username}  onChange={changeUsername}/>
-            <input className="auth-input" type="email" placeholder="Email" value={email}  onChange={changeEmail}/>
-            <input className="auth-input" type="password" placeholder="Password" value={password}  onChange={changePassword}/>
-            <input className="auth-input" type="password" placeholder="Confirm Password" value={confirmPassword} onChange={changeConfirm}/>
+            <input className="auth-input" name="username" type="text" placeholder="Username" value={username}  onChange={changeUsername}/>
+            <input className="auth-input" name="email" type="email" placeholder="Email" value={email}  onChange={changeEmail}/>
+            <input className="auth-input" name="password" type="password" placeholder="Password" value={password}  onChange={changePassword}/>
+            <input className="auth-input" name="repeat_password" type="password" placeholder="Confirm Password" value={confirmPassword} onChange={changeConfirm}/>
         
-            <button className="auth-button" onClick={onSignup}>Sign up!</button>
-        </div>
+            <button type="submit" disabled={isDisabled()} className="auth-button" onClick={onSignup}>Sign up!</button>
+        </form>
     )
 }
 

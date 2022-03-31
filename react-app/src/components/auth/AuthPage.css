@@ -134,6 +134,10 @@ div.small {
     background-color: #0054a4;
     cursor: pointer;
 }
+.auth-button:disabled{
+    background-color: #838383;
+    cursor:not-allowed;
+}
 
 .forgot-password{
     color: #198FCB;
