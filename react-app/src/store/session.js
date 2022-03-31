@@ -49,7 +49,6 @@ export const login = (nameOrEmail, password) => async (dispatch) => {
         return data;
     }
     dispatch(setUser(data))
-    dispatch()
     return data //change ({} to data) why are we returning nothing?
 }
 

@@ -10,6 +10,8 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
   photo = db.Column(db.Text)
+  status = db.Column(db.String(15), default="pending")
+  confirmCode = db.Column(db.String(255), nullable=True)
 
   lists = db.relationship("List", cascade="all,delete", back_populates="owner")
   tasks = db.relationship("Task", cascade="all,delete", back_populates="owner")
@@ -50,6 +52,25 @@ class User(db.Model, UserMixin):
   @picture.setter
   def picture(self, pic):
     self.photo = pic
+
+  @property
+  def status1(self):
+    return self.status
+
+  @status1.setter
+  def status1(self, status):
+    self.status = status
+
+  @property
+  def confirmCode1(self):
+    return self.confirmCode
+
+  @confirmCode1.setter
+  def confirmCode1(self, code):
+    self.confirmCode = generate_password_hash(code)
+
+  def check_confirmCode(self, code):
+    return check_password_hash(self.confirmCode, code)
 
 
   def to_dict(self):

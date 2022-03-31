@@ -3,6 +3,8 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from itsdangerous import Signer
+import os
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -40,7 +42,8 @@ def login():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
-        user = User.query.filter((User.email == form.data['nameOrEmail']) or (User.username == form.data['nameOrEmail'])).first()
+        user = User.query.filter((User.email == form.data['nameOrEmail']) or (
+            User.username == form.data['nameOrEmail'])).first()
         if user:
             login_user(user)
             return user.to_dict()
@@ -75,14 +78,22 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
+    """Creating signature for pending user account."""
+    print("secret_key", os.environ['SECRET_KEY'])
+    signature = Signer(os.environ["SECRET_KEY"], "pending")
+    print("signature", signature)
+
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            status="pending",
+            confirmCode="this"
         )
+
         db.session.add(user)
         db.session.commit()
         login_user(user)
