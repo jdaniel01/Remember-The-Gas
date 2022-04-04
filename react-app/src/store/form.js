@@ -42,27 +42,33 @@ const setForgotEmail = (payload) => ({
 })
 
 export const updateUsername = (username) => async (dispatch) => {
-
+    //check if username meets criteria here or in component?
+    dispatch(setUsername(username))
 }
 
 export const updateEmail = (email) => async (dispatch) => {
-    
+    //check if username meets criteria here or in component?
+    dispatch(setEmail(email))
 }
 
 export const updatePassword = (password) => async (dispatch) => {
-    
+    //check if username meets criteria here or in component?
+    dispatch(setPassword(password))
 }
 
 export const updateConfirm = (confirm) => async (dispatch) => {
-    
+    //check if username meets criteria here or in component?
+    dispatch(setConfirm(confirm))
 }
 
 export const updateLogin = (login) => async (dispatch) => {
-    
+    //check if username meets criteria here or in component?
+    dispatch(setLogin(login))
 }
 
 export const updateCred = (cred) => async (dispatch) => {
-    
+    //check if username meets criteria here or in component?
+    dispatch(setCred(cred))
 }
 
 export const updateForgotEmail = (email) => async (dispatch) => {
@@ -72,7 +78,7 @@ export const updateForgotEmail = (email) => async (dispatch) => {
 export const sendForgotEmail = (email) => async (dispatch) => {
     //need to make a call to database to ensure there is a user with email, if so send email via backend and prepare an alert to the member on the frontend.
     if (email) {
-        return {message: "An email was sent. Check your inbox for further instructions."}
+        return {message: `An email was sent to ${email}. Check your inbox for further instructions.`}
     }
 }
 

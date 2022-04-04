@@ -67,12 +67,13 @@ const About = () => {
                     {/* <div className="social-media" onClick={() => window.open("")}>
                     <img className="media-image " src="" style={{ height: "100px" }} />
                 </div> */}
-                    <div className="social-media">
+                    {/* <div className="social-media">
                         <img className="github media-image" alt="github logo" src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{ height: "100px" }} onClick={() => window.open("https://github.com/jdaniel01")} />
                     </div>
                     <div className="social-media" onClick={() => window.open("https://www.linkedin.com/in/james-daniel-jr-403178189?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BVwQ9TThBT6OMT41JzUhOAw%3D%3D")}>
                         <img className="media-image linked-in" alt="linked in logo" src="https://image.flaticon.com/icons/png/512/174/174857.png" style={{ height: "100px" }} />
-                    </div>
+                    </div> */}
+                    <p>TODO: get/create vectors for github, LinkedIn, AngelList, etc.</p>
                 </div>
             </div>
         </>

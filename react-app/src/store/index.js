@@ -5,6 +5,7 @@ import listReducer from "./list";
 import taskReducer from './task';
 import searchReducer from "./search";
 import formReducer from "./form";
+import menuReducer from "./menu";
 
 const rootReducer = combineReducers({
     session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     task: taskReducer,
     search: searchReducer,
     form: formReducer,
+    menu: menuReducer,
 });
 
 
