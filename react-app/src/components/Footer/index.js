@@ -1,12 +1,14 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import SocialLink from './SocialLink';
 import { socialNetworks } from './socialData';
 import "./Footer.css";
 
 const Footer = () => {
 
-    return (
+    const location = useLocation();
+
+    return location.pathname !== "/sign-up" && location.pathname !== "/login" ? (
         <div className="footer">
             <div className="sitemap">
                 <div className="sitemap-list">
@@ -31,7 +33,7 @@ const Footer = () => {
             </div>
 
         </div>
-    )
+    ) : null;
 }
 
 export default Footer;

@@ -9,6 +9,8 @@ import User from "./components/User";
 import Splash from "./components/Splash/Splash";
 import About from './components/About';
 import AuthPage from "./components/auth/AuthPage";
+import ForgotPassword from "./components/auth/ForgotPassword";
+import Footer from "./components/Footer";
 import { authenticate } from "./store/session";
 // import Footer from "./components/Footer";
 
@@ -70,8 +72,11 @@ function App() {
         <Route path="/about" exact={true}>
           <About />
         </Route>
-        {/* <Footer /> */}
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPassword />
+        </Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

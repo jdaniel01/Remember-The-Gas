@@ -1,5 +1,6 @@
 .navigation_bar{
-    z-index: 1;
+    position: sticky;
+    top: 0px;
     display: flex;
     justify-content: center;
     height: 114px;

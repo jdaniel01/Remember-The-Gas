@@ -1,14 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import "./FormInputs.css";
 
-const Text = ({ val, onChange }) => {
+export const Text = ({ val, onChange }) => {
     const dispatch = useDispatch();
     return (
         <input type="text" className="text-input" value={val} onChange={(e) => onChange(e.target.value)}/>
     )
 }
 
-export default Text;
+
 // export const Password = ({ val, onChange }) => {
 //     const dispatch = useDispatch();
 //     return (
@@ -22,3 +23,16 @@ export default Text;
 //         <input type="email" className="text-input email-input" value={val} onChange={(e) => onChange(e.target.value)} />
 //     )
 // };
+
+
+export const Error = ({ text }) => {
+    
+    return (
+        <div className="error-container">
+            <div className="icon-container">
+                <img src="images/alert_icon.png" alt="a red equalateral triangle with rounded corners and a white exclamation point centered inside it."/>
+            </div>
+            <div className="error-text">{text}</div>
+        </div>
+    )
+};

@@ -7,7 +7,6 @@ import "./navigation.css";
 const Navbar = () => {
 
     const location = useLocation();
-    console.log(location);
 
     return location.pathname !== "/login" && location.pathname !== "/sign-up" ? (
         <div className="navigation_bar">
