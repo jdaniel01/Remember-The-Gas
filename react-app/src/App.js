@@ -11,6 +11,7 @@ import About from './components/About';
 import AuthPage from "./components/auth/AuthPage";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import Footer from "./components/Footer";
+import Dashboard from "./components/Dashboard/Dashboard";
 import { authenticate } from "./store/session";
 // import Footer from "./components/Footer";
 
@@ -43,42 +44,47 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <AuthPage/>
         </Route>
-        <ProtectedRoute path="/users" exact={true}>
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
-        </ProtectedRoute>
-        {/* <ProtectedRoute path="/users/:userId/lists" exact={true}>
-          <ListForm />
-        </ProtectedRoute> */}
-        {/* <ProtectedRoute path="/lists/" exact={true} >
-          <Main showing={showing} setShowing={setShowing} />
-        </ProtectedRoute> */}
-        <ProtectedRoute path="/lists/:listId" exact={true}>
-          {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/tasks" exact={true}>
-          {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
-        </ProtectedRoute>
-        {user ?
-          <ProtectedRoute path="/" exact={true} >
-            {/* <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} /> */}
-          </ProtectedRoute>
-          : <Route path="/" exact={true}>
-            <Splash />
-          </Route>
-        }
         <Route path="/about" exact={true}>
           <About />
         </Route>
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />
         </Route>
+        {user ?
+          <ProtectedRoute path="/" exact={true} >
+            <Dashboard/>
+          </ProtectedRoute>
+          : <Route path="/" exact={true}>
+            <Splash />
+          </Route>
+        }
       </Switch>
-      <Footer />
+      <Footer user={user?true:false}/>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+
+//removed the following routes:
+
+// {/* <ProtectedRoute path="/users" exact={true}>
+//           <UsersList/>
+//         </ProtectedRoute> */}
+//         {/* <ProtectedRoute path="/users/:userId" exact={true}>
+//           <User />
+//         </ProtectedRoute> */}
+//         {/* <ProtectedRoute path="/users/:userId/lists" exact={true}>
+//           <ListForm />
+//         </ProtectedRoute> */}
+//         {/* <ProtectedRoute path="/lists/" exact={true} >
+//           <Main showing={showing} setShowing={setShowing} />
+//         </ProtectedRoute> */}
+// {/* <ProtectedRoute path="/lists/:listId" exact={true}>
+//   <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
+// </ProtectedRoute>
+// <ProtectedRoute path="/users/:userId/tasks" exact={true}>
+//   <Main showing={showing} setShowing={setShowing} setShowingTaskOptions={setShowingTaskOptions} showingTaskOptions={showingTaskOptions} />
+// </ProtectedRoute> */}

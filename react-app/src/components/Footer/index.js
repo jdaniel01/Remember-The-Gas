@@ -1,14 +1,13 @@
 import React from 'react';
 import { NavLink, useLocation } from "react-router-dom";
-import SocialLink from './SocialLink';
-import { socialNetworks } from './socialData';
 import "./Footer.css";
+import SocialLinks from './SocialLink';
 
-const Footer = () => {
+const Footer = ({ user }) => {
 
     const location = useLocation();
 
-    return location.pathname !== "/sign-up" && location.pathname !== "/login" ? (
+    return (!user && location.pathname !== "/sign-up" && location.pathname !== "/login") || (user && location.pathname === '/about')? (
         <div className="footer">
             <div className="sitemap">
                 <div className="sitemap-list">
@@ -27,11 +26,8 @@ const Footer = () => {
             </div>
             <div className="floor-container">
                 <div id="copywright">©️ Remember The Gas 2022</div>
-                <div className="link-container">
-                    {socialNetworks.map((network, id) => <SocialLink network={network} key={id} />)}
-                </div>
+                <SocialLinks/>
             </div>
-
         </div>
     ) : null;
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { socialNetworks } from './socialData';
 
 const SocialLink = ({ network }) => {
     return (
@@ -8,4 +9,13 @@ const SocialLink = ({ network }) => {
     )
 }
 
-export default SocialLink;
+const SocialLinks = () => {
+
+    return (
+        <div className="link-container">
+            {socialNetworks && socialNetworks.map((network, id) => <SocialLink network={network} key={id} />)}
+        </div>
+    )
+}
+
+export default SocialLinks

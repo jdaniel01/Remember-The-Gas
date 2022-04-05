@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     form: formReducer,
     menu: menuReducer,
+    
 });
 
 
