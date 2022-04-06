@@ -135,8 +135,8 @@ const AuthForm = () => {
                 <div className="large">Sign-up at your own risk!</div>
                 <div className="medium">(We're kidding, it's completely safe)</div>
                 <div className="small">(mostly)</div>
-                <div className="error-container">      
-                        {errors.map((error, idx) => <div>{idx + 1}) {error}</div>)}
+                <div className="errors-container">      
+                    {errors && errors.map((error, idx) => <div>{idx + 1}) {error}</div>)}
                 </div>
             </div>
         

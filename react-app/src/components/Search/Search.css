@@ -37,6 +37,9 @@
 .input:focus {
     border: 1.25px solid #198FCB;
     outline: none;
+    .search-input-focus {
+        display: flex;
+    }
 }
 
 .radio{
@@ -61,4 +64,21 @@
 }
 .search-button:hover{
     background-color: #0054a4;
+}
+.search-icon-focus {
+    display: none;
+}
+
+.search-container:focus-within .search-icon-focus {
+    display: flex;
+}
+
+.search-container:focus-within .search-icon {
+    display: none;
+}
+
+.search-img {
+    box-sizing: border-box;
+    padding: 5px;
+    height: 100%;
 }

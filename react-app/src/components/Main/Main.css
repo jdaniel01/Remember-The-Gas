@@ -3,15 +3,18 @@ body{
     padding: 0;
 }
 
-#root{
+/* #root{
     display: flex;
     flex-flow: column nowrap;
     align-content: center;
     align-items:center;
     padding: 0;
+    height: 100%;
     width: 100%;
     box-sizing: border-box;
 }
+
+*/
 .main-container{
     width: 90%;
     display: flex;

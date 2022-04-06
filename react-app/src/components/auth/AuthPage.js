@@ -11,7 +11,7 @@ const LeftText = () => {
 
     return location.pathname === "/sign-up" ? (<div>Join the handful of people who joined Remember The Gas and save zilch and anything anywhere!</div>) : (<div>“Always carry a pocket knife
 cause you never know when
-you’ll have to slash some tires.”
+you'll have to slash some tires.”
 #roadrageatitsfinest</div>)
 }
 
@@ -20,7 +20,7 @@ const AuthPage = () => {
     const user = useSelector(state => state.session.user);
 
     if (user) {
-        return <Redirect to={`/users/${user.id}/tasks`} />;
+        return <Redirect to={`/`} />;
     }
 
     return (

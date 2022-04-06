@@ -51,6 +51,47 @@
     align-items: center;
 }
 
+.burger-button {
+    display: flex;
+    flex-flow: row nowrap;
+    color: #E5E5E5;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 14pt;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
+}
+
+.burger-button:hover {
+    background-color: #003A72;
+    cursor: pointer;
+}
+
+.burger-button:hover .burger-icon {
+    display: none;
+}
+
+.burger-button:hover .burger-icon-white {
+    display: flex;
+}
+
+.burger-icon-white {
+    display: none;
+}
+
+.burger-button>img {
+    height: 15px;
+    width: 20px;
+}
+
+.burger-text {
+    margin-left: 10px;
+}
 .menu-button{
     display: flex;
     align-items: center;
@@ -95,12 +136,6 @@
     border-radius: 3px;
 }
 
-#search-icon {
-    height: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 .search-input{
     border: none;
     background-color:#198FCB;
@@ -114,7 +149,6 @@
     outline: none;
     color: #515151;
 }
-
 
 
 .auth-menu-bar{
@@ -145,4 +179,13 @@
 }
 .sub-menu-button:hover {
     background-color: rgba(15, 125, 180, 0.3)
+}
+body,
+html,
+#root {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
 }

@@ -51,7 +51,7 @@ function App() {
           <ForgotPassword />
         </Route>
         {user ?
-          <ProtectedRoute path="/" exact={true} >
+          <ProtectedRoute path="/" >
             <Dashboard/>
           </ProtectedRoute>
           : <Route path="/" exact={true}>

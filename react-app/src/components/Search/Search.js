@@ -13,7 +13,8 @@ const Search = () => {
 
     return (
         <div className="search-container" style={{ backgroundColor: background, color: background === "#198FCB" ? "white" : "#515151" }}>
-            <img id="search-icon" src="/images/search-icon.png" alt="Search icon. A grey vector image of a magnifying glass." />
+            <img className="search-icon search-img" src="/images/search_icon.png" alt="Search icon. A grey vector image of a magnifying glass." />
+            <img className="search-icon-focus search-img" src="/images/search_icon_focus.png" alt="Search icon. A darker grey vector image of a magnifying glass."/>
             <input type="text" className="search-input" value={haveInput} onChange={(e) => dispatch(changeHaveInput(e.target.value))} onFocus={() => setBackground(("white"))} onBlur={() => setBackground("#198FCB")} />
             <Filter />
         </div>
