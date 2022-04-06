@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import LeftMain from "./LeftMain";
 import RightMain from "./RightMain";
+import BurgerMenu from "./BurgerMenu";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -15,9 +16,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard-container">
             {burgerOpen && 
-                <div className="main-menu">
-                    Main Menu Here
-                </div>
+                <BurgerMenu/>
             }
             <div className="main-display">
                 <LeftMain />

@@ -163,6 +163,7 @@ div.small {
 
 .left-logo-container{
     width: 100%;
+    padding-left: 100px;
 }
 /* .forgot-password-container {
     background-color: #0054A4;

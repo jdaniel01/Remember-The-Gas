@@ -15,8 +15,8 @@
 .filter-options-container{
     color: #515151;
     position:absolute;
-    top: 100%;
-    right: -100px;
+    top: 25px;
+    right: -86px;
     width: 375px;
     background-color: white;
     border-radius: 3px;
@@ -24,6 +24,8 @@
     justify-content: center;
     flex-flow: column nowrap;
     padding: 15px;
+    z-index: 2;
+    box-sizing: border-box;
 }
 
 .input {
@@ -37,9 +39,6 @@
 .input:focus {
     border: 1.25px solid #198FCB;
     outline: none;
-    .search-input-focus {
-        display: flex;
-    }
 }
 
 .radio{
